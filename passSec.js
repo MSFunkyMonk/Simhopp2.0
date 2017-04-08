@@ -1,35 +1,50 @@
 var crypto = require('crypto');
 var bcrypt = require('bcryptjs');
+var MongoClient = require('mongodb').MongoClient;
 
 var password = 'Enteredpassword1';
 
-// Asynkron genereringsfunktion som genererar både salt och hashen 
-/* crypto.randomBytes(16,function(err, salt) {
-    if (err)
-        throw err;
-    crypto.pbkdf2(password,salt,100000,512,'sha512',function(err,key){
-        if (err)
-            throw err;
-        console.log("Hashed password " + key.toString('hex'));
+function register(username, pswd) {
+    bcrypt.hash(pswd,10, function(err, hash){
+        MongoClient.connect("mongodb://95.85.17.152:27017/test", function(err, db) {
+            if (err)
+                throw err;
+            var collection = db.collection('testeroni');
+            var psswdDoc = { 'Username' : username , 'Password' : hash }; 
+
+            collection.insert(psswdDoc, {w:1}, function(err, result){});
+            console.log("stored password: " + hash)
+        });
     });
-    
-}); */
+}
 
-//Bättre lösning. Denna behöver bcryptjs modulen 
-console.log("Password: " + password);
-bcrypt.hash(password,10, function(err, hash){
-    console.log("Hashed password: " + hash);
-});
-
-//För att sedan kontrollera lösenordet så behöver man hasha det man skriver in sedan köra:
 var dbHash;
-//Funktion för att ladda hashen från databasen och lägga den i dbHash
-bcrypt.compare(password, dbHash, function(err,result){
-    if (err)
-        throw err;
-    if (result == true) {
-        //tillåt login
-     } else {
-        //tillåt ej login
-     }
-})
+
+function retrieve(username, pswd) {
+    bcrypt.hash(pswd,10, function(err, hash){
+        MongoClient.connect("mongodb://95.85.17.152:27017/test", function(err, db) {
+            if (err)
+                throw err;
+
+            var collection = db.collection('testeroni');
+            
+            collection.findOne({Username:username}, function(err, item){
+                if (bcrypt.compare(item,hash)) //Returnerar true/false
+                {
+                    console.log("correct password");
+                }
+                else {
+                    console.log("incorrect password");
+                }
+                
+            });
+            
+            console.log("stored password: " + hash)
+        });
+    });
+}
+
+register("Kjell", password);
+
+//retrieve("Kjell", password);
+
