@@ -3,11 +3,15 @@ import routes = require('./routes/index');
 import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
+import fs = require('fs');
+
 
 var app = express();
 
+
 // all environments
-app.set('port', process.env.PORT || 3000);
+//app.set('port', process.env.PORT || 3000);
+app.set('port', '3000');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -27,8 +31,16 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/', routes.index);
+//app.get('/users', user.list);
+
+app.get('/', function(req, res) {
+    fs.readFile(__dirname + "/public/index.html", 'utf8',
+        function(err, data) {
+            res.contentType('html');
+            res.send(data);
+        });
+});
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
