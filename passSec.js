@@ -18,9 +18,8 @@ function register(username, pswd) {
     });
 }
 
-var dbHash;
-
 function retrieve(username, pswd) {
+    var dbHash;
     bcrypt.hash(pswd,10, function(err, hash){
         MongoClient.connect("mongodb://95.85.17.152:27017/test", function(err, db) {
             if (err)
