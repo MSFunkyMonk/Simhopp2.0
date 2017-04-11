@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 
