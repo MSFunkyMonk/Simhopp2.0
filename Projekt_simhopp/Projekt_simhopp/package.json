@@ -8,8 +8,10 @@
     "email": ""
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "express": "3.4.4",
     "jade": "*",
+    "jquery": "^3.2.1",
     "stylus": "*"
   }
 }
