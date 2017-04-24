@@ -31,6 +31,10 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+//$.post("/loginFunc.js",{ email1: email, password1:password},function(data)
+/* app.post("/loginFunc.js", function (req, res) {
+
+}) */
 //app.get('/', routes.index);
 //app.get('/users', user.list);
 

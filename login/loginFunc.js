@@ -1,7 +1,3 @@
-var bcrypt = require('bcryptjs');
-var MongoClient = require('mongodb').MongoClient;
-var $ = require('jquery');
-
 //Se login.html för varför detta inte fungerar
 
 function login(username, pswd) {
@@ -26,10 +22,4 @@ function login(username, pswd) {
             
         });
 }
-
-$email=$_POST['email1'];
-$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-$password = $_POST['password1'];
-
-login($email, $password);
 
