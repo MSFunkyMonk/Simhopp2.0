@@ -2,109 +2,134 @@
 
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title></title>
     <!--Bootstrap reference-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="Competition.js"></script>
-
-
-
 
 </head>
 <body>
 
+    <nav class=" navbar navbar-inverse">
+        <div class="container-fluid">
 
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand">Admin</a>
+            </div>
 
-<nav class=" navbar navbar-inverse">
-    <div class="container-fluid">
-        
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="#" class="navbar-brand">Admin</a>
+            <div class="collapse navbar-collapse" id="mainNavBar">
+                <u1 class="nav navbar-nav">
+                    <li><a href="#" id="createComp">Skapa tävling</a></li>
+                    <li><a href="#">Starta tävling</a></li>
+                    <li><a href="#">Arkiv</a></li>
+                </u1>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="#">Logga ut</a></li>
+                </ul>
+            </div>
         </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <!--skapa tävling-->
+            <div class="col-md-4">
+                <h3>Skapa tävling</h3>
+                <form action="#" id="comp">
+                    <div class="form-group">
+                        <label for="compName">Tävlingsnamn</label>
+                        <input type="text" class="form-control" id="compName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="compAmount">Antal deltagare</label>
+                        <input type="number" class="form-control" id="compAmount" />
+                    </div>
+                    <div class="form-group">
+                        <label for="compJudges"> Antal domare</label>
+                        <input type="number" class="form-control" id="compJudges" />
+                    </div>
+                    <div class="form-group">
+                        <label for="compJumps">Antal hopp</label>
+                        <input type="number" class="form-control" id="compJumps" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default-color-grey" value="Skapa" id="funka" />
+                    </div>
+                </form>
+            </div>
 
-        <div class="collapse navbar-collapse" id="mainNavBar">
-            <u1 class="nav navbar-nav">
-                <li><a href="#" id="createComp">Skapa tävling</a></li>
-                <li><a href="#">Starta tävling</a></li>
-                <li><a href="#">Arkiv</a></li>
-            </u1>
+            <!--lägg till hoppare-->
+            <div class="col-md-4">
+                <h3>Lägg till simhoppare</h3>
+                <form action="#" id="Add">
+                    <div class="form-group">
+                        <label for="nameDiver">Namn</label>
+                        <input type="text" class="form-control" id="nameDiver" />
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Nationalitet</label>
+                        <input type="text" class="form-control" id="country" />
+                    </div>
+                    <div class="form-group">
+                        <label for="diverJumps"> Hopplista(för senare bruk med dropdown-meny, använd ej!)</label>
+                        <input type="text" class="form-control" id="diverJumps" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default-color-grey" value="Lägg till" />
+                    </div>
+                </form>
+            </div>
+            <!--lägg till hopp-->
 
-            <ul class="nav navbar-nav navbar-right">
-
-                <li><a href="#">Logga ut</a></li>
-            </ul>
+            <div class="col-md-4">
+                <h3>Lägg till hopp</h3>
+                <form action="#" id="jump-form">
+                    <div class="form-group">
+                        <label for="jCode">Hoppkod</label>
+                        <input type="text" class="form-control" id="jCode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="diff">Svårighetsgrad</label>
+                        <input type="number" class="form-control" id="diff" />
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Höjd</label>
+                        <input type="number" class="form-control" id="height" />
+                    </div>
+                    <div class="form-group">
+                        <label for="jumpPoints"> Hoppoäng(använd ej!)</label>
+                        <input type="number" class="form-control" id="jumpPoints" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default-color-grey" value="Lägg till" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</nav>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h3>Skapa tävling</h3>
-            <form action="#" id="comp">
-                <div class="form-group">
-                    <label for="compName">Tävlingsnamn</label>
-                    <input type="text" class="form-control" id="compName" />
-                </div>
-                <div class="form-group">
-                    <label for="compAmount">Antal deltagare</label>
-                    <input type="number" class="form-control" id="compAmount" />
-                </div>
-                <div class="form-group">
-                    <label for="compJudges"> Antal domare</label>
-                    <input type="number" class="form-control" id="compJudges" />
-                </div>
-                <div class="form-group">
-                    <label for="compJumps">Antal hopp</label>
-                    <input type="number" class="form-control" id="compJumps" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default-color-grey" value="Skapa" id="funka" />
-                </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <h3>Lägg till simhoppare</h3>
-            <form action="#" id="comp">
-                <div class="form-group">
-                    <label for="compName">Namn</label>
-                    <input type="text" class="form-control" id="compName" />
-                </div>
-                <div class="form-group">
-                    <label for="compAmount">Nationalitet</label>
-                    <input type="number" class="form-control" id="compAmount" />
-                </div>
-                <div class="form-group">
-                    <label for="compJudges"> Hopplista</label>
-                    <input type="number" class="form-control" id="compJudges" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default-color-grey" value="Skapa"  />
-                </div>
-            </form>
-        </div>
+
+    <div id="compinfo">
+
+
+        <p>jag är här!</p>
     </div>
-</div>
+    <!--fixa ordning av script för att exekvera projekt-->
+    <script type="text/javascript" src="Points.js"></script>
+    <script type="text/javascript" src="Jump.js"></script>
+    <script type="text/javascript" src="Diver.js"></script>
+    <script type="text/javascript" src="Competition.js"></script>
+    <script type="text/javascript" src="RegComp.js"></script>
 
-<form action="#" id="yolo">
-    <input type="text" id="" />
-    <input type="submit" value="try" id="test" />
-</form>
-
-<div id="compinfo">
-
-
-    <p>jag är här!</p>
-</div>
-
-<script type="text/javascript" src="test.js"></script>
+    <!--<script type="text/javascript" src="test.js"></script>-->
+    <!--<script type="text/javascript"  src="testComp.js"></script>-->
 </body>
 </html>

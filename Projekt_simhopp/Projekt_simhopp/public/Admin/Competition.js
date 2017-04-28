@@ -1,4 +1,4 @@
-"use strict";
+///<reference path="./Diver.ts"/>
 var Competition = (function () {
     function Competition() {
         this.diverList = new Array();
@@ -13,12 +13,12 @@ var Competition = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Competition.prototype, "setNUmberOfContestants", {
+    Object.defineProperty(Competition.prototype, "setNumberOfContestants", {
         set: function (amount) { this.numberOfContestants = amount; },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Competition.prototype, "getNUmberOfContestants", {
+    Object.defineProperty(Competition.prototype, "getNumberOfContestants", {
         get: function () { return this.numberOfContestants; },
         enumerable: true,
         configurable: true

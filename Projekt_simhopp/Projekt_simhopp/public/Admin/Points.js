@@ -1,4 +1,3 @@
-"use strict";
 var Points = (function () {
     function Points() {
         this.point = 0;
@@ -39,5 +38,4 @@ var Points = (function () {
     };
     return Points;
 }());
-exports.Points = Points;
 //# sourceMappingURL=Points.js.map

@@ -1,4 +1,5 @@
-"use strict";
+//import {Jump} from "./Jump";
+///<reference path="./Jump.ts" />
 var Diver = (function () {
     function Diver() {
         this.jumpList = new Array();
@@ -34,14 +35,6 @@ var Diver = (function () {
         enumerable: true,
         configurable: true
     });
-    Diver.prototype.diverTotalScore = function () {
-        var result = 0;
-        for (var i = 0; i < this.jumpList.length; i++) {
-            result += this.jumpList[i].jumpPoints.point;
-        }
-        return result;
-    };
     return Diver;
 }());
-exports.Diver = Diver;
 //# sourceMappingURL=Diver.js.map

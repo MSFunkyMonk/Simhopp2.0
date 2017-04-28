@@ -1,11 +1,11 @@
 ﻿
-export class Points {
+class Points {
 
     public point: number = 0;
     public pointList: Array<number> = new Array<number>();
 
     //set-get functions
-    public set setPoint(p: number ){ this.point = p; }
+    public set setPoint(p: number) { this.point = p; }
     public get getPoint(): number { return this.point; }
 
     public set setPointList(plist: Array<number>) { this.pointList = plist; }
@@ -24,7 +24,7 @@ export class Points {
             this.point += result;
         }
         else if (this.pointList.length === 5) {
-            
+
         }
     }
 }
