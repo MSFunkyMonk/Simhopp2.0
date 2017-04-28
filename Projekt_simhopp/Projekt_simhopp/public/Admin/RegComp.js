@@ -10,11 +10,12 @@
 
     $('#comp').submit(function () {
 
+       
         c.setNameOfCompetition = $('#compName').val();
         c.setNumberOfContestants = $('#compAmount').val();
         c.setNumberOfJudges = $('#compJudges').val();
         c.setNumberOfJumps = $('#compJumps').val();
-
+        
         alert("Tävling tillagd!");
     });
 
@@ -27,22 +28,22 @@
             var v = $('#nameDiver').val();
             console.log(v);
             c.diverList[counterDiver] = new Diver();
-            c.diverList[counterDiver].setDiverName = ($('#nameDiver').valueOf());
+            c.diverList[counterDiver].setDiverName = $('#nameDiver').val();
             c.diverList[counterDiver].setNationality = $('#country').val();
-            // c.diverList[counter].jumpList.length = c.getNumberOfJumps;
 
             console.log("Hoppare: " + counterDiver);
+            var name = c.diverList[counterDiver].getDiverName;
+            console.log(name);
 
             if (counterDiver === (c.getNumberOfContestants - 1)) {
-                console.log("Visa tävlingens deltagare och info!");
 
-                //for (var i in c.diverList) {
-                //    $('#compinfo').html(i + " ");
-                //}
                 counterDiver = 0;
-                alert("Kan inte lägga till fler tävlande!");
+                alert("Lagt till alla tävlande!");
+            } else {
+                counterDiver = counterDiver + 1;  
             }
-            counterDiver = counterDiver + 1;
+         
+          
 
         }
 
@@ -53,25 +54,36 @@
 
 
         console.log(counterDiver);
+        console.log(counterJump);
         if (counterDiver < c.getNumberOfContestants) {
+            var name0 = c.diverList[0].getDiverName;
+            var name1 = c.diverList[1].getDiverName;
+            var name2 = c.diverList[2].getDiverName;
+
+            console.log(name0);
+            console.log(name1);
+            console.log(name2);
 
             if (counterJump < c.getNumberOfJumps) {
-                console.log("Lägger till hopp för: " + c.diverList[counterDiver].getDiverName);
+                var name = c.diverList[counterDiver].getDiverName;
+                console.log("Lägger till hopp för: " + name);
                 c.diverList[counterDiver].jumpList[counterJump] = new Jump();
                 c.diverList[counterDiver].jumpList[counterJump].setJumpCode = ($('#jCode').valueOf());
                 c.diverList[counterDiver].jumpList[counterJump].setDifficulty = ($('#diff').valueOf());
                 c.diverList[counterDiver].jumpList[counterJump].setHeight = ($('#height').valueOf());
 
-                counterJump = counterJump + 1;
             }
 
-            if (counterDiver === (c.getNumberOfJumps - 1)) {
+            if (counterJump === (c.getNumberOfJumps - 1)) {
                 console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].getDiverName);
                 counterJump = 0;
+                counterDiver = counterDiver + 1;
+            } else {
+                counterJump = counterJump + 1;     
             }
         }
 
-        if (counterDiver === (c.getNumberOfContestants - 1)) {
+        if (counterDiver === c.getNumberOfContestants) {
             alert("Alla simhoppare har fått sina hopp!");
             counterDiver = 0;
         }
