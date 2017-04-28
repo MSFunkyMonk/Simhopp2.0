@@ -41,6 +41,7 @@ app.get('/', function (req, res) {
         res.send(data);
     });
 });
+//hej
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');

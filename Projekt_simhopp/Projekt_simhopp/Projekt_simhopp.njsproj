@@ -46,6 +46,8 @@
     <Content Include="public\Admin\AdminHome.html" />
     <Content Include="public\index.html" />
     <Content Include="package.json" />
+    <Content Include="public\Judge\index.jade" />
+    <Content Include="public\Judge\layout.jade" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
     <Content Include="views\index.jade" />
@@ -56,6 +58,7 @@
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
+    <Folder Include="public\Judge\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="Scripts\" />

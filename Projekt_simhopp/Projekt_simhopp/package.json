@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "express": "3.4.4",
-    "jade": "*",
+    "express": "^3.4.4",
+    "jade": "^1.11.0",
     "jquery": "^3.2.1",
-    "stylus": "*"
+    "stylus": "^0.54.5"
   }
 }
