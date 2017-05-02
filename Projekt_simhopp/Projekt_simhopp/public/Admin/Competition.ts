@@ -27,9 +27,19 @@ class Competition {
     public set setNameOfCompetition(compName: string) { this.nameOfCompetition = compName; }
     public get getNameOfCompetition(): string { return this.nameOfCompetition; }
 
+    //jobba med detta denna vecka
+    public startCompetition(): void {
+        
+        console.log("Tävling startade!");
 
-    public createCompetition(): void {
 
 
+
+        for (var i = 0; i < this.numberOfJumps; i++) {
+
+            for (var j = 0; j < this.numberOfContestants; j++) {
+                
+            }
+        }
     }
 }
