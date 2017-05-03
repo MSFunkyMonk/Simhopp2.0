@@ -5,6 +5,10 @@ import http = require('http');
 import path = require('path');
 import fs = require('fs');
 
+var io = require('socket.io')(http);
+var bcrypt = require('brcypyjs');
+var MongoClient = require('mongodb').MongoClient;
+
 
 var app = express();
 
@@ -31,10 +35,39 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+io.on('connection', function(socket) {
+    console.log('user connected');
+    socket.on('disconnect', function(){
+        console.log('user has disconnected');
+    });
+});
+
 //$.post("/loginFunc.js",{ email1: email, password1:password},function(data)
 /* app.post("/loginFunc.js", function (req, res) {
+    let login = function(username, pswd) {
+        MongoClient.connect("mongodb://95.85.17.152:27017/test", function(err, db) {
+            if (err)
+                throw err;
 
-}) */
+            var collection = db.collection('testeroni')
+            collection.findOne({Username:username}, {Password: 1}, function(err, item){
+                bcrypt.compare(pswd,item.Password, function(err, result) {
+                    if (result == true) //Returnerar true/false
+                    {
+                        $data = 1;
+                        console.log("Correct password");
+                    }
+                    else {
+                        $data = 0;
+                        console.log("Incorrect pasword");
+                    }
+                });
+            });
+
+        });
+    }
+
+}); */
 //app.get('/', routes.index);
 //app.get('/users', user.list);
 
