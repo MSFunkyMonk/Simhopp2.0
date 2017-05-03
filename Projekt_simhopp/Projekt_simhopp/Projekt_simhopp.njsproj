@@ -46,6 +46,8 @@
     <Content Include="public\Admin\AdminHome.html" />
     <Content Include="public\index.html" />
     <Content Include="package.json" />
+    <Content Include="public\Judge\index.jade" />
+    <Content Include="public\Judge\layout.jade" />
     <Content Include="public\stylesheets\style.styl" />
     <Content Include="README.md" />
     <Content Include="views\index.jade" />
@@ -56,6 +58,7 @@
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />
+    <Folder Include="public\Judge\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="Scripts\" />
@@ -66,7 +69,10 @@
     <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="public\Admin\NavBarEvents.js" />
+    <Compile Include="public\Admin\RegComp.js" />
     <Compile Include="public\Admin\test.js" />
+    <Compile Include="public\Admin\testComp.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

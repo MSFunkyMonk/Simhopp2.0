@@ -1,8 +1,8 @@
-"use strict";
-var Points_1 = require("./Points");
+//import {Points} from "./Points";
+///<reference path="./Points.ts" />
 var Jump = (function () {
     function Jump() {
-        this.jumpPoints = new Points_1.Points();
+        this.jumpPoints = new Array();
     }
     Object.defineProperty(Jump.prototype, "setJumpCode", {
         //set-get functions
@@ -15,7 +15,7 @@ var Jump = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Jump.prototype, "setDificultye", {
+    Object.defineProperty(Jump.prototype, "setDifficulty", {
         set: function (diff) { this.difficulty = diff; },
         enumerable: true,
         configurable: true
@@ -36,16 +36,15 @@ var Jump = (function () {
         configurable: true
     });
     Object.defineProperty(Jump.prototype, "setJumpPoints", {
-        set: function (point) { this.jumpPoints = point; },
+        set: function (jlist) { this.jumpPoints = jlist; },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Jump.prototype, "getJumpPoints", {
+    Object.defineProperty(Jump.prototype, "getPointList", {
         get: function () { return this.jumpPoints; },
         enumerable: true,
         configurable: true
     });
     return Jump;
 }());
-exports.Jump = Jump;
 //# sourceMappingURL=Jump.js.map

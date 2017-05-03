@@ -1,10 +1,10 @@
-﻿import {Jump} from "./Jump";
-export class Diver {
+﻿//import {Jump} from "./Jump";
+///<reference path="./Jump.ts" />
+class Diver {
 
     public diverName: string;
     public nationality: string;
     public jumpList: Array<Jump> = new Array<Jump>();
-
 
 
     //set-get functions
@@ -15,18 +15,18 @@ export class Diver {
     public get getNationality(): string { return this.nationality; }
 
     public set setJumpList(jumpName: Array<Jump>) { this.jumpList = jumpName; }
-    public get getJumplist(): Array<Jump> { return this.jumpList;}
+    public get getJumplist(): Array<Jump> { return this.jumpList; }
 
 
-    public diverTotalScore(): number {
-        var result = 0;
-        for (var i = 0; i < this.jumpList.length; i++) {
-            result += this.jumpList[i].jumpPoints.point;
-        }
-        return result;
-    }
+    //public diverTotalScore(): number {
+    //    var result = 0;
+    //    for (var i = 0; i < this.jumpList.length; i++) {
+    //        result += this.jumpList[i].jumpPoints[i].;
+    //    }
+    //    return result;
+    //}
 
 
-  
-    
+
+
 }
