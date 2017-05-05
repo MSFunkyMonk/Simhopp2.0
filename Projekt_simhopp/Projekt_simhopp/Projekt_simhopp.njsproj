@@ -69,6 +69,7 @@
     <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="public\Admin\Communication.js" />
     <Compile Include="public\Admin\NavBarEvents.js" />
     <Compile Include="public\Admin\RegComp.js" />
     <Compile Include="public\Admin\test.js" />
