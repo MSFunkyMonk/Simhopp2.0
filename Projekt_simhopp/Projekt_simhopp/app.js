@@ -1,8 +1,8 @@
 "use strict";
-const express = require('express');
-const http = require('http');
-const path = require('path');
-const fs = require('fs');
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-const stylus = require('stylus');
+var stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 // development only
