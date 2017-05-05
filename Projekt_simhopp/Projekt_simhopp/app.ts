@@ -11,8 +11,8 @@ var MongoClient = require('mongodb').MongoClient;
 
 var app = express();
 
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+
+
 
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -74,20 +74,20 @@ if ('development' == app.get('env')) {
 //            res.send(data);
 //        });
 //});
-/* app.get('/', function (req, res) {
+ app.get('/', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
         function (err, data) {
             res.contentType('html');
             res.send(data);
         });
-}); */
-app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
-        function (err, data) {
-            res.contentType('html');
-            res.send(data);
-        });
-});
+}); 
+//app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
+//        function (err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//});
 
 //hej
 app.get('/*.js', function (req, res) {
@@ -97,11 +97,14 @@ app.get('/*.js', function (req, res) {
             res.send(data);
         });
 });
-http.createServer(app).listen(app.get('port'), function () {
+
+var server = http.createServer(app);
+
+server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-
+var io = require('socket.io')(server);
 
 io.on('connection', function(socket) {
     console.log('user connected');

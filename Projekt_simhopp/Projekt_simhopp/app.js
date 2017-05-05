@@ -1,13 +1,11 @@
 "use strict";
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
 // all environments
 //app.set('port', process.env.PORT || 3000);
 app.set('port', '3000');
@@ -19,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-var stylus = require('stylus');
+const stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 // development only
@@ -61,19 +59,19 @@ if ('development' == app.get('env')) {
 //            res.send(data);
 //        });
 //});
-/* app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
-        function (err, data) {
-            res.contentType('html');
-            res.send(data);
-        });
-}); */
 app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
 });
+//app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
+//        function (err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//});
 //hej
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8', function (err, data) {
@@ -81,9 +79,11 @@ app.get('/*.js', function (req, res) {
         res.send(data);
     });
 });
-http.createServer(app).listen(app.get('port'), function () {
+var server = http.createServer(app);
+server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log('user connected');
     socket.on('disconnect', function () {
