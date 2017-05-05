@@ -53,7 +53,13 @@ var Competition = (function () {
         enumerable: true,
         configurable: true
     });
-    Competition.prototype.createCompetition = function () {
+    //jobba med detta denna vecka
+    Competition.prototype.startCompetition = function () {
+        console.log("Tävling startade!");
+        for (var i = 0; i < this.numberOfJumps; i++) {
+            for (var j = 0; j < this.numberOfContestants; j++) {
+            }
+        }
     };
     return Competition;
 }());

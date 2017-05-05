@@ -8,18 +8,13 @@
     "email": ""
   },
   "dependencies": {
+    "bcryptjs": "*",
     "bootstrap": "^3.3.7",
     "express": "^3.21.2",
     "jade": "^1.11.0",
     "jquery": "^3.2.1",
-<<<<<<< HEAD
-    "stylus": "*",
-    "bcryptjs": "*",
-    "socket.io": "*"
-
-=======
     "socket.io": "^1.7.3",
-    "stylus": "^0.54.5"
->>>>>>> c0ae63e754ca4ef90b71c1425480735d73dd09b6
+    "socket.io-client": "*",
+    "stylus": "*"
   }
 }

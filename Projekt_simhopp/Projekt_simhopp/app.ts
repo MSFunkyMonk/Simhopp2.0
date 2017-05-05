@@ -5,13 +5,14 @@ import http = require('http');
 import path = require('path');
 import fs = require('fs');
 
-var io = require('socket.io')(http);
-var bcrypt = require('brcypyjs');
+var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 
 
 var app = express();
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -35,12 +36,7 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-io.on('connection', function(socket) {
-    console.log('user connected');
-    socket.on('disconnect', function(){
-        console.log('user has disconnected');
-    });
-});
+
 
 //$.post("/loginFunc.js",{ email1: email, password1:password},function(data)
 /* app.post("/loginFunc.js", function (req, res) {
@@ -78,13 +74,21 @@ io.on('connection', function(socket) {
 //            res.send(data);
 //        });
 //});
-app.get('/', function (req, res) {
+/* app.get('/', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
         function (err, data) {
             res.contentType('html');
             res.send(data);
         });
+}); */
+app.get('/', function (req, res) {
+    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
+        function (err, data) {
+            res.contentType('html');
+            res.send(data);
+        });
 });
+
 //hej
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8',
@@ -95,4 +99,13 @@ app.get('/*.js', function (req, res) {
 });
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+
+io.on('connection', function(socket) {
+    console.log('user connected');
+    socket.on('disconnect', function(){
+        console.log('user has disconnected');
+    });
 });
