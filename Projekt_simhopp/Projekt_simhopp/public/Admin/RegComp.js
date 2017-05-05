@@ -1,9 +1,9 @@
 ﻿/// <reference path="./Competition.js" />
-
+var c = new Competition();
 (function ($) {
 
     console.log("i regComp");
-    var c = new Competition();
+    //var c = new Competition();
     var counterDiver = 0;
     var counterJump = 0;
     var counterPoints = 0;
