@@ -38,6 +38,7 @@
     <TypeScriptCompile Include="public\Admin\Diver.ts" />
     <TypeScriptCompile Include="public\Admin\Jump.ts" />
     <TypeScriptCompile Include="public\Admin\Points.ts" />
+    <TypeScriptCompile Include="public\Judge\JudgeTS.ts" />
     <TypeScriptCompile Include="routes\index.ts" />
     <TypeScriptCompile Include="routes\user.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
@@ -46,6 +47,7 @@
     <Content Include="public\Admin\AdminHome.html" />
     <Content Include="public\index.html" />
     <Content Include="package.json" />
+    <Content Include="public\Judge\Judge.html" />
     <Content Include="public\Judge\index.jade" />
     <Content Include="public\Judge\layout.jade" />
     <Content Include="public\stylesheets\style.styl" />

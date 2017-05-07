@@ -20,6 +20,7 @@ app.use(app.router);
 var stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/Judge', express.static(path.join(__dirname, 'public/Judge'))); //!!!Tillagt!!!
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
