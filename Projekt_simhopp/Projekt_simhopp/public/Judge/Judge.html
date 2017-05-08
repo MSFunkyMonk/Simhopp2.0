@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Judge</title>
@@ -11,19 +11,81 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.js"
-            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
-            crossorigin="anonymous">
-    </script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="TestClient.js"></script>
+    <!--<style>
+        p {
+            background: White;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+            p.over {
+                background: #ccc;
+            }
+
+        span {
+            color: red;
+        }
+    </style>-->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body id="id-body">
-    <script>
-        (function ($) {
-            var tc = new TestClient(io('/Judge'));
-        })(jQuery);
-    </script>
+
+    <Center>
+        <p><label>JUDGE</label></p>
+        <p>
+            <form>
+                Name:       <input type="text" name="fname"><br>
+                Jump:       <input type="text" name="fjump"><br>
+                JumpType:   <input type="text" name="fjuty"><br>
+            </form>
+        </p>
+        <form action="">
+            <div id="selected">
+                <Select name="selector" id="selector">
+                    <option selected value=""></option>
+                    <option value="0.0">0.0</option>
+                    <option value="0.5">0.5</option>
+                    <option value="1.0">1.0</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2.0">2.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="3.0">3.0</option>
+                    <option value="3.5">3.5</option>
+                    <option value="4.0">4.0</option>
+                    <option value="4.5">4.5</option>
+                    <option value="5.0">5.0</option>
+                    <option value="5.5">5.5</option>
+                    <option value="6.0">6.0</option>
+                    <option value="6.5">6.5</option>
+                    <option value="7.0">7.0</option>
+                    <option value="7.5">7.5</option>
+                    <option value="8.0">8.0</option>
+                    <option value="8.5">8.5</option>
+                    <option value="9.0">9.0</option>
+                    <option value="9.5">9.5</option>
+                    <option value="10">10</option>
+                </Select>
+         </form>
+        <p></p>
+        <p>
+            <button id="test">test</button>
+        </p>
+        <!--<p><input type="submit" set="Point"></p>-->
+
+                <!--<p>Click me!</p>
+
+                <span></span>
+                <script>
+                    var count = 0;
+                    $("body").on("click", "p", function () {
+                        $(this).after("<p>Another paragraph! " + (this.x) + "</p>");
+                    });
+                </script>-->
+</Center>
+    <script type="text/javascript" src="Points.js"></script>
 </body>
 </html>
