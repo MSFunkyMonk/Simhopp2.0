@@ -99,8 +99,8 @@ server.listen(app.get('port'), function () {
 var io = require('socket.io')(server);
 var admin = io.of('/admin');
 var judge = io.of('/judge');
-var AdminAdministration = null;
-var JudgeAdministration = null;
+var AdminHandler = null;
+var JudgeHandler = null;
 var LoginHandler = null;
 
 io.on('connection', function(socket) {
@@ -113,12 +113,12 @@ io.on('connection', function(socket) {
 });
 
 admin.on('connection', function(socket) {
-    AdminAdministration = new AdminAdministration(socket);
+    AdminHandler = new AdminHandler(socket);
     
 });
 
 judge.on('connection', function(socket) {
-    JudgeAdministration = new JudgeAdministration(socket);
+    JudgeHandler = new JudgeHandler(socket);
 
 });
 

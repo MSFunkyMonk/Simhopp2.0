@@ -15,4 +15,4 @@ var JudgeAdministration = (function () {
     }
     return JudgeAdministration;
 }());
-//# sourceMappingURL=JudgeAdministration.js.map
+//# sourceMappingURL=JudgeHandler.js.map
