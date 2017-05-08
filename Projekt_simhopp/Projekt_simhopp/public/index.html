@@ -1,8 +1,14 @@
 ﻿<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
+    
+    <!--Bootstrap reference-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style type ="text/css">
         body {
             background-color: azure;
@@ -11,18 +17,51 @@
          h1 {text-align: center}
         h2 {text-align: center}
         div { width: 100%;overflow: hidden;}
- 
 
-        
         nav ul{ height: 150px;width: 70%;}
         nav ul{ overflow: hidden;overflow-y: scroll;}
     </style>
     <title>Simhopp2.0</title>
 </head>
 <body>
-<button type="button">Login Admin</button>
-<button type="button">Login Judge</button>
 <h1> Välkommen till Simhopp2.0 </h1>
+    
+<div class="container">
+    
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="loginWindow" id="adimLogin">Login Admin</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="loginWindow" id="judgeLogin">Login Judge</button>
+    
+    <div class="modal fade" id="loginWindow">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Logga in</h2>
+                </div>
+                <div class="modal-header">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="user">Användarnamn</label>
+                            <input type="text" class="form-control" id="user"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Användarnamn</label>
+                            <input type="password" class="form-control" id="password" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-header">
+                    <button class="btn btn-success" >Logga in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+
 <hr/>
 <h2> Tävlings resultat </h2>
 
@@ -72,6 +111,14 @@
     </div>
 </div>
 
-
+<!--<script type="text/javascript" src="login.js"></script>-->
+<script>
+    $(document).ready(function () {
+        console.log("inne")
+        $("#adimLogin").click(function(){
+            $("#loginWindow").modal();
+    });
+});
+</script>
 </body>
 </html>

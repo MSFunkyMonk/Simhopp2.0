@@ -27,13 +27,12 @@ if ('development' == app.get('env')) {
 }
 //app.get('/', routes.index);
 //app.get('/users', user.list);
-//app.get('/', function(req, res) {
-//    fs.readFile(__dirname + "/public/index.html", 'utf8',
-//        function(err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//});
+app.get('/', function (req, res) {
+    fs.readFile(__dirname + "/public/index.html", 'utf8', function (err, data) {
+        res.contentType('html');
+        res.send(data);
+    });
+});
 // app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
 //        function (err, data) {
@@ -41,12 +40,13 @@ if ('development' == app.get('env')) {
 //            res.send(data);
 //        });
 //}); 
-app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8', function (err, data) {
-        res.contentType('html');
-        res.send(data);
-    });
-});
+//app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
+//        function (err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//}); 
 //app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
 //        function (err, data) {

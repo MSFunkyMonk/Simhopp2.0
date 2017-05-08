@@ -80,7 +80,7 @@ class ServerContest {
         });
     }
     public startCompetition(comp: any): void {
-
+        //ej helt klar!
         console.log("Tävling startade!");
         var reciever = [];
         for (var jump = 0; jump < comp.numberOfJumps; jump++) {
