@@ -31,7 +31,7 @@ import stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
+//app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
 
 // development only
 if ('development' == app.get('env')) {
@@ -48,15 +48,16 @@ if ('development' == app.get('env')) {
 //            res.send(data);
 //        });
 //});
- app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
-        function (err, data) {
-            res.contentType('html');
-            res.send(data);
-        });
-}); 
 
- app.get('/Judge', function (req, res) {
+// app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
+//        function (err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//}); 
+
+ app.get('/', function (req, res) {
      fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
          function (err, data) {
              res.contentType('html');
@@ -72,6 +73,15 @@ if ('development' == app.get('env')) {
 //});
 
 //hej
+
+app.get('/*.js', function (req, res) {
+    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8',
+        function (err, data) {
+            res.contentType('javascript');
+            res.send(data);
+        });
+ });
+
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8',
         function (err, data) {

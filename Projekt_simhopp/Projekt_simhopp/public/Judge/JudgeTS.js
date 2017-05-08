@@ -1,5 +1,5 @@
-var TestClient = (function () {
-    function TestClient(socket) {
+var JudgeTS = (function () {
+    function JudgeTS(socket) {
         var _this = this;
         this.socket = null;
         this.containerTags = function () {
@@ -12,6 +12,6 @@ var TestClient = (function () {
         this.socket = socket;
         this.pageZero();
     }
-    return TestClient;
+    return JudgeTS;
 }());
 //# sourceMappingURL=JudgeTS.js.map

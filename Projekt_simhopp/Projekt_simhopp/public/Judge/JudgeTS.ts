@@ -1,4 +1,4 @@
-﻿class TestClient {
+﻿class JudgeTS {
     private socket: any = null;
 
     constructor(socket: any) {
