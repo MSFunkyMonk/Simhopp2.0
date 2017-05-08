@@ -1,5 +1,5 @@
 ///<reference path="./Diver.ts"/>
-var Competition = (function () {
+var socket = (function () {
     function Competition() {
         this.diverList = new Array();
     }
@@ -53,11 +53,12 @@ var Competition = (function () {
         enumerable: true,
         configurable: true
     });
-    //jobba med detta denna vecka
-    Competition.prototype.startCompetition = function () {
+    //jobba med detta denna vecka//håll igång!
+    Competition.prototype.startCompetition = function (comp, socket) {
         console.log("Tävling startade!");
-        for (var i = 0; i < this.numberOfJumps; i++) {
-            for (var j = 0; j < this.numberOfContestants; j++) {
+        for (var jump = 0; jump < comp.numberOfJumps; jump++) {
+            //omgång
+            for (var diver = 0; diver < comp.numberOfContestants; diver++) {
             }
         }
     };
