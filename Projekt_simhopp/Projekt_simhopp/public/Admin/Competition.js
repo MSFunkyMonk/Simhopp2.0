@@ -1,5 +1,5 @@
 ///<reference path="./Diver.ts"/>
-var socket = (function () {
+var Competition = (function () {
     function Competition() {
         this.diverList = new Array();
     }
@@ -53,12 +53,30 @@ var socket = (function () {
         enumerable: true,
         configurable: true
     });
-    //jobba med detta denna vecka//håll igång!
-    Competition.prototype.startCompetition = function (comp, socket) {
+    //jobba med detta denna vecka
+    Competition.prototype.startCompetition = function (comp) {
         console.log("Tävling startade!");
+        var reciever = [];
         for (var jump = 0; jump < comp.numberOfJumps; jump++) {
             //omgång
+            var i = 0;
             for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+                judge.emit('compInfo', { comp: comp });
+                //väntar på att dommare ska döma
+                while (dömda_poäng != comp.getNumberOfJudges) {
+                    console.log("väntar på domare!");
+                    if (dömda_poäng != 0) {
+                        reciever[i].add(dömda_poäng);
+                        i += 1;
+                    }
+                }
+                //tar emot 
+                for (var _i = 0, reciever_1 = reciever; _i < reciever_1.length; _i++) {
+                    var points = reciever_1[_i];
+                    var point = points;
+                    comp.diverList[diver].jumpList[jump].jumpPoints.pointList.add(point);
+                }
+                comp.diverList[diver].jumpList[jump].calculatePoint(comp.diverList[diver].jumpList[jump].difficulty);
             }
         }
     };

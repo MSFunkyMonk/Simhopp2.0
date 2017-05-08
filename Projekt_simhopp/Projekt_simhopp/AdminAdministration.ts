@@ -51,8 +51,6 @@ class ServerContest {
 
             });
         });
-
-<<<<<<< HEAD
         socket.on('start contest', function (contestName) {
             var comp = null;
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
@@ -60,29 +58,23 @@ class ServerContest {
                     throw err;
 
                 var collection = db.collection(contestName)
-                collection.findOne({'CompetitionName': contestName}, function(err, document){
-                    if (err) { throw err; }
+                collection.findOne({'CompetitionName': contestName}, function (err, document) {
+                    if (err) {
+                        throw err;
+                    }
                     comp.competitionName = document.CompetitionName;
                     comp.numberOfJumps = document.NumberOfJumps;
                     comp.numberOfJudges = document.NumberOfJudges;
                 });
                 //Glöm EJ testa!!!!!
-                collection.find({'Name' : {$exists: true}}, {Name: 1, _id: 0}, function(err, documents){
+                collection.find({'Name': {$exists: true}}, {Name: 1, _id: 0}, function (err, documents) {
                     for (var entry in documents) {
                         comp.diverList.push(entry);
                     }
                 });
 
 
-
             });
-=======
-        socket.on('start contest', function(contestName) {
-            /* accessa databasen, hämta information om korrekt tävling
-             skicka event till judge namespace med objektet som innehåller informationen
-             */
-             
->>>>>>> 2cda0d9eacbaa5eaac34cb01873b40110518d168
         });
     }
 }
