@@ -4,7 +4,11 @@
 
     $('#comp').submit(function () {
         console.log("sent contest information to server");
-        //socket.emit('contest create', c);
+        /*socket.on('successful login', function(c) {
+            if(c === 'Judge') {
+                socket = io('/judge');
+            }
+         ); */
 
     });
 
