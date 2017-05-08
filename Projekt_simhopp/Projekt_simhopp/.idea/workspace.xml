@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0d222df-20e8-40db-bf89-68d5e710ab45" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/LoginHandler.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminAdministration.js" afterPath="$PROJECT_DIR$/AdminAdministration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminAdministration.js.map" afterPath="$PROJECT_DIR$/AdminAdministration.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminAdministration.ts" afterPath="$PROJECT_DIR$/AdminAdministration.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JudgeAdministration.js" afterPath="$PROJECT_DIR$/JudgeAdministration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JudgeAdministration.js.map" afterPath="$PROJECT_DIR$/JudgeAdministration.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JudgeAdministration.ts" afterPath="$PROJECT_DIR$/JudgeAdministration.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js.map" afterPath="$PROJECT_DIR$/app.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.ts" afterPath="$PROJECT_DIR$/app.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/Admin/Communication.js" afterPath="$PROJECT_DIR$/public/Admin/Communication.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,22 +28,34 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="103" column="51" lean-forward="false" selection-start-line="103" selection-start-column="51" selection-end-line="103" selection-end-column="51" />
+            <state relative-caret-position="298">
+              <caret line="101" column="7" lean-forward="true" selection-start-line="101" selection-start-column="7" selection-end-line="101" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AdminAdministration.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AdminAdministration.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AdminAdministration.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="33" column="125" lean-forward="false" selection-start-line="33" selection-start-column="125" selection-end-line="33" selection-end-column="125" />
+            <state relative-caret-position="374">
+              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginHandler.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/LoginHandler.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="316">
+              <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#41#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,8 +63,8 @@
       <file leaf-file-name="JudgeAdministration.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JudgeAdministration.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+            <state relative-caret-position="126">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
               </folding>
@@ -63,50 +75,8 @@
       <file leaf-file-name="Communication.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Competition.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/Competition.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="33" lean-forward="false" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Diver.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/Diver.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminHome.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="865">
-              <caret line="127" column="61" lean-forward="false" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegComp.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/RegComp.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+            <state relative-caret-position="324">
+              <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -147,11 +117,12 @@
         <option value="$PROJECT_DIR$/public/Admin/NavBarEvents.js" />
         <option value="$PROJECT_DIR$/public/Admin/Competition.ts" />
         <option value="$PROJECT_DIR$/public/Admin/RegComp.js" />
-        <option value="$PROJECT_DIR$/public/Admin/Communication.js" />
         <option value="$PROJECT_DIR$/ServerContest.ts" />
-        <option value="$PROJECT_DIR$/AdminAdministration.ts" />
-        <option value="$PROJECT_DIR$/JudgeAdministration.ts" />
+        <option value="$PROJECT_DIR$/public/Admin/Communication.js" />
+        <option value="$PROJECT_DIR$/LoginHandler.ts" />
         <option value="$PROJECT_DIR$/app.ts" />
+        <option value="$PROJECT_DIR$/JudgeAdministration.ts" />
+        <option value="$PROJECT_DIR$/AdminAdministration.ts" />
       </list>
     </option>
   </component>
@@ -458,7 +429,7 @@
       <workItem from="1493968406878" duration="1930000" />
       <workItem from="1493970646850" duration="2384000" />
       <workItem from="1494071202350" duration="6504000" />
-      <workItem from="1494223727781" duration="5837000" />
+      <workItem from="1494223727781" duration="13210000" />
     </task>
     <task id="LOCAL-00001" summary="Refaktoriserade samt gjorde skellet för fortsatt arbete">
       <created>1494228527052</created>
@@ -467,11 +438,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494228527052</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Merge">
+      <created>1494229589214</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1494229589214</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27367000" />
+    <option name="totallyTimeSpent" value="34740000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="25" width="1368" height="720" extended-state="6" />
@@ -530,6 +508,8 @@
         <option value="$PROJECT_DIR$/public/Judge/JudgeTS.js.map" />
         <option value="$PROJECT_DIR$/JudgeAdministration.js.map" />
         <option value="$PROJECT_DIR$/JudgeAdministration.js" />
+        <option value="$PROJECT_DIR$/LoginHandler.js" />
+        <option value="$PROJECT_DIR$/LoginHandler.js.map" />
       </list>
     </option>
   </component>
@@ -538,7 +518,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refaktoriserade samt gjorde skellet för fortsatt arbete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refaktoriserade samt gjorde skellet för fortsatt arbete" />
+    <MESSAGE value="Merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -774,14 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="865">
-          <caret line="127" column="61" lean-forward="false" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Admin/RegComp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -808,36 +781,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
+    <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="29" lean-forward="false" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="37" />
+        <state relative-caret-position="2286">
+          <caret line="127" column="61" lean-forward="false" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AdminAdministration.ts">
+    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="33" column="125" lean-forward="false" selection-start-line="33" selection-start-column="125" selection-end-line="33" selection-end-column="125" />
+        <state relative-caret-position="324">
+          <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="101" column="7" lean-forward="true" selection-start-line="101" selection-start-column="7" selection-end-line="101" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JudgeAdministration.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="14" column="69" lean-forward="false" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
+        <state relative-caret-position="126">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.ts">
+    <entry file="file://$PROJECT_DIR$/LoginHandler.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="103" column="51" lean-forward="false" selection-start-line="103" selection-start-column="51" selection-end-line="103" selection-end-column="51" />
+        <state relative-caret-position="316">
+          <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AdminAdministration.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding />
         </state>
       </provider>

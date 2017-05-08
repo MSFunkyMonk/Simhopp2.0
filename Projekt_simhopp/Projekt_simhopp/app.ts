@@ -91,9 +91,11 @@ var admin = io.of('/admin');
 var judge = io.of('/judge');
 var AdminAdministration = null;
 var JudgeAdministration = null;
+var LoginHandler = null;
 
 io.on('connection', function(socket) {
     console.log('user connected');
+    LoginHandler = new LoginHandler(socket);
 
     socket.on('disconnect', function(){
         console.log('user has disconnected');
