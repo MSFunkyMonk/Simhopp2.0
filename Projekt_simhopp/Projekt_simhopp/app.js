@@ -59,42 +59,20 @@ server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 var io = require('socket.io')(server);
+var admin = io.of('/admin');
+var judge = io.of('/judge');
+var AdminAdministration = null;
+var JudgeAdministration = null;
 io.on('connection', function (socket) {
     console.log('user connected');
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
-    socket.on('contest create', function (comp) {
-        (function () {
-            MongoClient.connect('mongodb://95.85.17.152:27017/test', function (err, db) {
-                if (err) {
-                    throw err;
-                }
-                db.createCollection(comp.nameOfCompetition);
-                var compDoc = { 'Divers': comp.diverList, 'Numper of Jumps': comp.numberOfJumps, 'Number of Judges': comp.numberOfJudges };
-                var collection = db.collection(comp.nameOfCompetition);
-                collection.insert(compDoc, function (err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    else {
-                        console.log("Competition created successfully");
-                    }
-                });
-                //Glöm inte att lägga till mer information om det behövs!!!
-                for (var i = 0; i < comp.diverList.length; i++) {
-                    var diverDoc = { 'Name': comp.diverList[i].diverName, 'Nationality': comp.diverList[i].nationality };
-                    collection.insert(diverDoc, function (err, result) {
-                        if (err) {
-                            throw err;
-                        }
-                        else {
-                            console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
-                        }
-                    });
-                }
-            });
-        })();
-    });
+});
+admin.on('connection', function (socket) {
+    AdminAdministration = new AdminAdministration(socket);
+});
+judge.on('connection', function (socket) {
+    JudgeAdministration = new JudgeAdministration(socket);
 });
 //# sourceMappingURL=app.js.map
