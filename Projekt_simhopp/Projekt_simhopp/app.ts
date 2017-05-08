@@ -55,6 +55,14 @@ if ('development' == app.get('env')) {
             res.send(data);
         });
 }); 
+
+ app.get('/Judge', function (req, res) {
+     fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
+         function (err, data) {
+             res.contentType('html');
+             res.send(data);
+         });
+ }); 
 //app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
 //        function (err, data) {
@@ -120,5 +128,23 @@ io.on('connection', function(socket) {
 
             });
         })();
+    });
+});
+
+import Server = require("./ServerT/Tserver");
+import TestServer = Server.TestServer;
+
+io.of('/Judge').on('connection', function (socket) {
+
+    console.log('on connection /Judge');
+
+    var test: Server.TestServer = new TestServer(socket);
+
+    socket.on('disconnect', function () {
+        try {
+            console.log('on disconnect /Judge');
+        } catch (e) {
+            console.log('on disconnect: exception: ' + e);
+        }
     });
 });

@@ -54,8 +54,10 @@
     <Content Include="README.md" />
     <Content Include="views\index.jade" />
     <Content Include="views\layout.jade" />
+    <TypeScriptCompile Include="ServerT\Tserver.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ServerT\" />
     <Folder Include="public\Admin\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
