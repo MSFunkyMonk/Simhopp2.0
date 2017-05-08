@@ -26,7 +26,7 @@ var ServerContest = (function () {
                 });
                 //Glöm inte att lägga till mer information om det behövs!!!
                 for (var i = 0; i < comp.diverList.length; i++) {
-                    var diverDoc = { 'Name': comp.diverList[i].diverName, 'Nationality': comp.diverList[i].nationality, 'Dives': comp.diverList[i].jumpList };
+                    var diverDoc = { 'Name': comp.diverList[i].diverName, 'Nationality': comp.diverList[i].nationality, 'Jumps': comp.diverList[i].jumpList };
                     collection.insert(diverDoc, function (err, result) {
                         if (err) {
                             throw err;

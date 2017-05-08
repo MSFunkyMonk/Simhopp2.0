@@ -107,7 +107,5 @@ admin.on('connection', function(socket) {
 judge.on('connection', function(socket) {
     JudgeAdministration = new JudgeAdministration(socket);
 
-            });
-        })();
-    });
 });
+

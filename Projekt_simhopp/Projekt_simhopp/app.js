@@ -81,18 +81,4 @@ admin.on('connection', function (socket) {
 judge.on('connection', function (socket) {
     JudgeAdministration = new JudgeAdministration(socket);
 });
-var Server = require("./ServerT/Tserver");
-var TestServer = Server.TestServer;
-io.of('/Judge').on('connection', function (socket) {
-    console.log('on connection /Judge');
-    var test = new TestServer(socket);
-    socket.on('disconnect', function () {
-        try {
-            console.log('on disconnect /Judge');
-        }
-        catch (e) {
-            console.log('on disconnect: exception: ' + e);
-        }
-    });
-});
 //# sourceMappingURL=app.js.map
