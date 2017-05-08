@@ -37,19 +37,23 @@ class Competition {
             var i = 0;
             
             for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+                //kolla vilket format den msåte skickas på, objekt blir lite skumt
                 judge.emit('compInfo', {comp});
                
                 while (1) {
 
 
                  //väntar på att dommare ska döma
-                    while (dömda_poäng != comp.getNumberOfJudges) {
+                    while (dömda_poäng !== comp.getNumberOfJudges) {
                         console.log("väntar på domare!");
-                        if (dömda_poäng != 0) {
+                        if (dömda_poäng !== 0) {
                             reciever[i].add(dömda_poäng);
                             i += 1;
                         }
                     }
+                    if (dömda_poäng === comp.getNumberOfJudges) 
+                        break;
+                    
                 }
 
                 //tar emot 

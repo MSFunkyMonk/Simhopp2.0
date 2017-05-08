@@ -79,4 +79,46 @@ class ServerContest {
 
         });
     }
+    public startCompetition(comp: any): void {
+
+        console.log("Tävling startade!");
+        var reciever = [];
+        for (var jump = 0; jump < comp.numberOfJumps; jump++) {
+            //omgång
+            var i = 0;
+
+            for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+                //kolla vilket format den msåte skickas på, objekt blir lite skumt
+                this.socket.emit('compInfo', { comp });
+
+                while (1) {
+
+
+                    //väntar på att dommare ska döma
+                    while (dömda_poäng !== comp.getNumberOfJudges) {
+                        console.log("väntar på domare!");
+                        if (dömda_poäng !== 0) {
+                            reciever[i].add(dömda_poäng);
+                            i += 1;
+                        }
+                    }
+                    if (dömda_poäng === comp.getNumberOfJudges)
+                        break;
+
+                }
+
+                //tar emot 
+                for (var points of reciever) {
+                    var point = points;
+                    comp.diverList[diver].jumpList[jump].jumpPoints.pointList.add(point);
+                }
+
+
+                comp.diverList[diver].jumpList[jump].calculatePoint(comp.diverList[diver].jumpList[jump].difficulty);
+
+            }
+
+        }
+
+    }
 }
