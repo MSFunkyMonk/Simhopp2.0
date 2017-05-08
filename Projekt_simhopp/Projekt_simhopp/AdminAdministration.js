@@ -11,6 +11,7 @@ var ServerContest = (function () {
                     throw err;
                 }
                 db.createCollection(comp.nameOfCompetition);
+                var collection = db.collection(comp.nameOfCompetition);
                 for (var i = 0; i < comp.diverList.length; i++) {
                     var diverDoc = {
                         'Name': comp.diverList[i].diverName,
@@ -31,7 +32,6 @@ var ServerContest = (function () {
                     'NumberOfJumps': comp.numberOfJumps,
                     'NumberOfJudges': comp.numberOfJudges
                 };
-                var collection = db.collection(comp.nameOfCompetition);
                 collection.insert(compDoc, function (err, result) {
                     if (err) {
                         throw err;

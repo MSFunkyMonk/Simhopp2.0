@@ -15,29 +15,30 @@ class ServerContest {
                 }
 
                 db.createCollection(comp.nameOfCompetition);
+                var collection = db.collection(comp.nameOfCompetition);
                 for (var i = 0; i < comp.diverList.length; i++) {
-                    var diverDoc = {
+                    let diverDoc = {
                         'Name': comp.diverList[i].diverName,
                         'Nationality': comp.diverList[i].nationality,
                         'Jumps': comp.diverList[i].jumpList
-                    }
+                    };
 
-                    collection.insert(diverDoc, function (err, result) {
+                        collection.insert(diverDoc, function (err, result) {
                         if (err) {
                             throw err;
                         } else {
                             console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                         }
-                    });
+                        });
+
                 }
 
-                var compDoc = {
+                let compDoc = {
                     'CompetitionName': comp.nameOfCompetiton,
                     'NumberOfJumps': comp.numberOfJumps,
                     'NumberOfJudges': comp.numberOfJudges
                 };
 
-                var collection = db.collection(comp.nameOfCompetition);
                 collection.insert(compDoc, function (err, result) {
                     if (err) {
                         throw err;
