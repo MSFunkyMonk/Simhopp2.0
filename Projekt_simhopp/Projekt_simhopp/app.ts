@@ -102,6 +102,7 @@ io.on('connection', function(socket) {
 
 admin.on('connection', function(socket) {
     AdminAdministration = new AdminAdministration(socket);
+    
 });
 
 judge.on('connection', function(socket) {

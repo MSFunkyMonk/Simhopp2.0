@@ -49,6 +49,7 @@ class ServerContest {
             /* accessa databasen, hämta information om korrekt tävling
              skicka event till judge namespace med objektet som innehåller informationen
              */
+             
         });
     }
 }

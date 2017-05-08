@@ -28,18 +28,37 @@ class Competition {
     public get getNameOfCompetition(): string { return this.nameOfCompetition; }
 
     //jobba med detta denna vecka
-    public startCompetition(): void {
+    public startCompetition(comp: any): void {
         
         console.log("Tävling startade!");
-
-
-
-
-        for (var i = 0; i < this.numberOfJumps; i++) {
-
-            for (var j = 0; j < this.numberOfContestants; j++) {
+        var reciever = [];
+        for (var jump = 0; jump < comp.numberOfJumps; jump++) {
+            //omgång
+            var i = 0;
+            
+            for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+                judge.emit('compInfo', {comp});
+                //väntar på att dommare ska döma
+                while (dömda_poäng != comp.getNumberOfJudges)
+                {
+                    console.log("väntar på domare!");
+                    if (dömda_poäng != 0) {
+                        reciever[i].add(dömda_poäng);
+                        i += 1;
+                    }
+                }
+                //tar emot 
+                for (var points of reciever) {
+                    var point = points;
+                    comp.diverList[diver].jumpList[jump].jumpPoints.pointList.add(point);
+                }
                 
+
+                comp.diverList[diver].jumpList[jump].calculatePoint(comp.diverList[diver].jumpList[jump].difficulty);
+
             }
+           
         }
+
     }
 }
