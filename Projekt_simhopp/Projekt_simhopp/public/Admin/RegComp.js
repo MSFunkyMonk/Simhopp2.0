@@ -15,8 +15,9 @@ var c = new Competition();
         c.setNumberOfContestants = $('#compAmount').val();
         c.setNumberOfJudges = $('#compJudges').val();
         c.setNumberOfJumps = $('#compJumps').val();
-        
+        $("#Add").show();
         alert("Tävling tillagd!");
+
     });
 
 
@@ -38,6 +39,7 @@ var c = new Competition();
             if (counterDiver === (c.getNumberOfContestants - 1)) {
 
                 counterDiver = 0;
+                $("#jump-form").show();
                 alert("Lagt till alla tävlande!");
             } else {
                 counterDiver = counterDiver + 1;  

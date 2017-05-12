@@ -27,19 +27,19 @@ if ('development' == app.get('env')) {
 }
 //app.get('/', routes.index);
 //app.get('/users', user.list);
+//app.get('/', function(req, res) {
+//    fs.readFile(__dirname + "/public/index.html", 'utf8',
+//        function(err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//});
 app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/index.html", 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
 });
-// app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
-//        function (err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//}); 
 //app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
 //        function (err, data) {
@@ -54,15 +54,14 @@ app.get('/', function (req, res) {
 //            res.send(data);
 //        });
 //});
-//hej
 app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');
         res.send(data);
     });
 });
 app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');
         res.send(data);
     });
