@@ -16,7 +16,8 @@
     $('#startComp').click(function () {
         //socket.emit('create contest');
         console.log("sent contest information to server");
-        console.log('sent data: ' + c.diverList[1].jumpList[0].difficulty);
+        var str = JSON.stringify(c.diverList[0].jumpList[0].difficulty);
+        console.log('sent data: ' + str);
         socket.emit('contest create', c);
         /*socket.on('successful login', function(c) {
          if(c === 'Judge') {
