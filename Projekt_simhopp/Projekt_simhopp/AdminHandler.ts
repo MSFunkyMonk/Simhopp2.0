@@ -76,49 +76,123 @@ class ServerContest {
 
 
             });
-
+            socket.emit('contest data retrived', comp);
         });
     }
-    public startCompetition(comp: any): void {
+    public startCompetition(): void {
         //ej helt klar!
+        var comp = null;
+        while (comp == null) {
+            this.socket.on('contest data retrieved', function (data) {
+                comp = data;
+            });
+        }
+
         console.log("Tävling startade!");
-        var reciever = [];
-        for (var jump = 0; jump < comp.numberOfJumps; jump++) {
+        var pointList: Array<number>;
+        for (var turn = 0; turn < comp.numberOfJumps; turn++) {
             //omgång
             var i = 0;
 
-            for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+            for (var diver = 0; diver < comp.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
                 this.socket.emit('compInfo', { comp });
-
-                while (1) {
-
-
+                var counter = 0;
+                while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
-                    while (dömda_poäng !== comp.getNumberOfJudges) {
-                        console.log("väntar på domare!");
-                        if (dömda_poäng !== 0) {
-                            reciever[i].add(dömda_poäng);
-                            i += 1;
-                        }
-                    }
-                    if (dömda_poäng === comp.getNumberOfJudges)
-                        break;
+                    this.socket.on('reciving data', function (data) {
+                      //tar emot 
+                        pointList[counter] = data.score;
+                        counter++;
+                    });
+                    
 
                 }
+                //comp innehåller bara namn och score, måste ändras då 
+               
 
-                //tar emot 
-                for (var points of reciever) {
-                    var point = points;
-                    comp.diverList[diver].jumpList[jump].jumpPoints.pointList.add(point);
-                }
+                comp.diverList[diver]
+                comp.jumpList[diver][turn]
 
-
-                comp.diverList[diver].jumpList[jump].calculatePoint(comp.diverList[diver].jumpList[jump].difficulty);
-
+                
+                counter = 0;
             }
-
+            console.log("Omgång: ", counter + 1);
         }
+
+    }
+    //public calculatePoint(difficulty: any, listLength: any): void {
+    //    var min;
+    //    var max;
+    //    if (listLength.length < 5) {
+    //        var resultUnder5: number;
+    //        for (var i = 0; i < listLength.length; i++) {
+    //            resultUnder5 = resultUnder5 + listLength[i];
+    //        }
+
+    //        resultUnder5 = resultUnder5 * difficulty;
+    //        this.point += resultUnder5;
+    //    }
+    //    else if (listLength.length === 5) {
+    //        var resultEqual5: number;
+    //        for (var i = 0; i < listLength.length; i++) {
+    //            if (listLength[i] < min) {
+    //                min = listLength[i];
+    //            }
+
+    //            if (listLength[i] > max) {
+    //                max = listLength[i];
+    //            }
+    //        }
+
+    //        for (var j = 0; j < listLength.length; j++) {
+    //            if (listLength[j] === min || listLength[j] === max) {
+    //                listLength.splice(j, max);
+
+    //            }
+    //            else if (listLength[j] === min) {
+    //                listLength.splice(j, min);
+    //            }
+    //            else {
+    //                resultEqual5 = resultEqual5 + listLength[j];
+    //            }
+
+    //        }
+    //        resultEqual5 = resultEqual5 * difficulty;
+    //        this.point += resultEqual5;
+
+
+    //    }
+    //    else if (listLength.length >= 7) {
+
+    //        var resultOver7: number;
+    //        for (var i = 0; i < listLength.length; i++) {
+    //            if (listLength[i] < min) {
+    //                min = listLength[i];
+    //            }
+
+    //            if (this.listLength[i] > max) {
+    //                max = this.listLength[i];
+    //            }
+    //        }
+
+    //        for (var j = 0; j < this.listLength.length; j++) {
+    //            if (this.listLength[j] === min || this.listLength[j] === max) {
+    //                this.listLength.splice(j, max);
+
+    //            }
+    //            else if (this.listLength[j] === min) {
+    //                this.listLength.splice(j, min);
+    //            }
+    //            else {
+    //                resultOver7 = resultOver7 + this.listLength[j];
+    //            }
+
+    //        }
+    //        resultOver7 = resultOver7 * difficulty;
+    //        this.point += resultOver7;
+
+    //    }
 
     }
 }
