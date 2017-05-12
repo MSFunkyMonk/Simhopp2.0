@@ -141,11 +141,11 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
-    admin.on('connection', function (socket) {
-        AdminHandler = new AdminHandler(socket);
-    });
-    judge.on('connection', function (socket) {
-        JudgeHandler = new JudgeHandler(socket);
-    });
+});
+admin.on('connection', function (socket) {
+    AdminHandler = new AdminHandler(socket);
+});
+judge.on('connection', function (socket) {
+    JudgeHandler = new JudgeHandler(socket);
 });
 //# sourceMappingURL=app.js.map
