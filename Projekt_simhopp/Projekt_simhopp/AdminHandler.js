@@ -67,44 +67,46 @@ var ServerContest = (function () {
                 });
                 //Glöm EJ testa!!!!!
                 collection.find({ 'Name': { $exists: true } }, { _id: 0 }).each(function (err, document) {
-                    console.log('Collection found');
+                    console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
                     comp.diverList.push(document.Name);
                     comp.jumpList.push(document.Jumps);
                     comp.difficultyList.push(document.Difficulty);
                 });
             });
+            socket.emit('contest data retrieved', comp);
         });
     }
-    ServerContest.prototype.startCompetition = function (comp) {
+    ServerContest.prototype.startCompetition = function () {
         //ej helt klar!
+        var comp = null;
+        while (comp == null) {
+            this.socket.on('contest data retrieved', function (data) {
+                comp = data;
+            });
+        }
         console.log("Tävling startade!");
-        var reciever = [];
-        for (var jump = 0; jump < comp.numberOfJumps; jump++) {
+        var pointList;
+        for (var turn = 0; turn < comp.numberOfJumps; turn++) {
             //omgång
             var i = 0;
-            for (var diver = 0; diver < comp.numberOfContestants; diver++) {
+            for (var diver = 0; diver < comp.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
                 this.socket.emit('compInfo', { comp: comp });
-                while (1) {
+                var counter = 0;
+                while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
-                    while (dömda_poäng !== comp.getNumberOfJudges) {
-                        console.log("väntar på domare!");
-                        if (dömda_poäng !== 0) {
-                            reciever[i].add(dömda_poäng);
-                            i += 1;
-                        }
-                    }
-                    if (dömda_poäng === comp.getNumberOfJudges)
-                        break;
+                    this.socket.on('reciving data', function (data) {
+                        //tar emot 
+                        pointList[counter] = data.score;
+                        counter++;
+                    });
                 }
-                //tar emot 
-                for (var _i = 0, reciever_1 = reciever; _i < reciever_1.length; _i++) {
-                    var points = reciever_1[_i];
-                    var point = points;
-                    comp.diverList[diver].jumpList[jump].jumpPoints.pointList.add(point);
-                }
-                comp.diverList[diver].jumpList[jump].calculatePoint(comp.diverList[diver].jumpList[jump].difficulty);
+                //comp innehåller bara namn och score, måste ändras då 
+                comp.diverList[diver];
+                comp.jumpList[diver][turn];
+                counter = 0;
             }
+            console.log("Omgång: ", counter + 1);
         }
     };
     return ServerContest;
