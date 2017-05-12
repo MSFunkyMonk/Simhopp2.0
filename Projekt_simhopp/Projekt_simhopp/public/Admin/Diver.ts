@@ -1,5 +1,4 @@
-﻿//import {Jump} from "./Jump";
-///<reference path="./Jump.ts" />
+﻿///<reference path="./Jump.ts" />
 class Diver {
 
     public diverName: string;

@@ -146,7 +146,8 @@ io.on('connection', function (socket) {
         });
     */
     socket.on('contest create', function (comp) {
-        console.log('data recieved ' + comp.diverList[0].jumpList[0].difficulty);
+        var diff = comp.diverList[0].getDiverName;
+        console.log('data recieved ' + diff);
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             if (err) {
                 throw err;
@@ -154,9 +155,9 @@ io.on('connection', function (socket) {
             db.createCollection(comp.nameOfCompetition);
             var collection = db.collection(comp.nameOfCompetition);
             var _loop_1 = function(i) {
-                var difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                var difficultList = [comp.diverList[i].jumpList[0].getDifficulty];
                 for (var j = 1; i < comp.diverList[i].jumpList.length; j++) {
-                    difficultList.push(comp.diverList[i].jumpList[j].difficulty);
+                    difficultList.push(comp.diverList[i].jumpList[j].getDifficulty);
                 }
                 var diverDoc = {
                     'Name': comp.diverList[i].diverName,

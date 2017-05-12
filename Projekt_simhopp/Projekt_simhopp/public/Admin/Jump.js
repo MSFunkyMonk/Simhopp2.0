@@ -1,4 +1,3 @@
-//import {Points} from "./Points";
 ///<reference path="./Points.ts" />
 var Jump = (function () {
     function Jump() {

@@ -35,7 +35,7 @@ var c = new Competition();
             console.log("Hoppare: " + counterDiver);
             var name = c.diverList[counterDiver].getDiverName;
             console.log(name);
-
+            
             if (counterDiver === (c.getNumberOfContestants - 1)) {
 
                 counterDiver = 0;
@@ -44,12 +44,8 @@ var c = new Competition();
             } else {
                 counterDiver = counterDiver + 1;  
             }
-         
-          
 
         }
-
-
     });
     $('#jump-form').submit(function () {
         console.log("lägger till hopp");
@@ -58,28 +54,27 @@ var c = new Competition();
         console.log(counterDiver);
         console.log(counterJump);
         if (counterDiver < c.getNumberOfContestants) {
-           /* var name0 = c.diverList[0].getDiverName;
-            var name1 = c.diverList[1].getDiverName;
-            var name2 = c.diverList[2].getDiverName;
 
-            console.log(name0);
-            console.log(name1);
-            console.log(name2); */
-
+            
             if (counterJump < c.getNumberOfJumps) {
-                //var name = c.diverList[counterDiver].getDiverName;
-                //console.log("Lägger till hopp för: " + name);
-                c.diverList[counterDiver].jumpList[counterJump] = new Jump();
-                c.diverList[counterDiver].jumpList[counterJump].setJumpCode = ($('#jCode').valueOf());
-                c.diverList[counterDiver].jumpList[counterJump].setDifficulty = ($('#diff').valueOf());
-                c.diverList[counterDiver].jumpList[counterJump].setHeight = ($('#height').valueOf());
 
+                c.diverList[counterDiver].jumpList[counterJump] = new Jump();
+                c.diverList[counterDiver].jumpList[counterJump].setJumpCode = $('#jCode').val();
+                c.diverList[counterDiver].jumpList[counterJump].setDifficulty = $('#diff').val();
+                c.diverList[counterDiver].jumpList[counterJump].setHeight= $('#height').val();
+                var name = c.diverList[counterDiver].jumpList[counterJump].getJumpCode;
+                var diff = c.diverList[counterDiver].jumpList[counterJump].getDifficulty;
+                var height = c.diverList[counterDiver].jumpList[counterJump].getHeight;
+                console.log(name);
+                console.log(diff);
+                console.log(height);
+                console.log(counterJump);
             }
 
             if (counterJump === (c.getNumberOfJumps - 1)) {
                 console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].getDiverName);
                 counterJump = 0;
-                counterDiver++
+                counterDiver++;
             } else {
                 counterJump = counterJump + 1;     
             }

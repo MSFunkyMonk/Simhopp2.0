@@ -1,5 +1,4 @@
-﻿//import {Points} from "./Points";
-///<reference path="./Points.ts" />
+﻿///<reference path="./Points.ts" />
 
 class Jump {
 

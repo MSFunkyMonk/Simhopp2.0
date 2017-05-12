@@ -1,7 +1,6 @@
 var Points = (function () {
     function Points() {
         this.point = 0;
-        this.pointList = new Array();
     }
     Object.defineProperty(Points.prototype, "setPoint", {
         //set-get functions

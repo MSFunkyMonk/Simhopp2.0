@@ -2,7 +2,7 @@
 class Points {
 
     public point: number = 0;
-    public pointList: Array<number> = new Array<number>();
+    public pointList: Array<number>;
 
     //set-get functions
     public set setPoint(p: number) { this.point = p; }

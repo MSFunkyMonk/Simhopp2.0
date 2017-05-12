@@ -15,10 +15,14 @@
 
     $('#startComp').click(function () {
         //socket.emit('create contest');
+        var x = c.diverList[0].jumpList[0].getDifficulty;
+        console.log(x);
+        //test för att se om värdet fanns kvar, de gjorde de!
         console.log("sent contest information to server");
         var str = JSON.stringify(c.diverList[0].jumpList[0].difficulty);
         console.log('sent data: ' + str);
-        socket.emit('contest create', c);
+        socket.emit('contest create', c);//emit lyckas inte flytta värdet till contest create, comp i socket.on är undefined
+
         /*socket.on('successful login', function(c) {
          if(c === 'Judge') {
          socket = io('/judge');

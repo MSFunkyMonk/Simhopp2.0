@@ -1,4 +1,3 @@
-//import {Jump} from "./Jump";
 ///<reference path="./Jump.ts" />
 var Diver = (function () {
     function Diver() {

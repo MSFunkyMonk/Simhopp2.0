@@ -1,5 +1,4 @@
 ﻿///<reference path="./Diver.ts"/>
-
 class Competition {
 
     public nameOfCompetition: string;
