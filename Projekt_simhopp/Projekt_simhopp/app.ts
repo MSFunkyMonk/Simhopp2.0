@@ -107,7 +107,7 @@ io.on('connection', function(socket) {
     console.log('user connected');
     //LoginHandler = new LoginHandler(socket);
 
-    socket.on('login', function (username, pswd) {
+   /* socket.on('login', function (username, pswd) {
         MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
             if (err)
                 throw err;
@@ -163,11 +163,11 @@ io.on('connection', function(socket) {
             });
         });
     });
-
+ */
     socket.on('disconnect', function(){
         console.log('user has disconnected');
     });
-});
+
 
 admin.on('connection', function(socket) {
     AdminHandler = new AdminHandler(socket);

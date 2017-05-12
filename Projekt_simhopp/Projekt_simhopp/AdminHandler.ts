@@ -7,7 +7,8 @@ class ServerContest {
         this.socket = socket;
 
         socket.on('contest create', function (comp) {
-            MongoClient.connect('mongodb://95.85.17.152:27017/test', function (err, db) {
+            console.log('data recieved ' + comp.nameOfCompetition);
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 if (err) {
                     throw err;
                 }
@@ -18,7 +19,7 @@ class ServerContest {
                     let difficultList = null;
 
                     for (let j=0;i<comp.diverList[i].jumpList.length; j++) {
-                            difficultList.add(comp.diverList[i].jumpList[j].difficulty);
+                        difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                     }
                     let diverDoc = {
                         'Name': comp.diverList[i].diverName,
@@ -29,13 +30,13 @@ class ServerContest {
                         'Total points': 0
                     };
 
-                        collection.insert(diverDoc, function (err, result) {
+                    collection.insert(diverDoc, function (err, result) {
                         if (err) {
                             throw err;
                         } else {
                             console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                         }
-                        });
+                    });
 
                 }
 
@@ -58,6 +59,7 @@ class ServerContest {
 
             });
         });
+
         socket.on('start contest', function (contestName) {
             var comp = null;
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
