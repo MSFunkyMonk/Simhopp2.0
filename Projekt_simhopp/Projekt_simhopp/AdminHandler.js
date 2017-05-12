@@ -10,11 +10,18 @@ var ServerContest = (function () {
                 }
                 db.createCollection(comp.nameOfCompetition);
                 var collection = db.collection(comp.nameOfCompetition);
-                for (var i = 0; i < comp.diverList.length; i++) {
+                var _loop_1 = function(i) {
+                    var difficultList = null;
+                    for (var j = 0; i < comp.diverList[i].jumpList.length; j++) {
+                        difficultList.add(comp.diverList[i].jumpList[j].difficulty);
+                    }
                     var diverDoc = {
                         'Name': comp.diverList[i].diverName,
                         'Nationality': comp.diverList[i].nationality,
-                        'Jumps': comp.diverList[i].jumpList
+                        'Jumps': comp.diverList[i].jumpList,
+                        'Difficulty': difficultList,
+                        'Points': [],
+                        'Total points': 0
                     };
                     collection.insert(diverDoc, function (err, result) {
                         if (err) {
@@ -24,6 +31,9 @@ var ServerContest = (function () {
                             console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                         }
                     });
+                };
+                for (var i = 0; i < comp.diverList.length; i++) {
+                    _loop_1(i);
                 }
                 var compDoc = {
                     'CompetitionName': comp.nameOfCompetiton,
@@ -56,12 +66,11 @@ var ServerContest = (function () {
                     comp.numberOfJudges = document.NumberOfJudges;
                 });
                 //Glöm EJ testa!!!!!
-                collection.find({ 'Name': { $exists: true } }, { Name: 1, _id: 0 }, function (err, documents) {
+                collection.find({ 'Name': { $exists: true } }, { _id: 0 }).each(function (err, document) {
                     console.log('Collection found');
-                    for (var entry in documents) {
-                        console.log(entry);
-                        comp.diverList.push(entry);
-                    }
+                    comp.diverList.push(document.Name);
+                    comp.jumpList.push(document.Jumps);
+                    comp.difficultyList.push(document.Difficulty);
                 });
             });
         });

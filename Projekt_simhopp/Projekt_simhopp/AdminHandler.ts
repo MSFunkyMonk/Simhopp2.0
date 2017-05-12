@@ -14,11 +14,19 @@ class ServerContest {
 
                 db.createCollection(comp.nameOfCompetition);
                 var collection = db.collection(comp.nameOfCompetition);
-                for (var i = 0; i < comp.diverList.length; i++) {
+                for (let i = 0; i < comp.diverList.length; i++) {
+                    let difficultList = null;
+
+                    for (let j=0;i<comp.diverList[i].jumpList.length; j++) {
+                            difficultList.add(comp.diverList[i].jumpList[j].difficulty);
+                    }
                     let diverDoc = {
                         'Name': comp.diverList[i].diverName,
                         'Nationality': comp.diverList[i].nationality,
-                        'Jumps': comp.diverList[i].jumpList
+                        'Jumps': comp.diverList[i].jumpList,
+                        'Difficulty': difficultList,
+                        'Points': [],
+                        'Total points': 0
                     };
 
                         collection.insert(diverDoc, function (err, result) {
@@ -66,15 +74,14 @@ class ServerContest {
                     comp.numberOfJudges = document.NumberOfJudges;
                 });
                 //Glöm EJ testa!!!!!
-                collection.find({'Name': {$exists: true}}, {Name: 1, _id: 0}, function (err, documents) {
+                collection.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
                     console.log('Collection found');
-                    for (var entry in documents) {
-                        console.log(entry)
-                        comp.diverList.push(entry);
-                    }
+                    comp.diverList.push(document.Name);
+                    comp.jumpList.push(document.Jumps);
+                    comp.difficultyList.push(document.Difficulty);
                 });
 
-
+                
             });
             socket.emit('contest data retrived', comp);
         });
