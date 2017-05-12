@@ -1,6 +1,3 @@
-/**
- * Created by kjlp on 2017-05-08.
- */
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 
