@@ -13,10 +13,11 @@
 
     });
 
-    $('#startComp').submit(function () {
+    $('#startComp').click(function () {
         //socket.emit('create contest');
         console.log("sent contest information to server");
-        socket.emit('create contest');
+        console.log('sent data: ' + c.diverList[1].jumpList[0].difficulty);
+        socket.emit('contest create', c);
         /*socket.on('successful login', function(c) {
          if(c === 'Judge') {
          socket = io('/judge');

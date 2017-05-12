@@ -4,7 +4,8 @@ var ServerContest = (function () {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
-            MongoClient.connect('mongodb://95.85.17.152:27017/test', function (err, db) {
+            console.log('data recieved ' + comp.nameOfCompetition);
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 if (err) {
                     throw err;
                 }
@@ -13,7 +14,7 @@ var ServerContest = (function () {
                 var _loop_1 = function(i) {
                     var difficultList = null;
                     for (var j = 0; i < comp.diverList[i].jumpList.length; j++) {
-                        difficultList.add(comp.diverList[i].jumpList[j].difficulty);
+                        difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                     }
                     var diverDoc = {
                         'Name': comp.diverList[i].diverName,
