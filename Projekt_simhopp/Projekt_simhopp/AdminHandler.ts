@@ -1,6 +1,4 @@
-var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
-var ObjectID = require('mongodb').ObjectID();
 
 class ServerContest {
     socket: any = null;
@@ -69,7 +67,9 @@ class ServerContest {
                 });
                 //Glöm EJ testa!!!!!
                 collection.find({'Name': {$exists: true}}, {Name: 1, _id: 0}, function (err, documents) {
+                    console.log('Collection found');
                     for (var entry in documents) {
+                        console.log(entry)
                         comp.diverList.push(entry);
                     }
                 });

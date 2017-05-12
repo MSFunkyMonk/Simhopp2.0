@@ -3,6 +3,7 @@
 (function ($) {
 
     $('#comp').submit(function () {
+        //socket.emit('create contest');
         console.log("sent contest information to server");
         /*socket.on('successful login', function(c) {
             if(c === 'Judge') {
