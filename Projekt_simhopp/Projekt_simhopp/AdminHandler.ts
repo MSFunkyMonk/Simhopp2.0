@@ -75,7 +75,7 @@ class ServerContest {
                 });
                 //Glöm EJ testa!!!!!
                 collection.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
-                    console.log('Collection found');
+                    console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
                     comp.diverList.push(document.Name);
                     comp.jumpList.push(document.Jumps);
                     comp.difficultyList.push(document.Difficulty);
@@ -83,7 +83,7 @@ class ServerContest {
 
                 
             });
-            socket.emit('contest data retrived', comp);
+            socket.emit('contest data retrieved', comp);
         });
     }
     public startCompetition(): void {

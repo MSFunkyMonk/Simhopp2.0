@@ -79,7 +79,7 @@ var c = new Competition();
             if (counterJump === (c.getNumberOfJumps - 1)) {
                 console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].getDiverName);
                 counterJump = 0;
-                counterDiver = counterDiver + 1;
+                counterDiver++
             } else {
                 counterJump = counterJump + 1;     
             }
