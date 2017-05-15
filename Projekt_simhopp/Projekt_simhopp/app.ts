@@ -92,8 +92,6 @@ var io = require('socket.io')(server);
 var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 
-
-
 io.on('connection', function(socket) {
     console.log('user connected');
     var loginHandler = new LoginHandler.LoginHandler(socket);
