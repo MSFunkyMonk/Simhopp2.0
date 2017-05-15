@@ -2,7 +2,7 @@
  * Created by kjlp on 2017-05-08.
  */
 
-class JudgeAdministration {
+export class JudgeHandler {
     socket: any = null;
 
     constructor(socket: any) {

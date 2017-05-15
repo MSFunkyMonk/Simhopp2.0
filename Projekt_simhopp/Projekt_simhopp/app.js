@@ -1,11 +1,11 @@
 "use strict";
-const express = require('express');
-const http = require('http');
-const path = require('path');
-const fs = require('fs');
-const LoginHandler = require('./LoginHandler');
-var bcrypt = require('bcryptjs');
-var MongoClient = require('mongodb').MongoClient;
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
+var LoginHandler = require('./LoginHandler');
+var AdminHandler = require('./AdminHandler');
+var JudgeHandler = require('./JudgeHandler');
 var app = express();
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-const stylus = require('stylus');
+var stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
@@ -36,7 +36,7 @@ if ('development' == app.get('env')) {
         });
 }); */
 app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/index.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
@@ -76,127 +76,17 @@ server.listen(app.get('port'), function () {
 var io = require('socket.io')(server);
 var admin = io.of('/admin');
 var judge = io.of('/judge');
-var AdminHandler = null;
-var JudgeHandler = null;
 io.on('connection', function (socket) {
     console.log('user connected');
     var loginHandler = new LoginHandler.LoginHandler(socket);
-    /*
-        socket.on('login', function (username, pswd) {
-            MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
-                if (err)
-                    throw err;
-    
-                var collection = db.collection('Users')
-                collection.findOne({Username: username}, function (err, item) {
-                    bcrypt.compare(pswd, item.Password, function (err, result) {
-                        if (result == true) //Returnerar true/false
-                        {
-                            var destination = null;
-                            if (item.AccountType == 'Admin') {
-                                destination = '/public/Admin/AdminHome.html';
-                            } else if (item.AccountType == 'Judge') {
-                                destination = '/public/Judge/Judge.html';
-                            }
-                            socket.emit('redirect', destination);
-                            console.log("correct password");
-                        }
-                        else {
-                            socket.emit('login unsuccessful');
-                            console.log("incorrect password");
-                        }
-                    });
-                });
-    
-            });
-    
-        });
-    
-        socket.on('register', function (username, pswd, email, accountType) {
-            bcrypt.hash(pswd, 10, function (err, hash) {
-                MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
-                    if (err)
-                        throw err;
-    
-                    var collection = db.collection('Users');
-                    var psswdDoc = {'Username': username, 'E-mail': email, 'Password': hash, 'AccountType': accountType};
-                    collection.findOne({Username: username}, {Username: 1}, function (err, result) {
-                        if (err)
-                            throw err;
-    
-                        if (result == null) {
-                            collection.insert(psswdDoc, {w: 1}, function (err, result) {
-                            });
-                            console.log("New user created successfully");
-                        } else if (result.Username == username) {
-                            console.log("User already exists");
-                        } else {
-                            collection.insert(psswdDoc, {w: 1}, function (err, result) {
-                            });
-                            console.log("New user created successfully");
-                        }
-    
-                    });
-                });
-            });
-        });
-        */
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
-    socket.on('contest create', function (comp) {
-        //testat runt för att få variablen att inte vara undefined, verkar vara hela comp-objektet
-        var diff = comp.diverList[0].diverName;
-        console.log('data recieved ' + JSON.stringify(comp));
-        MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
-            if (err) {
-                throw err;
-            }
-            db.createCollection(comp.nameOfCompetition);
-            var collection = db.collection(comp.nameOfCompetition);
-            for (let i = 0; i < comp.diverList.length; i++) {
-                let difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
-                    difficultList.push(comp.diverList[i].jumpList[j].difficulty);
-                }
-                let diverDoc = {
-                    'Name': comp.diverList[i].diverName,
-                    'Nationality': comp.diverList[i].nationality,
-                    'Jumps': comp.diverList[i].jumpList,
-                    'Difficulty': difficultList,
-                    'Points': [],
-                    'Total points': 0
-                };
-                collection.insert(diverDoc, function (err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    else {
-                        console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
-                    }
-                });
-            }
-            let compDoc = {
-                'CompetitionName': comp.nameOfCompetition,
-                'NumberOfJumps': comp.numberOfJumps,
-                'NumberOfJudges': comp.numberOfJudges
-            };
-            collection.insert(compDoc, function (err, result) {
-                if (err) {
-                    throw err;
-                }
-                else {
-                    console.log("Competition created successfully");
-                }
-            });
-            //Glöm inte att lägga till mer information om det behövs!!!
-        });
-    });
 });
 admin.on('connection', function (socket) {
-    AdminHandler = new AdminHandler(socket);
+    var adminHandler = new AdminHandler.AdminHandler(socket);
 });
 judge.on('connection', function (socket) {
-    JudgeHandler = new JudgeHandler(socket);
+    var judgeHandler = new JudgeHandler.JudgeHandler(socket);
 });
 //# sourceMappingURL=app.js.map

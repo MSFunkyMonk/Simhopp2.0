@@ -1,3 +1,4 @@
+"use strict";
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var LoginHandler = (function () {
@@ -58,4 +59,5 @@ var LoginHandler = (function () {
     }
     return LoginHandler;
 }());
+exports.LoginHandler = LoginHandler;
 //# sourceMappingURL=LoginHandler.js.map

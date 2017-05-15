@@ -1,10 +1,11 @@
+"use strict";
 var MongoClient = require('mongodb').MongoClient;
-var ServerContest = (function () {
-    function ServerContest(socket) {
+var AdminHandler = (function () {
+    function AdminHandler(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
-            console.log('data recieved ' + comp.nameOfCompetition);
+            console.log('data recieved ' + JSON.stringify(comp));
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 if (err) {
                     throw err;
@@ -12,8 +13,8 @@ var ServerContest = (function () {
                 db.createCollection(comp.nameOfCompetition);
                 var collection = db.collection(comp.nameOfCompetition);
                 var _loop_1 = function(i) {
-                    var difficultList = null;
-                    for (var j = 0; i < comp.diverList[i].jumpList.length; j++) {
+                    var difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                    for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
                         difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                     }
                     var diverDoc = {
@@ -37,7 +38,7 @@ var ServerContest = (function () {
                     _loop_1(i);
                 }
                 var compDoc = {
-                    'CompetitionName': comp.nameOfCompetiton,
+                    'CompetitionName': comp.nameOfCompetition,
                     'NumberOfJumps': comp.numberOfJumps,
                     'NumberOfJudges': comp.numberOfJudges
                 };
@@ -77,7 +78,7 @@ var ServerContest = (function () {
             socket.emit('contest data retrieved', comp);
         });
     }
-    ServerContest.prototype.startCompetition = function () {
+    AdminHandler.prototype.startCompetition = function () {
         //ej helt klar!
         var comp = null;
         while (comp == null) {
@@ -110,6 +111,7 @@ var ServerContest = (function () {
             console.log("Omgång: ", counter + 1);
         }
     };
-    return ServerContest;
+    return AdminHandler;
 }());
+exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map

@@ -1,8 +1,9 @@
 /**
  * Created by kjlp on 2017-05-08.
  */
-var JudgeAdministration = (function () {
-    function JudgeAdministration(socket) {
+"use strict";
+var JudgeHandler = (function () {
+    function JudgeHandler(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('scored', function (data) {
@@ -13,6 +14,7 @@ var JudgeAdministration = (function () {
              */
         });
     }
-    return JudgeAdministration;
+    return JudgeHandler;
 }());
+exports.JudgeHandler = JudgeHandler;
 //# sourceMappingURL=JudgeHandler.js.map

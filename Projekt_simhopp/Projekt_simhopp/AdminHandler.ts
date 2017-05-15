@@ -1,64 +1,64 @@
 var MongoClient = require('mongodb').MongoClient;
 
-class ServerContest {
+export class AdminHandler {
     socket: any = null;
 
     constructor(socket: any) {
         this.socket = socket;
 
-        //socket.on('contest create', function (comp) {
-        //    console.log('data recieved ' + comp.nameOfCompetition);
-        //    MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
-        //        if (err) {
-        //            throw err;
-        //        }
+        socket.on('contest create', function (comp) {
+            console.log('data recieved ' + JSON.stringify(comp));
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+                if (err) {
+                    throw err;
+                }
 
-        //        db.createCollection(comp.nameOfCompetition);
-        //        var collection = db.collection(comp.nameOfCompetition);
-        //        for (let i = 0; i < comp.diverList.length; i++) {
-        //            let difficultList = null;
+                db.createCollection(comp.nameOfCompetition);
+                var collection = db.collection(comp.nameOfCompetition);
+                for (let i = 0; i < comp.diverList.length; i++) {
+                    let difficultList = [comp.diverList[i].jumpList[0].difficulty];
 
-        //            for (let j=0;i<comp.diverList[i].jumpList.length; j++) {
-        //                difficultList.push(comp.diverList[i].jumpList[j].getDifficulty);
-        //            }
-        //            let diverDoc = {
-        //                'Name': comp.diverList[i].diverName,
-        //                'Nationality': comp.diverList[i].nationality,
-        //                'Jumps': comp.diverList[i].jumpList,
-        //                'Difficulty': difficultList,
-        //                'Points': [],
-        //                'Total points': 0
-        //            };
+                    for (let j=1;j<comp.diverList[i].jumpList.length; j++) {
+                        difficultList.push(comp.diverList[i].jumpList[j].difficulty);
+                    }
+                    let diverDoc = {
+                        'Name': comp.diverList[i].diverName,
+                        'Nationality': comp.diverList[i].nationality,
+                        'Jumps': comp.diverList[i].jumpList,
+                        'Difficulty': difficultList,
+                        'Points': [],
+                        'Total points': 0
+                    };
 
-        //            collection.insert(diverDoc, function (err, result) {
-        //                if (err) {
-        //                    throw err;
-        //                } else {
-        //                    console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
-        //                }
-        //            });
+                    collection.insert(diverDoc, function (err, result) {
+                        if (err) {
+                            throw err;
+                        } else {
+                            console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
+                        }
+                    });
 
-        //        }
+                }
 
-        //        let compDoc = {
-        //            'CompetitionName': comp.nameOfCompetiton,
-        //            'NumberOfJumps': comp.numberOfJumps,
-        //            'NumberOfJudges': comp.numberOfJudges
-        //        };
+                let compDoc = {
+                    'CompetitionName': comp.nameOfCompetition,
+                    'NumberOfJumps': comp.numberOfJumps,
+                    'NumberOfJudges': comp.numberOfJudges
+                };
 
-        //        collection.insert(compDoc, function (err, result) {
-        //            if (err) {
-        //                throw err;
-        //            } else {
-        //                console.log("Competition created successfully");
-        //            }
-        //        });
+                collection.insert(compDoc, function (err, result) {
+                    if (err) {
+                        throw err;
+                    } else {
+                        console.log("Competition created successfully");
+                    }
+                });
 
-        //        //Glöm inte att lägga till mer information om det behövs!!!
+                //Glöm inte att lägga till mer information om det behövs!!!
 
 
-        //    });
-        //});
+            });
+        });
 
         socket.on('start contest', function (contestName) {
             var comp = null;
