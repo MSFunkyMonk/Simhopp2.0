@@ -1,8 +1,8 @@
 "use strict";
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
-var LoginHandler = (function () {
-    function LoginHandler(socket) {
+class LoginHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('login', function (username, pswd) {
@@ -11,33 +11,44 @@ var LoginHandler = (function () {
                     throw err;
                 var collection = db.collection('Users');
                 collection.findOne({ Username: username }, function (err, item) {
-                    bcrypt.compare(pswd, item.Password, function (err, result) {
-                        if (result == true) {
-                            var destination = null;
-                            if (item.AccountType == 'Admin') {
-                                destination = '/public/Admin/AdminHome.html';
+                    try {
+                        bcrypt.compare(pswd, item.Password, function (err, result) {
+                            if (err) {
+                                throw err;
                             }
-                            else if (item.AccountType == 'Judge') {
-                                destination = '/public/Judge/Judge.html';
+                            if (result == true) {
+                                var destination = null;
+                                var dest = null;
+                                if (item.AccountType == 'Admin') {
+                                    destination = '/Admin/AdminHome.html';
+                                    dest = 'Admin';
+                                }
+                                else if (item.AccountType == 'Judge') {
+                                    destination = '/public/Judge/Judge.html';
+                                    dest = 'Judge';
+                                }
+                                socket.emit('redirect', destination, dest);
+                                console.log("correct password");
                             }
-                            socket.emit('redirect', destination);
-                            console.log("correct password");
-                        }
-                        else {
-                            socket.emit('login unsuccessful');
-                            console.log("incorrect password");
-                        }
-                    });
+                            else {
+                                socket.emit('login unsuccessful');
+                                console.log("incorrect password");
+                            }
+                        });
+                    }
+                    catch (e) {
+                        console.log('No entry in database');
+                    }
                 });
             });
         });
-        socket.on('register', function (username, pswd, email, accountType) {
+        socket.on('register', function (username, pswd, name, email, accountType) {
             bcrypt.hash(pswd, 10, function (err, hash) {
                 MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                     if (err)
                         throw err;
                     var collection = db.collection('Users');
-                    var psswdDoc = { 'Username': username, 'E-mail': email, 'Password': hash, 'AccountType': accountType };
+                    var psswdDoc = { 'Username': username, 'Name': name, 'E-mail': email, 'Password': hash, 'AccountType': accountType };
                     collection.findOne({ Username: username }, { Username: 1 }, function (err, result) {
                         if (err)
                             throw err;
@@ -57,7 +68,6 @@ var LoginHandler = (function () {
             });
         });
     }
-    return LoginHandler;
-}());
+}
 exports.LoginHandler = LoginHandler;
 //# sourceMappingURL=LoginHandler.js.map

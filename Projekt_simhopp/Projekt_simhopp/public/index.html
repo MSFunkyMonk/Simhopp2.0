@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <style type ="text/css">
         body {
             background-color: azure;
@@ -45,16 +46,16 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="user">Användarnamn</label>
-                            <input type="text" class="form-control" id=""/>
+                            <input type="text" class="form-control" id="loginUserNameAdmin"/>
                         </div>
                         <div class="form-group">
                             <label form="password">Lösenord</label>
-                            <input type="password" class="form-control" id="" />
+                            <input type="password" class="form-control" id="loginPasswordAdmin" />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success btn-block">Logga in</button>
+                    <button class="btn btn-success btn-block" type ="submit" id="loginAdmin">Logga in</button>
                 </div>
                 <div class="modal-footer">
                     <p>Ny användare? <button type="button" class="btn btn-link" id="createAdminForm" data-dismiss="modal">Skapa konto</button> </p>
@@ -77,16 +78,16 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="user">Användarnamn</label>
-                            <input type="text" class="form-control" id="" />
+                            <input type="text" class="form-control" id="loginUserNameJudge" />
                         </div>
                         <div class="form-group">
                             <label for="password">Lösenord</label>
-                            <input type="password" class="form-control" id="" />
+                            <input type="password" class="form-control" id="loginPasswordJudge" />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success btn-block">Logga in</button>
+                    <button class="btn btn-success btn-block" type ="submit" id="loginJudge">Logga in</button>
                 </div>
                 <div class="modal-footer">
                     <p>Ny användare? <button type="button" class="btn btn-link" id="createJudgeForm" data-dismiss="modal">Skapa konto</button> </p>
@@ -108,28 +109,24 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="user">Användarnamn</label>
-                            <input type="text" class="form-control" id="user" />
+                            <input type="text" class="form-control" id="userNameAdmin" />
                         </div>
                         <div class="form-group">
                             <label for="password">Lösenord</label>
-                            <input type="password" class="form-control" id="" />
+                            <input type="password" class="form-control" id="passwordAdmin" />
                         </div>
                         <div class="form-group">
                             <label for="">Namn</label>
-                            <input type="text" class="form-control" id="" />
+                            <input type="text" class="form-control" id="nameAdmin" />
                         </div>
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" id="" />
+                            <input type="email" class="form-control" id="emailAdmin" />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success-info">Logga in</button>
-                </div>
-                <div class="modal-footer">
-                    <p>Ny användare? <a href="#">Skapa konto</a></p>
-                    <p>Slarvig? <a href="#">Glömt Lösenord</a></p>
+                    <button class="btn btn-info" type ="submit" id="adcre">Logga in</button>
                 </div>
             </div>
         </div>
@@ -148,24 +145,24 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="user">Användarnamn</label>
-                            <input type="text" class="form-control" id="#" />
+                            <input type="text" class="form-control" id="userNameJudge" />
                         </div>
                         <div class="form-group">
                             <label for="password">Lösenord</label>
-                            <input type="password" class="form-control" id="#" />
+                            <input type="password" class="form-control" id="paswordJudge" />
                         </div>
                         <div class="form-group">
                             <label for="">Namn</label>
-                            <input type="text" class="form-control" id="" />
+                            <input type="text" class="form-control" id="nameJudge" />
                         </div>
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" id="" />
+                            <input type="email" class="form-control" id="emailJudge" />
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-info">Logga in</button>
+                    <button type ="submit" class="btn btn-info" id="judgeCreate">Logga in</button>
                 </div>
                 
             </div>
@@ -222,28 +219,83 @@
         </nav>
     </div>
 </div>
-
+    
+<!--<script type="text/javascript" src="handleLogin.js"></script>-->
 <!--<script type="text/javascript" src="login.js"></script>-->
 <script>
-$(document).ready(function () {
-    console.log("inne");
-    //login-windows
-    $("#adimLogin").click(function(){
-        $("#loginWindowAdmin").modal();
+    var socket = io();
+    $(document).ready(function () {
+        
+        console.log("inne");
+        //login-windows
+        $("#adimLogin").click(function(){
+            $("#loginWindowAdmin").modal();
+        });
+        $("#judgeLogin").click(function () {
+            $("#loginWindowJudge").modal();
+        });
+
+        //skapa konto-forms
+        $("#createAdminForm").click(function () {
+            $("#createAdmin").modal();
+        });
+        $("#createJudgeForm").click(function () {
+            $("#createJudge").modal();
+        });
+
+        console.log("konto spec");
+        $('#adcre').click(function () {
+            console.log("skapat admin");
+            var username = $('#userNameAdmin').val();
+            var password = $('#passwordAdmin').val();
+            var name = $('#nameAdmin').val();
+            var email = $('#emailAdmin').val();
+
+            socket.emit('register', username, password, name, email, "Admin");
+            
+
+        });
+        $('#judgeCreate').click(function () {
+
+            var username = $('#userNameJudge').val();
+            var password = $('#passwordJudge').val();
+            var name = $('#nameJudge').val();
+            var email = $('#emailJudge').val();
+
+            socket.emit('register', username, password, name, email, "Judge");
+            console.log("skapat judge");
+        });
+
+        $('#loginAdmin').click(function () {
+
+            var username = $('#loginUserNameAdmin').val();
+            var password = $('#loginPasswordAdmin').val();
+
+            socket.emit('login', username, password);
+            console.log("login admin");
+        });
+        $('#loginJudge').click(function () {
+
+            var username = $('#loginUserNameJudge').val();
+            var password = $('#loginPasswordJudge').val();
+
+
+            socket.emit('login', username, password);
+            console.log("login judge");
+        });
+
     });
-    $("#judgeLogin").click(function () {
-        $("#loginWindowJudge").modal();
+    socket.on('redirect', function (destination, dest) {
+        if (dest === 'Admin') {
+            socket.join('/Admin');
+        }
+        else if (dest === 'Judge') {
+            socket.join('/Judge');
+        }
+        window.location.href = destination;
     });
 
-    //skapa konto-forms
-    $("#createAdminForm").click(function () {
-        $("#createAdmin").modal();
-    });
-    $("#createJudgeForm").click(function () {
-        $("#createJudge").modal();
-    });
-
-});
 </script>
+
 </body>
 </html>

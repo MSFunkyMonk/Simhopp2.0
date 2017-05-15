@@ -40,13 +40,6 @@ if ('development' == app.get('env')) {
 //app.get('/', routes.index);
 //app.get('/users', user.list);
 
-/*app.get('/', function(req, res) {
-    fs.readFile(__dirname + "/public/index.html", 'utf8',
-        function(err, data) {
-            res.contentType('html');
-            res.send(data);
-        });
-}); */
 
  app.get('/', function (req, res) {
     fs.readFile(__dirname + "/public/index.html", 'utf8',
@@ -82,7 +75,7 @@ if ('development' == app.get('env')) {
  }); */
 
 app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8',
+    fs.readFile(__dirname + "/public/" + req.url, 'utf8',
         function (err, data) {
             res.contentType('javascript');
             res.send(data);
@@ -96,8 +89,8 @@ server.listen(app.get('port'), function () {
 });
 
 var io = require('socket.io')(server);
-var admin = io.of('/admin');
-var judge = io.of('/judge');
+var admin = io.of('/Admin');
+var judge = io.of('/Judge');
 
 
 

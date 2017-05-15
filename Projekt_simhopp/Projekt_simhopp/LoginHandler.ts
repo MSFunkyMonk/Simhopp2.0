@@ -13,38 +13,49 @@ export class LoginHandler {
                     throw err;
 
                 var collection = db.collection('Users')
-                collection.findOne({Username: username}, function (err, item) {
-                    bcrypt.compare(pswd, item.Password, function (err, result) {
-                        if (result == true) //Returnerar true/false
-                        {
-                            var destination = null;
-                            if (item.AccountType == 'Admin') {
-                                destination = '/public/Admin/AdminHome.html';
-                            } else if (item.AccountType == 'Judge') {
-                                destination = '/public/Judge/Judge.html';
-                            }
-                            socket.emit('redirect', destination);
-                            console.log("correct password");
-                        }
-                        else {
-                            socket.emit('login unsuccessful');
-                            console.log("incorrect password");
-                        }
-                    });
+                collection.findOne({ Username: username },
+                    function(err, item) {
+                        try {
+                        bcrypt.compare(pswd,item.Password, function(err, result) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    if (result == true) //Returnerar true/false
+                                    {
+                                        var destination = null;
+                                        var dest = null;
+                                        if (item.AccountType == 'Admin') {
+                                            destination = '/Admin/AdminHome.html';
+                                            dest = 'Admin';
+                                        } else if (item.AccountType == 'Judge') {
+                                            destination = '/public/Judge/Judge.html';
+                                            dest = 'Judge';
+                                        }
+                                        socket.emit('redirect', destination, dest);
+                                        console.log("correct password");
+                                    } else {
+                                        socket.emit('login unsuccessful');
+                                        console.log("incorrect password");
+                                    }
+                                });
+                        } catch(e) {
+                            console.log('No entry in database');
+                    }
+                
                 });
 
             });
 
         });
 
-        socket.on('register', function(username, pswd, email, accountType){
+        socket.on('register', function(username, pswd,name, email, accountType){
             bcrypt.hash(pswd,10, function(err, hash){
                 MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function(err, db) {
                     if (err)
                         throw err;
 
                     var collection = db.collection('Users');
-                    var psswdDoc = { 'Username' : username ,'E-mail' : email, 'Password' : hash, 'AccountType' : accountType };
+                    var psswdDoc = { 'Username' : username ,'Name': name,'E-mail' : email, 'Password' : hash, 'AccountType' : accountType };
                     collection.findOne({Username:username}, {Username:1}, function(err, result) {
                         if (err)
                             throw err;
