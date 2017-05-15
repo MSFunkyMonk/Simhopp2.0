@@ -9,18 +9,18 @@ class Jump {
 
 
 
-    //set-get functions
-    public set setJumpCode(code: string) { this.jumpCode = code; }
-    public get getJumpCode(): string { return this.jumpCode; }
+    ////set-get functions
+    //public set setJumpCode(code: string) { this.jumpCode = code; }
+    //public get getJumpCode(): string { return this.jumpCode; }
 
-    public set setDifficulty(diff: number) { this.difficulty = diff; }
-    public get getDifficulty(): number { return this.difficulty; }
+    //public set setDifficulty(diff: number) { this.difficulty = diff; }
+    //public get getDifficulty(): number { return this.difficulty; }
 
-    public set setHeight(height: number) { this.height = height; }
-    public get getHeight(): number { return this.height; }
+    //public set setHeight(height: number) { this.height = height; }
+    //public get getHeight(): number { return this.height; }
 
-    public set setJumpPoints(jlist: Array<Points>) { this.jumpPoints = jlist; }
-    public get getPointList(): Array<Points> { return this.jumpPoints; }
+    //public set setJumpPoints(jlist: Array<Points>) { this.jumpPoints = jlist; }
+    //public get getPointList(): Array<Points> { return this.jumpPoints; }
 
 
 }

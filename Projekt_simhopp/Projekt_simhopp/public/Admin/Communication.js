@@ -19,7 +19,7 @@
         console.log(x);
         //test för att se om värdet fanns kvar, de gjorde de!
         console.log("sent contest information to server");
-        var str = JSON.stringify(c.diverList[0].jumpList[0].difficulty);
+        var str = JSON.stringify(c);
         console.log('sent data: ' + str);
         socket.emit('contest create', c);//emit lyckas inte flytta värdet till contest create, comp i socket.on är undefined
 

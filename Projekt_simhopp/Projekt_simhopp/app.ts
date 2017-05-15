@@ -4,6 +4,7 @@ import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
 import fs = require('fs');
+import LoginHandler = require('./LoginHandler');
 
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
@@ -101,11 +102,11 @@ var admin = io.of('/admin');
 var judge = io.of('/judge');
 var AdminHandler = null;
 var JudgeHandler = null;
-var LoginHandler = null;
+
 
 io.on('connection', function(socket) {
     console.log('user connected');
-    //LoginHandler = new LoginHandler(socket);
+    var loginHandler = new LoginHandler.LoginHandler(socket);
 /*
     socket.on('login', function (username, pswd) {
         MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
@@ -165,15 +166,15 @@ io.on('connection', function(socket) {
             });
         });
     });
-
+    */
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
-*/
+
     socket.on('contest create', function (comp) {
     //testat runt för att få variablen att inte vara undefined, verkar vara hela comp-objektet
-        var diff = comp.diverList[0].getDiverName;
-        console.log('data recieved ' + diff);
+        var diff = comp.diverList[0].diverName;
+        console.log('data recieved ' + JSON.stringify(comp));
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             if (err) {
                 throw err;
@@ -182,10 +183,10 @@ io.on('connection', function(socket) {
             db.createCollection(comp.nameOfCompetition);
             var collection = db.collection(comp.nameOfCompetition);
             for (let i = 0; i < comp.diverList.length; i++) {
-                let difficultList = [comp.diverList[i].jumpList[0].getDifficulty];
+                let difficultList = [comp.diverList[i].jumpList[0].difficulty];
 
-                for (let j=1;i<comp.diverList[i].jumpList.length; j++) {
-                    difficultList.push(comp.diverList[i].jumpList[j].getDifficulty);
+                for (let j=1;j<comp.diverList[i].jumpList.length; j++) {
+                    difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                 }
                 let diverDoc = {
                     'Name': comp.diverList[i].diverName,
@@ -207,7 +208,7 @@ io.on('connection', function(socket) {
             }
 
             let compDoc = {
-                'CompetitionName': comp.nameOfCompetiton,
+                'CompetitionName': comp.nameOfCompetition,
                 'NumberOfJumps': comp.numberOfJumps,
                 'NumberOfJudges': comp.numberOfJudges
             };

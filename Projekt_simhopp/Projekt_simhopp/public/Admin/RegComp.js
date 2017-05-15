@@ -10,11 +10,11 @@ var c = new Competition();
 
     $('#comp').submit(function () {
 
-       
-        c.setNameOfCompetition = $('#compName').val();
-        c.setNumberOfContestants = $('#compAmount').val();
-        c.setNumberOfJudges = $('#compJudges').val();
-        c.setNumberOfJumps = $('#compJumps').val();
+       //förändra klasserna och ta bort get-set funktionerna?
+        c.nameOfCompetition = $('#compName').val();
+        c.numberOfContestants = $('#compAmount').val();
+        c.numberOfJudges = $('#compJudges').val();
+        c.numberOfJumps = $('#compJumps').val();
         $("#skapaH").show();
         alert("Tävling tillagd!");
 
@@ -25,18 +25,18 @@ var c = new Competition();
     $('#Add').submit(function () {
         console.log("lägger till hoppare");
 
-        if (counterDiver < c.getNumberOfContestants) {
+        if (counterDiver < c.numberOfContestants) {
             var v = $('#nameDiver').val();
             console.log(v);
             c.diverList[counterDiver] = new Diver();
-            c.diverList[counterDiver].setDiverName = $('#nameDiver').val();
-            c.diverList[counterDiver].setNationality = $('#country').val();
+            c.diverList[counterDiver].diverName = $('#nameDiver').val();
+            c.diverList[counterDiver].nationality = $('#country').val();
 
             console.log("Hoppare: " + counterDiver);
-            var name = c.diverList[counterDiver].getDiverName;
+            var name = c.diverList[counterDiver].diverName;
             console.log(name);
             
-            if (counterDiver === (c.getNumberOfContestants - 1)) {
+            if (counterDiver === (c.numberOfContestants - 1)) {
 
                 counterDiver = 0;
                 $("#skapaJ").show();
@@ -53,26 +53,26 @@ var c = new Competition();
 
         console.log(counterDiver);
         console.log(counterJump);
-        if (counterDiver < c.getNumberOfContestants) {
+        if (counterDiver < c.numberOfContestants) {
 
             
-            if (counterJump < c.getNumberOfJumps) {
+            if (counterJump < c.numberOfJumps) {
 
                 c.diverList[counterDiver].jumpList[counterJump] = new Jump();
-                c.diverList[counterDiver].jumpList[counterJump].setJumpCode = $('#jCode').val();
-                c.diverList[counterDiver].jumpList[counterJump].setDifficulty = $('#diff').val();
-                c.diverList[counterDiver].jumpList[counterJump].setHeight= $('#height').val();
-                var name = c.diverList[counterDiver].jumpList[counterJump].getJumpCode;
-                var diff = c.diverList[counterDiver].jumpList[counterJump].getDifficulty;
-                var height = c.diverList[counterDiver].jumpList[counterJump].getHeight;
+                c.diverList[counterDiver].jumpList[counterJump].jumpCode = $('#jCode').val();
+                c.diverList[counterDiver].jumpList[counterJump].difficulty = $('#diff').val();
+                c.diverList[counterDiver].jumpList[counterJump].height= $('#height').val();
+                var name = c.diverList[counterDiver].jumpList[counterJump].jumpCode;
+                var diff = c.diverList[counterDiver].jumpList[counterJump].difficulty;
+                var height = c.diverList[counterDiver].jumpList[counterJump].height;
                 console.log(name);
                 console.log(diff);
                 console.log(height);
                 console.log(counterJump);
             }
 
-            if (counterJump === (c.getNumberOfJumps - 1)) {
-                console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].getDiverName);
+            if (counterJump === (c.numberOfJumps - 1)) {
+                console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName);
                 counterJump = 0;
                 counterDiver++;
             } else {

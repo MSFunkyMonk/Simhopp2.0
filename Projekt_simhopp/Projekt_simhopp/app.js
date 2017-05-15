@@ -1,8 +1,9 @@
 "use strict";
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const fs = require('fs');
+const LoginHandler = require('./LoginHandler');
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var app = express();
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-var stylus = require('stylus');
+const stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
@@ -77,10 +78,9 @@ var admin = io.of('/admin');
 var judge = io.of('/judge');
 var AdminHandler = null;
 var JudgeHandler = null;
-var LoginHandler = null;
 io.on('connection', function (socket) {
     console.log('user connected');
-    //LoginHandler = new LoginHandler(socket);
+    var loginHandler = new LoginHandler.LoginHandler(socket);
     /*
         socket.on('login', function (username, pswd) {
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
@@ -140,26 +140,26 @@ io.on('connection', function (socket) {
                 });
             });
         });
-    
-        socket.on('disconnect', function () {
-            console.log('user has disconnected');
-        });
-    */
+        */
+    socket.on('disconnect', function () {
+        console.log('user has disconnected');
+    });
     socket.on('contest create', function (comp) {
-        var diff = comp.diverList[0].getDiverName;
-        console.log('data recieved ' + diff);
+        //testat runt för att få variablen att inte vara undefined, verkar vara hela comp-objektet
+        var diff = comp.diverList[0].diverName;
+        console.log('data recieved ' + JSON.stringify(comp));
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             if (err) {
                 throw err;
             }
             db.createCollection(comp.nameOfCompetition);
             var collection = db.collection(comp.nameOfCompetition);
-            var _loop_1 = function(i) {
-                var difficultList = [comp.diverList[i].jumpList[0].getDifficulty];
-                for (var j = 1; i < comp.diverList[i].jumpList.length; j++) {
-                    difficultList.push(comp.diverList[i].jumpList[j].getDifficulty);
+            for (let i = 0; i < comp.diverList.length; i++) {
+                let difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                 }
-                var diverDoc = {
+                let diverDoc = {
                     'Name': comp.diverList[i].diverName,
                     'Nationality': comp.diverList[i].nationality,
                     'Jumps': comp.diverList[i].jumpList,
@@ -175,12 +175,9 @@ io.on('connection', function (socket) {
                         console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                     }
                 });
-            };
-            for (var i = 0; i < comp.diverList.length; i++) {
-                _loop_1(i);
             }
-            var compDoc = {
-                'CompetitionName': comp.nameOfCompetiton,
+            let compDoc = {
+                'CompetitionName': comp.nameOfCompetition,
                 'NumberOfJumps': comp.numberOfJumps,
                 'NumberOfJudges': comp.numberOfJudges
             };

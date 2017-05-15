@@ -1,7 +1,7 @@
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 
-class LoginHandler {
+export class LoginHandler {
     socket: any = null;
 
     constructor(socket: any) {
