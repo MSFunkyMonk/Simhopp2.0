@@ -108,19 +108,14 @@ export class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
-
-            socket.emit('contest data retrieved', comp);
+            this.startCompetition(comp);
+            //socket.emit('contest data retrieved', comp);
         });
-        socket.on('', function(comp) {
-                
-                
-
-            });
 
     }
-    public startCompetition(): void {
+    public startCompetition(comp: any): void {
         //ej helt klar!
-        var comp = null;
+        //var comp = null;
         while (comp == null) {
             this.socket.on('contest data retrieved', function (data) {
                 comp = data;
@@ -147,22 +142,25 @@ export class AdminHandler {
                     
 
                 }
-                //comp innehåller bara namn och score, måste ändras då 
+                //comp innehåller bara namn och score
                
-
-                //comp.diverList[diver].jumpList[diver][turn].difficultyList[diver][turn]
-                //comp.jumpList[diver][turn]
-                this.calculatePoint(comp.difficultyList[diver][turn],comp.numberOfJudges);
-                
+                var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
+                this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
                 counter = 0;
             }
-            console.log("Omgång: ", counter + 1);
-        }
 
+            console.log("Omgång: ", counter + 1);
+            if (turn == comp.numberOfJumps) {
+                this.socket.emit('store total score', comp.nameOfCompetition, comp.diverList[diver]);
+            }
+        }
+      
+        console.log("Tävling avslutad!");
     }
-    public calculatePoint(difficulty: any, listLength: any): void {
+    public calculatePoint(difficulty: any, listLength: any): number {
         var min;
         var max;
+        var totalPoint;
         if (listLength.length < 5) {
             var resultUnder5: number;
             for (var i = 0; i < listLength.length; i++) {
@@ -170,7 +168,7 @@ export class AdminHandler {
             }
 
             resultUnder5 = resultUnder5 * difficulty;
-            this.point += resultUnder5;
+            totalPoint += resultUnder5;
         }
         else if (listLength.length === 5) {
             var resultEqual5: number;
@@ -198,7 +196,7 @@ export class AdminHandler {
 
             }
             resultEqual5 = resultEqual5 * difficulty;
-            point += resultEqual5;
+            totalPoint += resultEqual5;
 
 
         }
@@ -229,9 +227,10 @@ export class AdminHandler {
 
             }
             resultOver7 = resultOver7 * difficulty;
-            point += resultOver7;
+            totalPoint += resultOver7;
 
         }
-
+        return totalPoint;
     }
+
 }

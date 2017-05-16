@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require('mongodb').MongoClient;
-class AdminHandler {
-    constructor(socket) {
+var AdminHandler = (function () {
+    function AdminHandler(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
@@ -12,12 +12,12 @@ class AdminHandler {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    for (let i = 0; i < comp.diverList.length; i++) {
-                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    var _loop_1 = function(i) {
+                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        let diverDoc = {
+                        var diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -38,8 +38,11 @@ class AdminHandler {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
+                    };
+                    for (var i = 0; i < comp.diverList.length; i++) {
+                        _loop_1(i);
                     }
-                    let compDoc = {
+                    var compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -90,7 +93,7 @@ class AdminHandler {
                             if (err) {
                                 throw err;
                             }
-                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
+                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
                             comp.diverList.push(document.Name);
                             comp.jumpList.push(document.Jumps);
                             comp.difficultyList.push(document.Difficulty);
@@ -104,14 +107,13 @@ class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
-            socket.emit('contest data retrieved', comp);
-        });
-        socket.on('', function (comp) {
+            this.startCompetition(comp);
+            //socket.emit('contest data retrieved', comp);
         });
     }
-    startCompetition() {
+    AdminHandler.prototype.startCompetition = function (comp) {
         //ej helt klar!
-        var comp = null;
+        //var comp = null;
         while (comp == null) {
             this.socket.on('contest data retrieved', function (data) {
                 comp = data;
@@ -134,25 +136,29 @@ class AdminHandler {
                         counter++;
                     });
                 }
-                //comp innehåller bara namn och score, måste ändras då 
-                comp.diverList[diver].jumpList[diver][turn].difficultyList[diver][turn];
-                comp.jumpList[diver][turn];
-                this.calculatePoint(comp.difficultyList[diver][turn]);
+                //comp innehåller bara namn och score
+                var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
+                this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
                 counter = 0;
             }
             console.log("Omgång: ", counter + 1);
+            if (turn == comp.numberOfJumps) {
+                this.socket.emit('store total score', comp.nameOfCompetition, comp.diverList[diver]);
+            }
         }
-    }
-    calculatePoint(difficulty, listLength) {
+        console.log("Tävling avslutad!");
+    };
+    AdminHandler.prototype.calculatePoint = function (difficulty, listLength) {
         var min;
         var max;
+        var totalPoint;
         if (listLength.length < 5) {
             var resultUnder5;
             for (var i = 0; i < listLength.length; i++) {
                 resultUnder5 = resultUnder5 + listLength[i];
             }
             resultUnder5 = resultUnder5 * difficulty;
-            this.point += resultUnder5;
+            totalPoint += resultUnder5;
         }
         else if (listLength.length === 5) {
             var resultEqual5;
@@ -176,7 +182,7 @@ class AdminHandler {
                 }
             }
             resultEqual5 = resultEqual5 * difficulty;
-            this.point += resultEqual5;
+            totalPoint += resultEqual5;
         }
         else if (listLength.length >= 7) {
             var resultOver7;
@@ -184,25 +190,27 @@ class AdminHandler {
                 if (listLength[i] < min) {
                     min = listLength[i];
                 }
-                if (this.listLength[i] > max) {
-                    max = this.listLength[i];
+                if (listLength[i] > max) {
+                    max = listLength[i];
                 }
             }
-            for (var j = 0; j < this.listLength.length; j++) {
-                if (this.listLength[j] === min || this.listLength[j] === max) {
-                    this.listLength.splice(j, max);
+            for (var j = 0; j < listLength.length; j++) {
+                if (listLength[j] === min || listLength[j] === max) {
+                    listLength.splice(j, max);
                 }
-                else if (this.listLength[j] === min) {
-                    this.listLength.splice(j, min);
+                else if (listLength[j] === min) {
+                    listLength.splice(j, min);
                 }
                 else {
-                    resultOver7 = resultOver7 + this.listLength[j];
+                    resultOver7 = resultOver7 + listLength[j];
                 }
             }
             resultOver7 = resultOver7 * difficulty;
-            this.point += resultOver7;
+            totalPoint += resultOver7;
         }
-    }
-}
+        return totalPoint;
+    };
+    return AdminHandler;
+}());
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map
