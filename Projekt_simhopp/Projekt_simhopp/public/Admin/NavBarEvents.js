@@ -9,7 +9,6 @@
 
     $('#startComp').click(function () {
         console.log("sent contest information to server:");
-        console.log('sent data: ' + str);
         socket.emit('contest create', c);
 
     });

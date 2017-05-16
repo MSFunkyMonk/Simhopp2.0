@@ -30,6 +30,12 @@ var LoginHandler = (function () {
                                         dest = 'Judge';
                                     }
                                     socket.emit('redirect', destination, dest);
+                                    if (dest === 'Admin') {
+                                        socket.join('/Admin');
+                                    }
+                                    else if (dest === 'Judge') {
+                                        socket.join('/Judge');
+                                    }
                                     console.log("correct password");
                                 }
                                 else {

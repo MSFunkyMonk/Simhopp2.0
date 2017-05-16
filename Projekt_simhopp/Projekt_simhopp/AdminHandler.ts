@@ -111,6 +111,12 @@ export class AdminHandler {
 
             socket.emit('contest data retrieved', comp);
         });
+        socket.on('', function(comp) {
+                
+                
+
+            });
+
     }
     public startCompetition(): void {
         //ej helt klar!
@@ -144,9 +150,9 @@ export class AdminHandler {
                 //comp innehåller bara namn och score, måste ändras då 
                
 
-                comp.diverList[diver]
-                comp.jumpList[diver][turn]
-
+                //comp.diverList[diver].jumpList[diver][turn].difficultyList[diver][turn]
+                //comp.jumpList[diver][turn]
+                this.calculatePoint(comp.difficultyList[diver][turn],comp.numberOfJudges);
                 
                 counter = 0;
             }
@@ -154,78 +160,78 @@ export class AdminHandler {
         }
 
     }
-    //public calculatePoint(difficulty: any, listLength: any): void {
-    //    var min;
-    //    var max;
-    //    if (listLength.length < 5) {
-    //        var resultUnder5: number;
-    //        for (var i = 0; i < listLength.length; i++) {
-    //            resultUnder5 = resultUnder5 + listLength[i];
-    //        }
+    public calculatePoint(difficulty: any, listLength: any): void {
+        var min;
+        var max;
+        if (listLength.length < 5) {
+            var resultUnder5: number;
+            for (var i = 0; i < listLength.length; i++) {
+                resultUnder5 = resultUnder5 + listLength[i];
+            }
 
-    //        resultUnder5 = resultUnder5 * difficulty;
-    //        this.point += resultUnder5;
-    //    }
-    //    else if (listLength.length === 5) {
-    //        var resultEqual5: number;
-    //        for (var i = 0; i < listLength.length; i++) {
-    //            if (listLength[i] < min) {
-    //                min = listLength[i];
-    //            }
+            resultUnder5 = resultUnder5 * difficulty;
+            this.point += resultUnder5;
+        }
+        else if (listLength.length === 5) {
+            var resultEqual5: number;
+            for (var i = 0; i < listLength.length; i++) {
+                if (listLength[i] < min) {
+                    min = listLength[i];
+                }
 
-    //            if (listLength[i] > max) {
-    //                max = listLength[i];
-    //            }
-    //        }
+                if (listLength[i] > max) {
+                    max = listLength[i];
+                }
+            }
 
-    //        for (var j = 0; j < listLength.length; j++) {
-    //            if (listLength[j] === min || listLength[j] === max) {
-    //                listLength.splice(j, max);
+            for (var j = 0; j < listLength.length; j++) {
+                if (listLength[j] === min || listLength[j] === max) {
+                    listLength.splice(j, max);
 
-    //            }
-    //            else if (listLength[j] === min) {
-    //                listLength.splice(j, min);
-    //            }
-    //            else {
-    //                resultEqual5 = resultEqual5 + listLength[j];
-    //            }
+                }
+                else if (listLength[j] === min) {
+                    listLength.splice(j, min);
+                }
+                else {
+                    resultEqual5 = resultEqual5 + listLength[j];
+                }
 
-    //        }
-    //        resultEqual5 = resultEqual5 * difficulty;
-    //        this.point += resultEqual5;
+            }
+            resultEqual5 = resultEqual5 * difficulty;
+            point += resultEqual5;
 
 
-    //    }
-    //    else if (listLength.length >= 7) {
+        }
+        else if (listLength.length >= 7) {
 
-    //        var resultOver7: number;
-    //        for (var i = 0; i < listLength.length; i++) {
-    //            if (listLength[i] < min) {
-    //                min = listLength[i];
-    //            }
+            var resultOver7: number;
+            for (var i = 0; i < listLength.length; i++) {
+                if (listLength[i] < min) {
+                    min = listLength[i];
+                }
 
-    //            if (this.listLength[i] > max) {
-    //                max = this.listLength[i];
-    //            }
-    //        }
+                if (listLength[i] > max) {
+                    max = listLength[i];
+                }
+            }
 
-    //        for (var j = 0; j < this.listLength.length; j++) {
-    //            if (this.listLength[j] === min || this.listLength[j] === max) {
-    //                this.listLength.splice(j, max);
+            for (var j = 0; j < listLength.length; j++) {
+                if (listLength[j] === min || listLength[j] === max) {
+                    listLength.splice(j, max);
 
-    //            }
-    //            else if (this.listLength[j] === min) {
-    //                this.listLength.splice(j, min);
-    //            }
-    //            else {
-    //                resultOver7 = resultOver7 + this.listLength[j];
-    //            }
+                }
+                else if (listLength[j] === min) {
+                    listLength.splice(j, min);
+                }
+                else {
+                    resultOver7 = resultOver7 + listLength[j];
+                }
 
-    //        }
-    //        resultOver7 = resultOver7 * difficulty;
-    //        this.point += resultOver7;
+            }
+            resultOver7 = resultOver7 * difficulty;
+            point += resultOver7;
 
-    //    }
+        }
 
-    //}
+    }
 }

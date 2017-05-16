@@ -286,13 +286,9 @@
 
     });
     socket.on('redirect', function (destination, dest) {
-        if (dest === 'Admin') {
-            socket.join('/Admin');
-        }
-        else if (dest === 'Judge') {
-            socket.join('/Judge');
-        }
         window.location.href = destination;
+
+
     });
 
 </script>
