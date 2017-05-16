@@ -198,10 +198,11 @@ export class AdminHandler {
 
                 }
                 //comp innehåller bara namn och score
-               
                 var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
                 this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
+
                 counter = 0;
+                score = 0;
             }
 
             console.log("Omgång: ", counter + 1);
