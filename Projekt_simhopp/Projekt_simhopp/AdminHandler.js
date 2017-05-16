@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require('mongodb').MongoClient;
-class AdminHandler {
-    constructor(socket) {
+var AdminHandler = (function () {
+    function AdminHandler(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
@@ -12,12 +12,12 @@ class AdminHandler {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    for (let i = 0; i < comp.diverList.length; i++) {
-                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    var _loop_1 = function(i) {
+                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        let diverDoc = {
+                        var diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -38,8 +38,11 @@ class AdminHandler {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
+                    };
+                    for (var i = 0; i < comp.diverList.length; i++) {
+                        _loop_1(i);
                     }
-                    let compDoc = {
+                    var compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -90,7 +93,7 @@ class AdminHandler {
                             if (err) {
                                 throw err;
                             }
-                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
+                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
                             comp.diverList.push(document.Name);
                             comp.jumpList.push(document.Jumps);
                             comp.difficultyList.push(document.Difficulty);
@@ -106,10 +109,70 @@ class AdminHandler {
             });
             socket.emit('contest data retrieved', comp);
         });
+        socket.on('store score', function (score, competitionName, diverName) {
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+                try {
+                    if (err) {
+                        throw err;
+                    }
+                    var collection = db.collection(competitionName);
+                    collection.findAndModify({ 'Name': diverName }, { $push: { Points: score } }, function (err, result) {
+                        try {
+                            if (err) {
+                                throw err;
+                            }
+                        }
+                        catch (e) {
+                            console.log("Error with find and update operation: " + e);
+                        }
+                    });
+                }
+                catch (e) {
+                    console.log("Database connection error: " + e);
+                }
+            });
+        });
+        socket.on('store total score', function (competitionName, diverName) {
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+                try {
+                    if (err) {
+                        throw err;
+                    }
+                    var collection = db.collection(competitionName);
+                    collection.findOne({ 'Name': diverName }, function (err, document) {
+                        try {
+                            if (err) {
+                                throw err;
+                            }
+                            var totalScore = null;
+                            for (var i in document.Points) {
+                                totalScore += i;
+                            }
+                            collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
+                                try {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                }
+                                catch (e) {
+                                    console.log("Data find and modify operation error: " + e);
+                                }
+                            });
+                        }
+                        catch (e) {
+                            console.log("Database search error: " + e);
+                        }
+                    });
+                }
+                catch (e) {
+                    console.log("Database connection error: " + e);
+                }
+            });
+        });
         socket.on('', function (comp) {
         });
     }
-    startCompetition() {
+    AdminHandler.prototype.startCompetition = function () {
         //ej helt klar!
         var comp = null;
         while (comp == null) {
@@ -135,15 +198,15 @@ class AdminHandler {
                     });
                 }
                 //comp innehåller bara namn och score, måste ändras då 
-                comp.diverList[diver].jumpList[diver][turn].difficultyList[diver][turn];
-                comp.jumpList[diver][turn];
-                this.calculatePoint(comp.difficultyList[diver][turn]);
+                //comp.diverList[diver].jumpList[diver][turn].difficultyList[diver][turn]
+                //comp.jumpList[diver][turn]
+                this.calculatePoint(comp.difficultyList[diver][turn], comp.numberOfJudges);
                 counter = 0;
             }
             console.log("Omgång: ", counter + 1);
         }
-    }
-    calculatePoint(difficulty, listLength) {
+    };
+    AdminHandler.prototype.calculatePoint = function (difficulty, listLength) {
         var min;
         var max;
         if (listLength.length < 5) {
@@ -176,7 +239,7 @@ class AdminHandler {
                 }
             }
             resultEqual5 = resultEqual5 * difficulty;
-            this.point += resultEqual5;
+            point += resultEqual5;
         }
         else if (listLength.length >= 7) {
             var resultOver7;
@@ -184,25 +247,26 @@ class AdminHandler {
                 if (listLength[i] < min) {
                     min = listLength[i];
                 }
-                if (this.listLength[i] > max) {
-                    max = this.listLength[i];
+                if (listLength[i] > max) {
+                    max = listLength[i];
                 }
             }
-            for (var j = 0; j < this.listLength.length; j++) {
-                if (this.listLength[j] === min || this.listLength[j] === max) {
-                    this.listLength.splice(j, max);
+            for (var j = 0; j < listLength.length; j++) {
+                if (listLength[j] === min || listLength[j] === max) {
+                    listLength.splice(j, max);
                 }
-                else if (this.listLength[j] === min) {
-                    this.listLength.splice(j, min);
+                else if (listLength[j] === min) {
+                    listLength.splice(j, min);
                 }
                 else {
-                    resultOver7 = resultOver7 + this.listLength[j];
+                    resultOver7 = resultOver7 + listLength[j];
                 }
             }
             resultOver7 = resultOver7 * difficulty;
-            this.point += resultOver7;
+            point += resultOver7;
         }
-    }
-}
+    };
+    return AdminHandler;
+}());
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map

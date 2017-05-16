@@ -73,7 +73,7 @@ export class AdminHandler {
                         throw err;
                     }
 
-                    var collection = db.collection(contestName)
+                    var collection = db.collection(contestName);
                     collection.findOne({'CompetitionName': contestName}, function (err, document) {
                         try {
                             if (err) {
@@ -111,6 +111,56 @@ export class AdminHandler {
 
             socket.emit('contest data retrieved', comp);
         });
+
+        socket.on('store score', function (score, competitionName, diverName) {
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+               try {
+                   if (err) { throw err; }
+
+                   var collection = db.collection(competitionName);
+                   collection.findAndModify({'Name' : diverName}, {$push: { Points : score }}, function(err, result) {
+                       try {
+                           if (err) { throw err; }
+                       } catch(e) {
+                           console.log("Error with find and update operation: " + e);
+                       }
+                   })
+               } catch (e) {
+                   console.log("Database connection error: " + e);
+               }
+            });
+        });
+
+        socket.on('store total score', function (competitionName, diverName){
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db){
+                try{
+                    if (err) { throw err; }
+                    var collection = db.collection(competitionName);
+                    collection.findOne({'Name' : diverName}, function (err, document) {
+                       try {
+                           if (err) { throw err; }
+
+                           let totalScore = null;
+                           for (let i in document.Points) {
+                               totalScore += i;
+                           }
+                           collection.findAndModify({'Name' : diverName}, {$set: {TotalScore: totalScore}}, function (err, result) {
+                               try {
+                                   if (err) { throw err; }
+                               } catch(e) {
+                                   console.log("Data find and modify operation error: " + e);
+                               }
+                           });
+                       } catch(e) {
+                           console.log("Database search error: " + e);
+                       }
+                    });
+                } catch(e) {
+                    console.log("Database connection error: " + e);
+                }
+            });
+        });
+
         socket.on('', function(comp) {
                 
                 
