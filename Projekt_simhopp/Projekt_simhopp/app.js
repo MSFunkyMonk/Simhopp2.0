@@ -3,8 +3,9 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-var bcrypt = require('bcryptjs');
-var MongoClient = require('mongodb').MongoClient;
+var LoginHandler = require('./LoginHandler');
+var AdminHandler = require('./AdminHandler');
+var JudgeHandler = require('./JudgeHandler');
 var app = express();
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -27,26 +28,19 @@ if ('development' == app.get('env')) {
 }
 //app.get('/', routes.index);
 //app.get('/users', user.list);
-/*app.get('/', function(req, res) {
-    fs.readFile(__dirname + "/public/index.html", 'utf8',
-        function(err, data) {
-            res.contentType('html');
-            res.send(data);
-        });
-}); */
-// app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
-//        function (err, data) {
-//           res.contentType('html');
-//           res.send(data);
-//      });
-//});
 app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/index.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
 });
+//app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
+//        function (err, data) {
+//            res.contentType('html');
+//            res.send(data);
+//        });
+//}); 
 //app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
 //        function (err, data) {
@@ -55,91 +49,45 @@ app.get('/', function (req, res) {
 //        });
 //});
 //hej
+/*app.get('/*.js', function (req, res) {
+    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8',
+        function (err, data) {
+            res.contentType('javascript');
+            res.send(data);
+        });
+ }); */
 app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');
         res.send(data);
     });
 });
-//app.get('/*.js', function (req, res) {
-//    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8',
-//        function (err, data) {
-//            res.contentType('javascript');
-//            res.send(data);
-//        });
-//});
 var server = http.createServer(app);
 server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 var io = require('socket.io')(server);
-var admin = io.of('/admin');
-var judge = io.of('/judge');
-var AdminHandler = null;
-var JudgeHandler = null;
-var LoginHandler = null;
+var admin = io.of('/Admin');
+var judge = io.of('/Judge');
 io.on('connection', function (socket) {
     console.log('user connected');
-    //LoginHandler = new LoginHandler(socket);
-    socket.on('login', function (username, pswd) {
-        MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
-            if (err)
-                throw err;
-            var collection = db.collection('Users');
-            collection.findOne({ Username: username }, function (err, item) {
-                bcrypt.compare(pswd, item.Password, function (err, result) {
-                    if (result == true) {
-                        var destination = null;
-                        if (item.AccountType == 'Admin') {
-                            destination = '/public/Admin/AdminHome.html';
-                        }
-                        else if (item.AccountType == 'Judge') {
-                            destination = '/public/Judge/Judge.html';
-                        }
-                        socket.emit('redirect', destination);
-                        console.log("correct password");
-                    }
-                    else {
-                        socket.emit('login unsuccessful');
-                        console.log("incorrect password");
-                    }
-                });
-            });
-        });
-    });
-    socket.on('register', function (username, pswd, email, accountType) {
-        bcrypt.hash(pswd, 10, function (err, hash) {
-            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
-                if (err)
-                    throw err;
-                var collection = db.collection('Users');
-                var psswdDoc = { 'Username': username, 'E-mail': email, 'Password': hash, 'AccountType': accountType };
-                collection.findOne({ Username: username }, { Username: 1 }, function (err, result) {
-                    if (err)
-                        throw err;
-                    if (result == null) {
-                        collection.insert(psswdDoc, { w: 1 }, function (err, result) { });
-                        console.log("New user created successfully");
-                    }
-                    else if (result.Username == username) {
-                        console.log("User already exists");
-                    }
-                    else {
-                        collection.insert(psswdDoc, { w: 1 }, function (err, result) { });
-                        console.log("New user created successfully");
-                    }
-                });
-            });
-        });
-    });
+    var loginHandler = new LoginHandler.LoginHandler(socket);
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
 });
 admin.on('connection', function (socket) {
-    AdminHandler = new AdminHandler(socket);
+    var adminHandler = new AdminHandler.AdminHandler(socket);
+    socket.on('send info to judge', function (data) {
+        console.log('Sending diver information to judge');
+        judge.emit('diveInfo', data);
+    });
 });
 judge.on('connection', function (socket) {
-    JudgeHandler = new JudgeHandler(socket);
+    var judgeHandler = new JudgeHandler.JudgeHandler(socket);
+    socket.on('score from judge', function (data) {
+        console.log('Recieved score from judge');
+        admin.emit('reciving data', data);
+    });
 });
 //# sourceMappingURL=app.js.map

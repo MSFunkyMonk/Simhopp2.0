@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0d222df-20e8-40db-bf89-68d5e710ab45" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/Judge/handleJudge.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminHandler.js" afterPath="$PROJECT_DIR$/AdminHandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminHandler.js.map" afterPath="$PROJECT_DIR$/AdminHandler.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AdminHandler.ts" afterPath="$PROJECT_DIR$/AdminHandler.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/Admin/AdminHome.html" afterPath="$PROJECT_DIR$/public/Admin/AdminHome.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/Admin/Communication.js" afterPath="$PROJECT_DIR$/public/Admin/Communication.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/Admin/RegComp.js" afterPath="$PROJECT_DIR$/public/Admin/RegComp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/JudgeHandler.ts" afterPath="$PROJECT_DIR$/JudgeHandler.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.ts" afterPath="$PROJECT_DIR$/app.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,27 +21,29 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="Projekt_simhopp" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="app.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1908">
-              <caret line="106" column="19" lean-forward="false" selection-start-line="106" selection-start-column="19" selection-end-line="106" selection-end-column="19" />
-              <folding>
-                <element signature="e#2916#4053#0" expanded="false" />
-                <element signature="e#4127#5247#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="256">
+              <caret line="100" column="7" lean-forward="true" selection-start-line="100" selection-start-column="7" selection-end-line="100" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Points.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/Points.ts">
+      <file leaf-file-name="handleJudge.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/Judge/handleJudge.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="85">
+              <caret line="7" column="3" lean-forward="false" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+              <folding>
+                <element signature="e#0#43#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -52,48 +51,8 @@
       <file leaf-file-name="AdminHandler.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AdminHandler.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1616">
-              <caret line="124" column="28" lean-forward="true" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegComp.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/RegComp.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="88" column="57" lean-forward="false" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminHome.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="30" column="49" lean-forward="false" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginHandler.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/LoginHandler.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Communication.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="359">
+              <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -102,11 +61,9 @@
       <file leaf-file-name="JudgeHandler.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/JudgeHandler.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="153">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,6 +74,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -126,7 +84,11 @@
       <find>server</find>
       <find>return io</find>
       <find>LoginHandler</find>
+      <find>getDifficulty()</find>
     </findStrings>
+    <replaceStrings>
+      <replace>difficulty</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -142,18 +104,20 @@
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/public/Admin/index.html" />
-        <option value="$PROJECT_DIR$/public/Admin/NavBarEvents.js" />
         <option value="$PROJECT_DIR$/public/Admin/Competition.ts" />
         <option value="$PROJECT_DIR$/ServerContest.ts" />
         <option value="$PROJECT_DIR$/JudgeAdministration.ts" />
         <option value="$PROJECT_DIR$/AdminAdministration.ts" />
         <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/LoginHandler.ts" />
-        <option value="$PROJECT_DIR$/app.ts" />
-        <option value="$PROJECT_DIR$/AdminHandler.ts" />
         <option value="$PROJECT_DIR$/public/Admin/RegComp.js" />
-        <option value="$PROJECT_DIR$/public/Admin/AdminHome.html" />
         <option value="$PROJECT_DIR$/public/Admin/Communication.js" />
+        <option value="$PROJECT_DIR$/public/Admin/AdminHome.html" />
+        <option value="$PROJECT_DIR$/LoginHandler.ts" />
+        <option value="$PROJECT_DIR$/public/Admin/NavBarEvents.js" />
+        <option value="$PROJECT_DIR$/AdminHandler.ts" />
+        <option value="$PROJECT_DIR$/JudgeHandler.ts" />
+        <option value="$PROJECT_DIR$/app.ts" />
+        <option value="$PROJECT_DIR$/public/Judge/handleJudge.js" />
       </list>
     </option>
   </component>
@@ -168,9 +132,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-1" />
-    <option name="y" value="25" />
     <option name="width" value="1368" />
-    <option name="height" value="720" />
+    <option name="height" value="741" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -188,7 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -229,17 +191,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Admin" />
+              <option name="myItemId" value="Judge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="nodejs_interpreter_path" value="/usr/local/node/bin/node" />
     <property name="javascript.nodejs.core.library.configured.version" value="7.7.3" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -253,6 +216,18 @@
       <recent name="$PROJECT_DIR$/public/Admin" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager" selected="JavaScript Debug.AdminHome.html">
     <configuration default="false" name="AdminHome.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Projekt_simhopp/public/Admin/AdminHome.html">
       <method />
@@ -261,6 +236,13 @@
       <method />
     </configuration>
     <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <node-interpreter value="project" />
+      <working-dir value="" />
+      <envs />
+      <scope-kind value="ALL" />
       <method />
     </configuration>
     <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
@@ -348,7 +330,15 @@
       <workItem from="1494265079931" duration="655000" />
       <workItem from="1494569406262" duration="3894000" />
       <workItem from="1494577284236" duration="207000" />
-      <workItem from="1494577938460" duration="3902000" />
+      <workItem from="1494577938460" duration="8514000" />
+      <workItem from="1494831706437" duration="696000" />
+      <workItem from="1494832818361" duration="852000" />
+      <workItem from="1494835809264" duration="334000" />
+      <workItem from="1494874928257" duration="2808000" />
+      <workItem from="1494917995762" duration="51000" />
+      <workItem from="1494918149525" duration="1582000" />
+      <workItem from="1495096736893" duration="835000" />
+      <workItem from="1495175028191" duration="1834000" />
     </task>
     <task id="LOCAL-00001" summary="Refaktoriserade samt gjorde skellet för fortsatt arbete">
       <created>1494228527052</created>
@@ -375,16 +365,26 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44184000" />
+    <option name="totallyTimeSpent" value="57788000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="25" width="1368" height="720" extended-state="6" />
+    <frame x="-1" y="0" width="1368" height="741" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19253294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32919255" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16910689" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39805827" sideWeight="0.50292826" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -397,7 +397,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -453,40 +452,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JudgeHandler.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="102" column="24" lean-forward="false" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AdminHandler.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -494,7 +463,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1134">
           <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -502,16 +470,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
+    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js" />
+    <entry file="file://$PROJECT_DIR$/app.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="3" lean-forward="false" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -520,21 +486,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -542,10 +494,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1782">
           <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -574,10 +523,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -585,10 +531,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -611,10 +554,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1728">
           <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -622,10 +562,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1746">
           <caret line="97" column="34" lean-forward="false" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -647,10 +584,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1746">
           <caret line="97" column="34" lean-forward="true" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -672,10 +606,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -683,10 +614,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -720,13 +648,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/NavBarEvents.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="11" lean-forward="true" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/Judge/layout.jade">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -755,7 +676,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/Diver.ts">
+    <entry file="file://$PROJECT_DIR$/ServerT/Tserver.ts" />
+    <entry file="file://$PROJECT_DIR$/LoginHandler.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -769,63 +691,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ServerT/Tserver.ts" />
-    <entry file="file://$PROJECT_DIR$/public/index.html">
+    <entry file="file://$PROJECT_DIR$/public/Admin/Diver.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="46" column="66" lean-forward="true" selection-start-line="46" selection-start-column="66" selection-end-line="46" selection-end-column="66" />
+        <state relative-caret-position="90">
+          <caret line="6" column="53" lean-forward="true" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LoginHandler.js">
+    <entry file="file://$PROJECT_DIR$/public/Admin/Jump.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JudgeHandler.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#JudgeAdministration#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1908">
-          <caret line="106" column="19" lean-forward="false" selection-start-line="106" selection-start-column="19" selection-end-line="106" selection-end-column="19" />
-          <folding>
-            <element signature="e#2916#4053#0" expanded="false" />
-            <element signature="e#4127#5247#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LoginHandler.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="5" column="30" lean-forward="true" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/Admin/RegComp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="88" column="57" lean-forward="false" selection-start-line="88" selection-start-column="57" selection-end-line="88" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="30" column="49" lean-forward="false" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
-          <folding />
+        <state relative-caret-position="550">
+          <caret line="69" column="18" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="69" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -833,22 +716,79 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="46" column="66" lean-forward="true" selection-start-line="46" selection-start-column="66" selection-end-line="46" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js" />
+    <entry file="file://$PROJECT_DIR$/public/Admin/AdminHome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="66" lean-forward="false" selection-start-line="27" selection-start-column="66" selection-end-line="27" selection-end-column="66" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/Admin/Communication.js">
+    <entry file="file://$PROJECT_DIR$/public/handleLogin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JudgeHandler.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Admin/NavBarEvents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="59" lean-forward="false" selection-start-line="10" selection-start-column="59" selection-end-line="10" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LoginHandler.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1242">
+          <caret line="85" column="39" lean-forward="true" selection-start-line="85" selection-start-column="39" selection-end-line="85" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="100" column="7" lean-forward="true" selection-start-line="100" selection-start-column="7" selection-end-line="100" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/Judge/handleJudge.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="7" column="3" lean-forward="false" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#43#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AdminHandler.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1616">
-          <caret line="124" column="28" lean-forward="true" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
+        <state relative-caret-position="359">
+          <caret line="212" column="6" lean-forward="true" selection-start-line="212" selection-start-column="6" selection-end-line="212" selection-end-column="6" />
           <folding />
         </state>
       </provider>
