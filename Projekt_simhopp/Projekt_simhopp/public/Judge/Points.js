@@ -7,6 +7,8 @@
 
     console.log("aktiv");
     $('#createComp').click(function () {
-        $("#comp").show();
+        $("#jTable").show();
     });
+
+ 
 })(jQuery);

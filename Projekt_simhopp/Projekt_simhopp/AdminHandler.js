@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require('mongodb').MongoClient;
-class AdminHandler {
-    constructor(socket) {
+var AdminHandler = (function () {
+    function AdminHandler(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
@@ -12,12 +12,12 @@ class AdminHandler {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    for (let i = 0; i < comp.diverList.length; i++) {
-                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    var _loop_1 = function(i) {
+                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        let diverDoc = {
+                        var diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -38,8 +38,11 @@ class AdminHandler {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
+                    };
+                    for (var i = 0; i < comp.diverList.length; i++) {
+                        _loop_1(i);
                     }
-                    let compDoc = {
+                    var compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -90,7 +93,7 @@ class AdminHandler {
                             if (err) {
                                 throw err;
                             }
-                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
+                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
                             comp.diverList.push(document.Name);
                             comp.jumpList.push(document.Jumps);
                             comp.difficultyList.push(document.Difficulty);
@@ -142,8 +145,8 @@ class AdminHandler {
                             if (err) {
                                 throw err;
                             }
-                            let totalScore = null;
-                            for (let i in document.Points) {
+                            var totalScore = null;
+                            for (var i in document.Points) {
                                 totalScore += i;
                             }
                             collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
@@ -170,7 +173,7 @@ class AdminHandler {
         socket.on('', function (comp) {
         });
     }
-    startCompetition(comp) {
+    AdminHandler.prototype.startCompetition = function (comp) {
         //ej helt klar!
         //var comp = null;
         while (comp == null) {
@@ -185,13 +188,13 @@ class AdminHandler {
             var i = 0;
             for (var diver = 0; diver < comp.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
-                this.socket.emit('compInfo', { comp: comp });
+                this.socket.emit('compInfo', comp.competitionName, comp.diverList[diver], comp.jumpList[diver][turn]);
                 var counter = 0;
                 while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
                     this.socket.on('reciving data', function (data) {
                         //tar emot 
-                        pointList[counter] = data.score;
+                        pointList[counter] = data;
                         counter++;
                     });
                 }
@@ -209,8 +212,8 @@ class AdminHandler {
             }
         }
         console.log("Tävling avslutad!");
-    }
-    calculatePoint(difficulty, listLength) {
+    };
+    AdminHandler.prototype.calculatePoint = function (difficulty, listLength) {
         var min;
         var max;
         var totalPoint;
@@ -271,7 +274,8 @@ class AdminHandler {
             totalPoint += resultOver7;
         }
         return totalPoint;
-    }
-}
+    };
+    return AdminHandler;
+}());
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map

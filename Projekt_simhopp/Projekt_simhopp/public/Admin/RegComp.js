@@ -8,7 +8,7 @@ var c = new Competition();
     var counterJump = 0;
     var counterPoints = 0;
 
-    $('#comp').submit(function () {
+    $('#funka').click(function () {
 
        //förändra klasserna och ta bort get-set funktionerna?
         c.nameOfCompetition = $('#compName').val();
@@ -22,7 +22,7 @@ var c = new Competition();
 
 
 
-    $('#Add').submit(function () {
+    $('#addDiver').click(function () {
         console.log("lägger till hoppare");
 
         if (counterDiver < c.numberOfContestants) {
@@ -47,7 +47,7 @@ var c = new Competition();
 
         }
     });
-    $('#jump-form').submit(function () {
+    $('#addJump').click(function () {
         console.log("lägger till hopp");
 
 

@@ -42,47 +42,14 @@
     <div class="container" id="forms">
         <div class="row">
             <!--skapa tävling-->
-            <div class="col-md-4" id="skapaT" style="display: none">
-                <h3>Aktiv Tävling</h3>
-                <table class="table table-bordered" id="jTable">
-                    <tr class="clickable-row">
-                        <th>Example</th>
-                    </tr>
-                    <tr class="clickable-row">
-                        <th>Example 2</th>
-                    </tr>
-                </table>
-                <form action="#" id="comp">
-                    <div class="form-group">
-                        <label for="compName">Tävlingsnamn</label>
-                        <input type="text" class="form-control" id="compName" />
-                    </div>
-                    <div class="form-group">
-                        <label for="compAmount">Antal deltagare</label>
-                        <input type="number" class="form-control" id="compAmount" />
-                    </div>
-                    <div class="form-group">
-                        <label for="compJudges"> Antal domare</label>
-                        <input type="number" class="form-control" id="compJudges" />
-                    </div>
-                    <div class="form-group">
-                        <label for="compJumps">Antal hopp</label>
-                        <input type="number" class="form-control" id="compJumps" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-default-color-grey" value="Anslut" id="funka" />
-                    </div>
-                </form>
-            </div>
+            <div class="col-md-4" id="skapa">
+                <h3 id="aktiv">Väntar på att tävlingen ska börja</h3>
+                <p id="contestant"></p>
+                <p id="jumpcode"></p>
+                
+                <input type="number" id="points" step="0.1"/>
+                <button class="button" id="anslut" value="Anslut"></button>
 
-            <!--lägg till hoppare-->
-            <div class="col-md-4" id="skapaH" style="display: none">
-            
-            </div>
-            <!--lägg till hopp-->
-
-            <div class="col-md-4" id="skapaJ" style="display: none">
-         
             </div>
         </div>
     </div>
@@ -91,8 +58,8 @@
         <p>jag är här!</p>
     </div>
     
-
-
+    <script type="text/javascript" src="Points.js"></script>
+    <script type="text/javascript" src="handleJudge.js"></script>
 </body>
 </html>
 

@@ -185,13 +185,14 @@ export class AdminHandler {
 
             for (var diver = 0; diver < comp.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
-                this.socket.emit('compInfo', { comp });
+                this.socket.emit('compInfo',comp.competitionName, comp.diverList[diver], comp.jumpList[diver][turn]);
                 var counter = 0;
+                
                 while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
                     this.socket.on('reciving data', function (data) {
                       //tar emot 
-                        pointList[counter] = data.score;
+                        pointList[counter] = data;
                         counter++;
                     });
                     

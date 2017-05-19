@@ -105,7 +105,7 @@ io.on('connection', function(socket) {
 admin.on('connection', function(socket) {
     var adminHandler = new AdminHandler.AdminHandler(socket);
 
-    socket.on('send info to judge', function (data){
+    socket.on('compInfo', function (data){
         console.log('Sending diver information to judge');
         judge.emit('diveInfo', data);
     });

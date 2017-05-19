@@ -3,7 +3,7 @@
 (function ($) {
     //skapa konton
     console.log("konto spec");
-    $('#adminCreate').submit(function () {
+    $('#adminCreate').click(function () {
 
         var username = $('#userNameAdmin').val();
         var password = $('#passwordAdmin').val();
@@ -14,7 +14,7 @@
         console.log("skapat admin");
 
     });
-    $('#judgeCreate').submit(function () {
+    $('#judgeCreate').click(function () {
 
         var username = $('#userNameJudge').val();
         var password = $('#passwordJudge').val();
@@ -25,7 +25,7 @@
         console.log("skapat judge");
     });
 
-    $('#loginAdmin').submit(function () {
+    $('#loginAdmin').click(function () {
 
         var username = $('#loginUserNameAdmin').val();
         var password = $('#loginPasswordAdmin').val();
@@ -33,7 +33,7 @@
         socket.emit('login', username, password);
         console.log("login admin");
     });
-    $('#loginJudge').submit(function () {
+    $('#loginJudge').click(function () {
 
         var username = $('#loginUserNameJudge').val();
         var password = $('#loginPasswordJudge').val();
