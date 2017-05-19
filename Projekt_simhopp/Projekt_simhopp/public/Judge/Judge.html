@@ -14,26 +14,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="TestClient.js"></script>
-    <!--<style>
-        p {
-            background: White;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-            p.over {
-                background: #ccc;
-            }
-
-        span {
-            color: red;
-        }
-    </style>-->
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body id="id-body">
-
     <Center>
         <p><label>JUDGE</label></p>
         <p>
@@ -74,17 +57,24 @@
         <p>
             <button id="test">test</button>
         </p>
-        <!--<p><input type="submit" set="Point"></p>-->
 
-                <!--<p>Click me!</p>
+        <!--SocketIO-->
+        <!--http://stackoverflow.com/questions/32252020/socket-io-send-form-data-from-client-to-server
+        <script>
+      var socket = io();
+      $('#form').submit(function(){
+        socket.emit('message', $('#Input').val());
+        //socket.emit('message', "Input");
+        //$('#Input').val('');
+        return false;
+      });
+        </script>
+        <form id="form" action="">
+            Input: <input type="text" id="Input"><br>
+            <input type="submit" value="Submit">
+        </form>-->
+        <!--SocketIO-->
 
-                <span></span>
-                <script>
-                    var count = 0;
-                    $("body").on("click", "p", function () {
-                        $(this).after("<p>Another paragraph! " + (this.x) + "</p>");
-                    });
-                </script>-->
 </Center>
     <script type="text/javascript" src="Points.js"></script>
 </body>

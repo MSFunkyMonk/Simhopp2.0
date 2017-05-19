@@ -34,19 +34,19 @@ if ('development' == app.get('env')) {
             res.send(data);
         });
 }); */
+// app.get('/', function (req, res) {
+//    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8',
+//        function (err, data) {
+//           res.contentType('html');
+//           res.send(data);
+//      });
+//});
 app.get('/', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/AdminHome.html", 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
 });
-//app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
-//        function (err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//}); 
 //app.get('/', function (req, res) {
 //    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
 //        function (err, data) {
@@ -55,19 +55,19 @@ app.get('/', function (req, res) {
 //        });
 //});
 //hej
-/*app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8',
-        function (err, data) {
-            res.contentType('javascript');
-            res.send(data);
-        });
- }); */
 app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8', function (err, data) {
+    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');
         res.send(data);
     });
 });
+//app.get('/*.js', function (req, res) {
+//    fs.readFile(__dirname + "/public/Admin/" + req.url, 'utf8',
+//        function (err, data) {
+//            res.contentType('javascript');
+//            res.send(data);
+//        });
+//});
 var server = http.createServer(app);
 server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

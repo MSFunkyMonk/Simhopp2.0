@@ -69,6 +69,7 @@
     <Folder Include="Scripts\typings\express\" />
     <Folder Include="Scripts\typings\node\" />
     <Folder Include="Scripts\typings\stylus\" />
+    <Folder Include="ServerT\" />
     <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
