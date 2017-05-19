@@ -14,9 +14,14 @@ socket.on('diveInfo', function (compname, diver, jump){
         $('#contestant').html(diver);
         $('#jumpcode').html(jump);
 
-        $('#anslut').click(function() {
+        $('#anslut').click(function () {
+            
             var point = $('#points').val();
-            socket.emit('reciving data', point);
+            if (point >= 0) {
+                socket.emit('reciving data', point);
+            } else {
+                alert("Score can't be below zero!");
+            }
         });
     });
 

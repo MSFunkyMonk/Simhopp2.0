@@ -12,6 +12,7 @@
 
         socket.emit('register', username, password, name, email, "Admin");
         console.log("skapat admin");
+        socket.emit('login', username, password);
 
     });
     $('#judgeCreate').click(function () {
@@ -23,6 +24,7 @@
 
         socket.emit('register', username, password, name, email, "Judge");
         console.log("skapat judge");
+        socket.emit('login', username, password);
     });
 
     $('#loginAdmin').click(function () {

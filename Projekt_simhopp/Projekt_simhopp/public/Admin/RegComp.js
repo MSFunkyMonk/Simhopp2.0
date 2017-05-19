@@ -17,7 +17,7 @@ var c = new Competition();
         c.numberOfJumps = $('#compJumps').val();
         $("#skapaH").show();
         alert("Tävling tillagd!");
-
+        $('#update').text("Tävling tillagd!");
     });
 
 
@@ -35,16 +35,17 @@ var c = new Competition();
             console.log("Hoppare: " + counterDiver);
             var name = c.diverList[counterDiver].diverName;
             console.log(name);
+            $('#update').text(name + " är registrerad!");
             
             if (counterDiver === (c.numberOfContestants - 1)) {
 
                 counterDiver = 0;
                 $("#skapaJ").show();
                 alert("Lagt till alla tävlande!");
+                $('#update').text("Lagt till alla tävlande!");
             } else {
                 counterDiver = counterDiver + 1;  
             }
-
         }
     });
     $('#addJump').click(function () {
@@ -53,6 +54,7 @@ var c = new Competition();
 
         console.log(counterDiver);
         console.log(counterJump);
+        
         if (counterDiver < c.numberOfContestants) {
 
             
@@ -69,10 +71,12 @@ var c = new Competition();
                 console.log(diff);
                 console.log(height);
                 console.log(counterJump);
+                $('#update').text("Lagt till hopp nummer" + counterDiver + 1 + "för" + c.diverList[counterDiver].diverName );
             }
 
             if (counterJump === (c.numberOfJumps - 1)) {
                 console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName);
+                $('#update').text("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName);
                 counterJump = 0;
                 counterDiver++;
             } else {
@@ -80,10 +84,11 @@ var c = new Competition();
             }
         }
 
-        /*if (counterDiver === c.getNumberOfContestants) {
+        if (counterDiver === c.getNumberOfContestants) {
             alert("Alla simhoppare har fått sina hopp!");
+            $('#update').text("Alla hoppa är tillagda! ");
             counterDiver = 0;
-        } */
+        } 
 
 
     });
