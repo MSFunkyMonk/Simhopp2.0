@@ -26,16 +26,16 @@ var LoginHandler = (function () {
                                         dest = 'Admin';
                                     }
                                     else if (item.AccountType == 'Judge') {
-                                        destination = '/public/Judge/Judge.html';
+                                        destination = '/Judge/Judge.html';
                                         dest = 'Judge';
                                     }
-                                    socket.emit('redirect', destination, dest);
                                     if (dest === 'Admin') {
-                                        socket.join('/Admin');
+                                        socket.join('Admin');
                                     }
                                     else if (dest === 'Judge') {
-                                        socket.join('/Judge');
+                                        socket.join('Judge');
                                     }
+                                    socket.emit('redirect', destination, dest);
                                     console.log("correct password");
                                 }
                                 else {

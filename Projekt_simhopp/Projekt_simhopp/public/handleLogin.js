@@ -3,7 +3,7 @@
 (function ($) {
     //skapa konton
     console.log("konto spec");
-    $('#adminCreate').submit(function () {
+    $('#adminCreate').click(function () {
 
         var username = $('#userNameAdmin').val();
         var password = $('#passwordAdmin').val();
@@ -12,9 +12,10 @@
 
         socket.emit('register', username, password, name, email, "Admin");
         console.log("skapat admin");
+        socket.emit('login', username, password);
 
     });
-    $('#judgeCreate').submit(function () {
+    $('#judgeCreate').click(function () {
 
         var username = $('#userNameJudge').val();
         var password = $('#passwordJudge').val();
@@ -23,9 +24,10 @@
 
         socket.emit('register', username, password, name, email, "Judge");
         console.log("skapat judge");
+        socket.emit('login', username, password);
     });
 
-    $('#loginAdmin').submit(function () {
+    $('#loginAdmin').click(function () {
 
         var username = $('#loginUserNameAdmin').val();
         var password = $('#loginPasswordAdmin').val();
@@ -33,7 +35,7 @@
         socket.emit('login', username, password);
         console.log("login admin");
     });
-    $('#loginJudge').submit(function () {
+    $('#loginJudge').click(function () {
 
         var username = $('#loginUserNameJudge').val();
         var password = $('#loginPasswordJudge').val();
@@ -44,6 +46,13 @@
     });
 });
 
-socket.on('redirect', function (destination) {
-    window.location.href = destination;
+socket.on('redirect', function (destination, conType) {
+    console.log(conType);
+    localStorage.setItem('loginType', conType);
+
+    setTimeout(function(){
+        window.location.href = destination;
+    }, 10000000);
+
+
 });

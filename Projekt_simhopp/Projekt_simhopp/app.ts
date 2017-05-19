@@ -4,6 +4,8 @@ import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
 import fs = require('fs');
+//import cookie = require('cookie');
+//import cookieParser = require('cookie-parser');
 import LoginHandler = require('./LoginHandler');
 import AdminHandler = require('./AdminHandler');
 import JudgeHandler = require('./JudgeHandler');
@@ -29,16 +31,13 @@ app.use(app.router);
 import stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(express.cookieParser());
 //app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
 
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-
-//app.get('/', routes.index);
-//app.get('/users', user.list);
 
 
  app.get('/', function (req, res) {
@@ -48,31 +47,6 @@ if ('development' == app.get('env')) {
            res.send(data);
       });
 });
-
- //app.get('/', function (req, res) {
- //    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
- //        function (err, data) {
- //            res.contentType('html');
- //            res.send(data);
- //        });
- //}); 
-//app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
-//        function (err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//});
-
-//hej
-
-/*app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8',
-        function (err, data) {
-            res.contentType('javascript');
-            res.send(data);
-        });
- }); */
 
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/" + req.url, 'utf8',
@@ -89,13 +63,22 @@ server.listen(app.get('port'), function () {
 });
 
 var io = require('socket.io')(server);
+//io.use(cookieParser());
 var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 
 io.on('connection', function(socket) {
-    console.log('user connected');
-    var loginHandler = new LoginHandler.LoginHandler(socket);
+    socket.emit('getType');
 
+    socket.on('recieveType', function(data){
+        console.log('JOINED CORRECT NAMSPACE, BIATCH');
+        socket.join(data);
+    });
+
+    var loginHandler = new LoginHandler.LoginHandler(socket);
+    socket.on('connection') {
+        console.log('User has connected');
+    }
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
@@ -103,9 +86,10 @@ io.on('connection', function(socket) {
 });
 
 admin.on('connection', function(socket) {
+    console.log('YAAAAS BITCH')
     var adminHandler = new AdminHandler.AdminHandler(socket);
 
-    socket.on('send info to judge', function (data){
+    socket.on('compInfo', function (data){
         console.log('Sending diver information to judge');
         judge.emit('diveInfo', data);
     });

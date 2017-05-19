@@ -10,6 +10,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            var socket = io();
+            console.log(localStorage.getItem('loginType'));
+            socket.on('getType', function() {
+                socket.emit('receiveType', localStorage.getItem("loginType"));
+            });
+
+        };
+    </script>
 </head>
 <body>
 
@@ -84,7 +94,7 @@
                     <input type="text" class="form-control" id="diverJumps" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default-color-grey" value="Lägg till" />
+                    <input type="submit" class="btn btn-default-color-grey" value="Lägg till" id="addDiver" />
                 </div>
             </form>
         </div>
@@ -110,19 +120,20 @@
                     <input type="number" class="form-control" id="jumpPoints" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default-color-grey" value="Lägg till" />
+                    <input type="submit" class="btn btn-default-color-grey" value="Lägg till" id="addJump" />
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-    <div id="compinfo">
-        <p>jag är här!</p>
+    <div class="form-group">
+        <label for="update">Uppdatering:</label>
+        <textarea class="form-control" rows="10" id="update"></textarea>
     </div>
 <!--fixa ordning av script för att exekvera projekt-->
 
     <script type="text/javascript" src="Points.js"></script>
+
     <script type="text/javascript" src="Jump.js"></script>
     <script type="text/javascript" src="Diver.js"></script>
     <script type="text/javascript" src="Competition.js"></script>
