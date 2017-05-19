@@ -44,6 +44,13 @@
     });
 });
 
-socket.on('redirect', function (destination) {
-    window.location.href = destination;
+socket.on('redirect', function (destination, conType) {
+    console.log(conType);
+    localStorage.setItem('loginType', conType);
+
+    setTimeout(function(){
+        window.location.href = destination;
+    }, 10000000);
+
+
 });

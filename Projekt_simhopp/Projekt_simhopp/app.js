@@ -70,15 +70,25 @@ var io = require('socket.io')(server);
 var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 io.on('connection', function (socket) {
-    console.log('user connected');
+    socket.emit('getType');
+
+    socket.on('receiveType', function(data){
+        console.log('JOINED CORRECT NAMSPACE, BIATCH');
+        console.log(data);
+        socket.join(data);
+    });
+
+    console.log('User connected');
     var loginHandler = new LoginHandler.LoginHandler(socket);
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
 });
 admin.on('connection', function (socket) {
+    console.log('YAAAAS BITCH')
     var adminHandler = new AdminHandler.AdminHandler(socket);
-    socket.on('compInfo', function (data) {
+
+    socket.on('compInfo', function (data){
         console.log('Sending diver information to judge');
         judge.emit('diveInfo', data);
     });
