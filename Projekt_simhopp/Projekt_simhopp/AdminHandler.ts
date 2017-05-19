@@ -203,11 +203,16 @@ export class AdminHandler {
 
                 counter = 0;
                 score = 0;
+                console.log("Omgång: ", counter + 1);
+
+
             }
 
-            console.log("Omgång: ", counter + 1);
             if (turn == comp.numberOfJumps) {
-                this.socket.emit('store total score', comp.nameOfCompetition, comp.diverList[diver]);
+                for (var j = 0; j < comp.diverList.length; j++) {
+                    this.socket.emit('store total score', comp.nameOfCompetition, comp.diverList[j]);
+                }
+                
             }
         }
       

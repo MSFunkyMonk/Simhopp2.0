@@ -78,8 +78,16 @@ io.on('connection', function (socket) {
 });
 admin.on('connection', function (socket) {
     var adminHandler = new AdminHandler.AdminHandler(socket);
+    socket.on('send info to judge', function (data) {
+        console.log('Sending diver information to judge');
+        judge.emit('diveInfo', data);
+    });
 });
 judge.on('connection', function (socket) {
     var judgeHandler = new JudgeHandler.JudgeHandler(socket);
+    socket.on('score from judge', function (data) {
+        console.log('Recieved score from judge');
+        admin.emit('reciving data', data);
+    });
 });
 //# sourceMappingURL=app.js.map
