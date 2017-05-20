@@ -68,17 +68,10 @@ var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 
 io.on('connection', function(socket) {
-    socket.emit('getType');
-
-    socket.on('recieveType', function(data){
-        console.log('JOINED CORRECT NAMSPACE, BIATCH');
-        socket.join(data);
-    });
+    console.log('User has connected');
 
     var loginHandler = new LoginHandler.LoginHandler(socket);
-    socket.on('connection') {
-        console.log('User has connected');
-    }
+
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
@@ -86,7 +79,6 @@ io.on('connection', function(socket) {
 });
 
 admin.on('connection', function(socket) {
-    console.log('YAAAAS BITCH')
     var adminHandler = new AdminHandler.AdminHandler(socket);
 
     socket.on('compInfo', function (data){

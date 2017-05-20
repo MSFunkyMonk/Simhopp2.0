@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var LoginHandler = (function () {
@@ -19,23 +20,19 @@ var LoginHandler = (function () {
                                     throw err;
                                 }
                                 if (result == true) {
-                                    var destination = null;
-                                    var dest = null;
+                                    var destination = {
+                                        dest: "",
+                                        conType: ""
+                                    };
                                     if (item.AccountType == 'Admin') {
-                                        destination = '/Admin/AdminHome.html';
-                                        dest = 'Admin';
+                                        destination.dest = '/Admin/AdminHome.html';
+                                        destination.conType = 'Admin';
                                     }
                                     else if (item.AccountType == 'Judge') {
-                                        destination = '/Judge/Judge.html';
-                                        dest = 'Judge';
+                                        destination.dest = '/Judge/Judge.html';
+                                        destination.conType = 'Judge';
                                     }
-                                    if (dest === 'Admin') {
-                                        socket.join('Admin');
-                                    }
-                                    else if (dest === 'Judge') {
-                                        socket.join('Judge');
-                                    }
-                                    socket.emit('redirect', destination, dest);
+                                    socket.emit('redirect', destination);
                                     console.log("correct password");
                                 }
                                 else {

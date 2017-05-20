@@ -20,16 +20,19 @@ export class LoginHandler {
                                     if (err) { throw err; }
                                     if (result == true) //Returnerar true/false
                                     {
-                                        var destination = null;
-                                        var conType = null;
-                                        if (item.AccountType == 'Admin') {
-                                            destination = '/Admin/AdminHome.html';
-                                            conType = 'Admin';
-                                        } else if (item.AccountType == 'Judge') {
-                                            destination = '/Judge/Judge.html';
-                                            conType = 'Judge';
+                                        var destination = {
+                                            dest: "",
+                                            conType:""
                                         }
-                                        socket.emit('redirect', destination, conType);
+
+                                        if (item.AccountType == 'Admin') {
+                                            destination.dest = '/Admin/AdminHome.html';
+                                            destination.conType = 'Admin';
+                                        } else if (item.AccountType == 'Judge') {
+                                            destination.dest = '/Judge/Judge.html';
+                                            destination.conType = 'Judge';
+                                        }
+                                        socket.emit('redirect', destination);
  
                                         console.log("correct password");
                                     } else {

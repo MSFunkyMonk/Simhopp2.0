@@ -1,11 +1,14 @@
 "use strict";
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
-var LoginHandler = require('./LoginHandler');
-var AdminHandler = require('./AdminHandler');
-var JudgeHandler = require('./JudgeHandler');
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require("express");
+var http = require("http");
+var path = require("path");
+var fs = require("fs");
+//import cookie = require('cookie');
+//import cookieParser = require('cookie-parser');
+var LoginHandler = require("./LoginHandler");
+var AdminHandler = require("./AdminHandler");
+var JudgeHandler = require("./JudgeHandler");
 var app = express();
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -18,44 +21,21 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-var stylus = require('stylus');
+var stylus = require("stylus");
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.cookieParser());
 //app.use('/Judge', express.static(path.join(__dirname, 'public/Judge')));  //!!!Tillagt!!!
 // development only
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-//app.get('/', routes.index);
-//app.get('/users', user.list);
 app.get('/', function (req, res) {
     fs.readFile(__dirname + "/public/index.html", 'utf8', function (err, data) {
         res.contentType('html');
         res.send(data);
     });
 });
-//app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Judge/Judge.html", 'utf8',
-//        function (err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//}); 
-//app.get('/', function (req, res) {
-//    fs.readFile(__dirname + "/public/Admin/index.html", 'utf8',
-//        function (err, data) {
-//            res.contentType('html');
-//            res.send(data);
-//        });
-//});
-//hej
-/*app.get('/*.js', function (req, res) {
-    fs.readFile(__dirname + "/public/Judge/" + req.url, 'utf8',
-        function (err, data) {
-            res.contentType('javascript');
-            res.send(data);
-        });
- }); */
 app.get('/*.js', function (req, res) {
     fs.readFile(__dirname + "/public/" + req.url, 'utf8', function (err, data) {
         res.contentType('javascript');
@@ -67,28 +47,19 @@ server.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 var io = require('socket.io')(server);
+//io.use(cookieParser());
 var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 io.on('connection', function (socket) {
-    socket.emit('getType');
-
-    socket.on('receiveType', function(data){
-        console.log('JOINED CORRECT NAMSPACE, BIATCH');
-        console.log(data);
-        socket.join(data);
-    });
-
-    console.log('User connected');
+    console.log('User has connected');
     var loginHandler = new LoginHandler.LoginHandler(socket);
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
 });
 admin.on('connection', function (socket) {
-    console.log('YAAAAS BITCH')
     var adminHandler = new AdminHandler.AdminHandler(socket);
-
-    socket.on('compInfo', function (data){
+    socket.on('compInfo', function (data) {
         console.log('Sending diver information to judge');
         judge.emit('diveInfo', data);
     });
