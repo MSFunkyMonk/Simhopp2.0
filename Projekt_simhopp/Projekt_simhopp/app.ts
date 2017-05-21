@@ -69,16 +69,16 @@ var judge = io.of('/Judge');
 
 io.on('connection', function(socket) {
     socket.emit('getType');
-
+    console.log('User has connected');
     socket.on('recieveType', function(data){
         console.log('JOINED CORRECT NAMSPACE, BIATCH');
         socket.join(data);
     });
 
     var loginHandler = new LoginHandler.LoginHandler(socket);
-    socket.on('connection') {
-        console.log('User has connected');
-    }
+    //socket.on('connection') {
+    //    console.log('User has connected');
+    //}
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });

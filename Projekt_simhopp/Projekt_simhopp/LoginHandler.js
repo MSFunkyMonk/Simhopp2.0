@@ -20,22 +20,16 @@ var LoginHandler = (function () {
                                 }
                                 if (result == true) {
                                     var destination = null;
-                                    var dest = null;
+                                    var conType = null;
                                     if (item.AccountType == 'Admin') {
                                         destination = '/Admin/AdminHome.html';
-                                        dest = 'Admin';
+                                        conType = 'Admin';
                                     }
                                     else if (item.AccountType == 'Judge') {
                                         destination = '/Judge/Judge.html';
-                                        dest = 'Judge';
+                                        conType = 'Judge';
                                     }
-                                    if (dest === 'Admin') {
-                                        socket.join('Admin');
-                                    }
-                                    else if (dest === 'Judge') {
-                                        socket.join('Judge');
-                                    }
-                                    socket.emit('redirect', destination, dest);
+                                    socket.emit('redirect', destination, conType);
                                     console.log("correct password");
                                 }
                                 else {
