@@ -285,10 +285,8 @@
         });
 
     });
-    socket.on('redirect', function (destination, dest) {
-        window.location.href = destination;
-
-
+    socket.on('redirect', function (destination) {
+        window.location.href = destination.dest;
     });
 
 </script>

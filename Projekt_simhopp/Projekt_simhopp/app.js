@@ -1,13 +1,14 @@
 "use strict";
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require("express");
+var http = require("http");
+var path = require("path");
+var fs = require("fs");
 //import cookie = require('cookie');
 //import cookieParser = require('cookie-parser');
-var LoginHandler = require('./LoginHandler');
-var AdminHandler = require('./AdminHandler');
-var JudgeHandler = require('./JudgeHandler');
+var LoginHandler = require("./LoginHandler");
+var AdminHandler = require("./AdminHandler");
+var JudgeHandler = require("./JudgeHandler");
 var app = express();
 // all environments
 //app.set('port', process.env.PORT || 3000);
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-var stylus = require('stylus');
+var stylus = require("stylus");
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.cookieParser());
@@ -50,22 +51,13 @@ var io = require('socket.io')(server);
 var admin = io.of('/Admin');
 var judge = io.of('/Judge');
 io.on('connection', function (socket) {
-    socket.emit('getType');
     console.log('User has connected');
-    socket.on('recieveType', function (data) {
-        console.log('JOINED CORRECT NAMSPACE, BIATCH');
-        socket.join(data);
-    });
     var loginHandler = new LoginHandler.LoginHandler(socket);
-    //socket.on('connection') {
-    //    console.log('User has connected');
-    //}
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
 });
 admin.on('connection', function (socket) {
-    console.log('YAAAAS BITCH');
     var adminHandler = new AdminHandler.AdminHandler(socket);
     socket.on('compInfo', function (data) {
         console.log('Sending diver information to judge');

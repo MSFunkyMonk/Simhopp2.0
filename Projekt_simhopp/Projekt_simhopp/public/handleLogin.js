@@ -45,14 +45,3 @@
         console.log("login judge");
     });
 });
-
-socket.on('redirect', function (destination, conType) {
-    console.log(conType);
-    localStorage.setItem('loginType', conType);
-
-    setTimeout(function(){
-        window.location.href = destination;
-    }, 10000000);
-
-
-});

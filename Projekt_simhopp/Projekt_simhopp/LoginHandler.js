@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var LoginHandler = (function () {
@@ -19,17 +20,19 @@ var LoginHandler = (function () {
                                     throw err;
                                 }
                                 if (result == true) {
-                                    var destination = null;
-                                    var conType = null;
+                                    var destination = {
+                                        dest: "",
+                                        conType: ""
+                                    };
                                     if (item.AccountType == 'Admin') {
-                                        destination = '/Admin/AdminHome.html';
-                                        conType = 'Admin';
+                                        destination.dest = '/Admin/AdminHome.html';
+                                        destination.conType = 'Admin';
                                     }
                                     else if (item.AccountType == 'Judge') {
-                                        destination = '/Judge/Judge.html';
-                                        conType = 'Judge';
+                                        destination.dest = '/Judge/Judge.html';
+                                        destination.conType = 'Judge';
                                     }
-                                    socket.emit('redirect', destination, conType);
+                                    socket.emit('redirect', destination);
                                     console.log("correct password");
                                 }
                                 else {

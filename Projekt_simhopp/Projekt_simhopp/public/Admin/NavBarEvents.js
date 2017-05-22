@@ -1,4 +1,4 @@
-﻿var socket = io();
+﻿var socket = io('/Admin');
 (function ($) {
 
     //visar forms för att skapa tävling

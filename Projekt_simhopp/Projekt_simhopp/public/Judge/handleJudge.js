@@ -1,7 +1,7 @@
 /**
  * Created by kevinj on 2017-05-19.
  */
-var socket = io();
+var socket = io('/Judge');
 
 socket.on('diveInfo', function (compname, diver, jump){
     

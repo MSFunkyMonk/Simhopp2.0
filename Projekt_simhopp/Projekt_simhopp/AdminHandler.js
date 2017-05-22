@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var MongoClient = require('mongodb').MongoClient;
 var AdminHandler = (function () {
     function AdminHandler(socket) {
@@ -12,7 +13,7 @@ var AdminHandler = (function () {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    var _loop_1 = function(i) {
+                    var _loop_1 = function (i) {
                         var difficultList = [comp.diverList[i].jumpList[0].difficulty];
                         for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
