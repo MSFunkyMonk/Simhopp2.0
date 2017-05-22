@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require('mongodb').MongoClient;
-var AdminHandler = (function () {
-    function AdminHandler(socket) {
+class AdminHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
@@ -12,12 +12,12 @@ var AdminHandler = (function () {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    var _loop_1 = function(i) {
-                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    for (let i = 0; i < comp.diverList.length; i++) {
+                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        var diverDoc = {
+                        let diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -38,11 +38,8 @@ var AdminHandler = (function () {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
-                    };
-                    for (var i = 0; i < comp.diverList.length; i++) {
-                        _loop_1(i);
                     }
-                    var compDoc = {
+                    let compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -95,7 +92,7 @@ var AdminHandler = (function () {
                             if (err) {
                                 throw err;
                             }
-                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
+                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
                             comp.diverList.push(document.Name);
                             comp.jumpList.push(document.Jumps);
                             comp.difficultyList.push(document.Difficulty);
@@ -111,7 +108,7 @@ var AdminHandler = (function () {
             });
             console.log("i start contest!");
             socket.emit('active competition');
-            this.AdminHandler.startCompetition(comp);
+            this.startCompetition();
         });
         socket.on('store score', function (score, competitionName, diverName) {
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
@@ -148,8 +145,8 @@ var AdminHandler = (function () {
                             if (err) {
                                 throw err;
                             }
-                            var totalScore = null;
-                            for (var i in document.Points) {
+                            let totalScore = null;
+                            for (let i in document.Points) {
                                 totalScore += i;
                             }
                             collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
@@ -197,7 +194,7 @@ var AdminHandler = (function () {
             });
         });
     }
-    AdminHandler.prototype.startCompetition = function (comp) {
+    startCompetition(comp) {
         //ej helt klar!
         var status = "";
         while (comp == null) {
@@ -243,8 +240,8 @@ var AdminHandler = (function () {
         }
         console.log("Tävling avslutad!");
         this.socket.emit('status', "Tävling" + comp.competitionName + "avslutad!");
-    };
-    AdminHandler.prototype.calculatePoint = function (difficulty, listLength) {
+    }
+    calculatePoint(difficulty, listLength) {
         var min;
         var max;
         var totalPoint;
@@ -305,8 +302,7 @@ var AdminHandler = (function () {
             totalPoint += resultOver7;
         }
         return totalPoint;
-    };
-    return AdminHandler;
-}());
+    }
+}
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map

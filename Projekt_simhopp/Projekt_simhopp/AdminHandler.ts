@@ -114,7 +114,7 @@ export class AdminHandler {
             });
             console.log("i start contest!");
             socket.emit('active competition');
-            
+            this.startCompetition();
 
         });
 
