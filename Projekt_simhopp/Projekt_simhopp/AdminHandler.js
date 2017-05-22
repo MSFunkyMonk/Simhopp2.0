@@ -1,8 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var MongoClient = require('mongodb').MongoClient;
-var AdminHandler = (function () {
-    function AdminHandler(socket) {
+class AdminHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('contest create', function (comp) {
@@ -13,12 +12,12 @@ var AdminHandler = (function () {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    var _loop_1 = function (i) {
-                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    for (let i = 0; i < comp.diverList.length; i++) {
+                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        var diverDoc = {
+                        let diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -39,11 +38,8 @@ var AdminHandler = (function () {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
-                    };
-                    for (var i = 0; i < comp.diverList.length; i++) {
-                        _loop_1(i);
                     }
-                    var compDoc = {
+                    let compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -66,6 +62,7 @@ var AdminHandler = (function () {
                     console.log("Database connection error: " + e);
                 }
             });
+            socket.emit('start contest', comp.nameOfCompetition);
         });
         socket.on('start contest', function (contestName) {
             var comp = null;
@@ -94,7 +91,7 @@ var AdminHandler = (function () {
                             if (err) {
                                 throw err;
                             }
-                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
+                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
                             comp.diverList.push(document.Name);
                             comp.jumpList.push(document.Jumps);
                             comp.difficultyList.push(document.Difficulty);
@@ -146,8 +143,8 @@ var AdminHandler = (function () {
                             if (err) {
                                 throw err;
                             }
-                            var totalScore = null;
-                            for (var i in document.Points) {
+                            let totalScore = null;
+                            for (let i in document.Points) {
                                 totalScore += i;
                             }
                             collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
@@ -174,14 +171,16 @@ var AdminHandler = (function () {
         socket.on('', function (comp) {
         });
     }
-    AdminHandler.prototype.startCompetition = function (comp) {
+    startCompetition(comp) {
         //ej helt klar!
         //var comp = null;
+        var status = "";
         while (comp == null) {
             this.socket.on('contest data retrieved', function (data) {
                 comp = data;
             });
         }
+        this.socket.emit('status', "Tävlingen startade");
         console.log("Tävling startade!");
         var pointList;
         for (var turn = 0; turn < comp.numberOfJumps; turn++) {
@@ -191,16 +190,21 @@ var AdminHandler = (function () {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
                 this.socket.emit('compInfo', comp.competitionName, comp.diverList[diver], comp.jumpList[diver][turn]);
                 var counter = 0;
+                status = comp.competitionName + " " + comp.diverList[diver] + " " + comp.jumpList[diver][turn] + " hoppar nu";
+                this.socket.emit('status', status);
                 while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
-                    this.socket.on('reciving data', function (data) {
+                    this.socket.on('reciving data', function (data, status) {
                         //tar emot 
                         pointList[counter] = data;
                         counter++;
+                        status = "Antal domare som gett poäng: " + counter;
+                        this.socket.emit('status', status);
                     });
                 }
                 //comp innehåller bara namn och score
                 var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
+                this.socket.emit('status', "Total poäng för hoppare: " + score);
                 this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
                 counter = 0;
                 score = 0;
@@ -213,8 +217,9 @@ var AdminHandler = (function () {
             }
         }
         console.log("Tävling avslutad!");
-    };
-    AdminHandler.prototype.calculatePoint = function (difficulty, listLength) {
+        this.socket.emit('status', "Tävling" + comp.competitionName);
+    }
+    calculatePoint(difficulty, listLength) {
         var min;
         var max;
         var totalPoint;
@@ -275,8 +280,7 @@ var AdminHandler = (function () {
             totalPoint += resultOver7;
         }
         return totalPoint;
-    };
-    return AdminHandler;
-}());
+    }
+}
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map

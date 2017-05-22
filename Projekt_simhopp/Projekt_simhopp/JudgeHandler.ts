@@ -8,5 +8,6 @@ export class JudgeHandler {
     constructor(socket: any) {
         this.socket = socket;
 
+    
     }
 }

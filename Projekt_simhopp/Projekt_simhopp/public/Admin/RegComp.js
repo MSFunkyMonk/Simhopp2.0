@@ -17,7 +17,10 @@ var c = new Competition();
         c.numberOfJumps = $('#compJumps').val();
         $("#skapaH").show();
         alert("Tävling tillagd!");
-        $('#update').text("Tävling tillagd!");
+        $('#update').append("Tävling tillagd!</br>");
+
+
+
     });
 
 
@@ -35,14 +38,16 @@ var c = new Competition();
             console.log("Hoppare: " + counterDiver);
             var name = c.diverList[counterDiver].diverName;
             console.log(name);
-            $('#update').text(name + " är registrerad!");
+            $('#update').append(name + " är registrerad! </br>");
+           
             
             if (counterDiver === (c.numberOfContestants - 1)) {
 
                 counterDiver = 0;
                 $("#skapaJ").show();
                 alert("Lagt till alla tävlande!");
-                $('#update').text("Lagt till alla tävlande!");
+                $('#update').append("Lagt till alla tävlande! </br>");
+           
             } else {
                 counterDiver = counterDiver + 1;  
             }
@@ -71,12 +76,13 @@ var c = new Competition();
                 console.log(diff);
                 console.log(height);
                 console.log(counterJump);
-                $('#update').text("Lagt till hopp nummer" + counterDiver + 1 + "för" + c.diverList[counterDiver].diverName );
+                $('#update').append("Lagt till hopp nummer" + counterDiver + 1 + "för" + c.diverList[counterDiver].diverName  + "</br>");
+               
             }
 
             if (counterJump === (c.numberOfJumps - 1)) {
                 console.log("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName);
-                $('#update').text("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName);
+                $('#update').append("Alla hoppa är tillagda för: " + c.diverList[counterDiver].diverName + "</br>");
                 counterJump = 0;
                 counterDiver++;
             } else {
@@ -84,9 +90,9 @@ var c = new Competition();
             }
         }
 
-        if (counterDiver === c.getNumberOfContestants) {
+        if (counterDiver === c.numberOfContestants) {
             alert("Alla simhoppare har fått sina hopp!");
-            $('#update').text("Alla hoppa är tillagda! ");
+            $('#update').append("Alla hoppa är tillagda! </br >");
             counterDiver = 0;
         } 
 

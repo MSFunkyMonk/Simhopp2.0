@@ -10,9 +10,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+
 </head>
 <body>
-
+<script>
+    $(document).ready(function() {
+        socket.on('status',
+            function(info) {
+                $('#update').append(info);
+            });
+    });
+</script>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
 
@@ -116,10 +124,11 @@
         </div>
     </div>
 </div>
-    <div class="form-group">
-        <label for="update">Uppdatering:</label>
-        <textarea class="form-control" rows="10" id="update"></textarea>
-    </div>
+<h4>Uppdatering</h4>
+<pre id="update">
+    
+</pre>
+
 <!--fixa ordning av script för att exekvera projekt-->
 
     <script type="text/javascript" src="Points.js"></script>

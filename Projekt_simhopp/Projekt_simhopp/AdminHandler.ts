@@ -63,6 +63,7 @@ export class AdminHandler {
                     console.log("Database connection error: " + e)
                 }
             });
+            socket.emit('start contest', comp.nameOfCompetition);
         });
 
         socket.on('start contest', function (contestName) {
@@ -171,41 +172,47 @@ export class AdminHandler {
     public startCompetition(comp: any): void {
         //ej helt klar!
         //var comp = null;
+        var status = "";
         while (comp == null) {
             this.socket.on('contest data retrieved', function (data) {
                 comp = data;
             });
         }
-
+        this.socket.emit('status', "Tävlingen startade");
         console.log("Tävling startade!");
         var pointList: Array<number>;
         for (var turn = 0; turn < comp.numberOfJumps; turn++) {
             //omgång
             var i = 0;
-
+            
             for (var diver = 0; diver < comp.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
                 this.socket.emit('compInfo',comp.competitionName, comp.diverList[diver], comp.jumpList[diver][turn]);
                 var counter = 0;
-                
+                status = comp.competitionName + " " + comp.diverList[diver] + " " + comp.jumpList[diver][turn] + " hoppar nu";
+
+                this.socket.emit('status', status);
                 while (counter < comp.numberOfJudges) {
                     //väntar på att dommare ska döma
-                    this.socket.on('reciving data', function (data) {
+                    this.socket.on('reciving data', function (data, status) {
                       //tar emot 
                         pointList[counter] = data;
                         counter++;
+                        status = "Antal domare som gett poäng: " + counter;
+                        this.socket.emit('status', status);
                     });
                     
 
                 }
                 //comp innehåller bara namn och score
                 var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
+                this.socket.emit('status', "Total poäng för hoppare: " + score);
                 this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
 
                 counter = 0;
                 score = 0;
                 console.log("Omgång: ", counter + 1);
-
+                
 
             }
 
@@ -218,6 +225,7 @@ export class AdminHandler {
         }
       
         console.log("Tävling avslutad!");
+        this.socket.emit('status', "Tävling" + comp.competitionName)
     }
     public calculatePoint(difficulty: any, listLength: any): number {
         var min;
