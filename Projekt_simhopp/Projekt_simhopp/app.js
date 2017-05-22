@@ -3,11 +3,10 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-//import cookie = require('cookie');
-//import cookieParser = require('cookie-parser');
 var LoginHandler = require('./LoginHandler');
 var AdminHandler = require('./AdminHandler');
 var JudgeHandler = require('./JudgeHandler');
+var MongoClient = require('mongodb').MongoClient;
 var app = express();
 // all environments
 //app.set('port', process.env.PORT || 3000);

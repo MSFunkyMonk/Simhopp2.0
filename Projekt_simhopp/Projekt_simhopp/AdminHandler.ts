@@ -2,11 +2,12 @@ var MongoClient = require('mongodb').MongoClient;
 
 export class AdminHandler {
     socket: any = null;
-
+  
     constructor(socket: any) {
         this.socket = socket;
-
+       
         socket.on('contest create', function (comp) {
+            
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 try {
                     if (err) { throw err; }
@@ -62,11 +63,13 @@ export class AdminHandler {
                 } catch(e) {
                     console.log("Database connection error: " + e)
                 }
-            });
-            socket.emit('start contest', comp.nameOfCompetition);
-        });
 
+            });
+            socket.emit('start contest', comp.nameOfCompetition)
+        });
+   
         socket.on('start contest', function (contestName) {
+            console.log("i start contest");
             var comp = null;
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
                 try {
@@ -109,8 +112,9 @@ export class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
+            console.log("i start contest!");
             socket.emit('active competition');
-            this.startCompetition(comp);
+            
 
         });
 
@@ -184,9 +188,9 @@ export class AdminHandler {
 
     }
 
-    public startCompetition(comp: any): void {
+    startCompetition(comp: any): void {
         //ej helt klar!
-        //var comp = null;
+        
         var status = "";
         while (comp == null) {
             this.socket.on('contest data retrieved', function (data) {
@@ -240,7 +244,7 @@ export class AdminHandler {
         }
       
         console.log("Tävling avslutad!");
-        this.socket.emit('status', "Tävling" + comp.competitionName)
+        this.socket.emit('status', "Tävling" + comp.competitionName + "avslutad!");
     }
     public calculatePoint(difficulty: any, listLength: any): number {
         var min;

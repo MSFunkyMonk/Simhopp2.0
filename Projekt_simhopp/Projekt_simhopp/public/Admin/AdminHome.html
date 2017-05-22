@@ -17,7 +17,7 @@
     $(document).ready(function() {
         socket.on('status',
             function(info) {
-                $('#update').append(info);
+                $('#update').append(info + "</br>");
             });
     });
 </script>
@@ -37,6 +37,7 @@
                 <u1 class="nav navbar-nav">
                     <li><a href="#" id="createComp">Skapa tävling</a></li>
                     <li><a href="#" id="startComp">Starta tävling</a></li>
+                    <li><a href="#" id="extraknapp">Lägg till i databas</a></li>
                     <li><a href="#">Arkiv</a></li>
                 </u1>
 
