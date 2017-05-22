@@ -108,8 +108,9 @@ export class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
+            socket.emit('active competition');
             this.startCompetition(comp);
-            //socket.emit('contest data retrieved', comp);
+
         });
 
         socket.on('store score', function (score, competitionName, diverName) {
@@ -161,13 +162,27 @@ export class AdminHandler {
             });
         });
 
-        socket.on('', function(comp) {
-                
-                
+        socket.on('active competition', function(contestName){
+            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db){
+                try{
+                    if (err) { throw err; }
+                    var collection = db.collection('activeContest');
+                    collection.findAndModify({'Name': {$exists: true}}, {$set: {Name: contestName}}, function (err, document) {
+                        try {
+                            if (err) { throw err; }
 
+                        } catch(e) {
+                            console.log("Database search error: " + e);
+                        }
+                    });
+                } catch(e) {
+                    console.log("Database connection error: " + e);
+                }
             });
+        });
 
     }
+
     public startCompetition(comp: any): void {
         //ej helt klar!
         //var comp = null;
@@ -294,5 +309,4 @@ export class AdminHandler {
         }
         return totalPoint;
     }
-
 }

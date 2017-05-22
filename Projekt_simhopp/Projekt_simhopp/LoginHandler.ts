@@ -1,4 +1,3 @@
-import {cookieParser} from "express";
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 
@@ -101,5 +100,50 @@ export class LoginHandler {
                 });
 
         });
+
+        socket.on('update the div', function () {
+            console.log('getting data');
+            var comp = null;
+            MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
+                try {
+                    if (err) {
+                        throw err;
+                    }
+
+                    var collection = db.collection('activeContest');
+                    collection.findOne({'Name': {$exists: true}}, function (err, document) {
+                        try {
+                            if (err) { throw err; }
+
+                            var collection = db.collection(document.Name);
+                            collection.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
+                                try {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
+
+                                    comp.diverList.push(document.Name);
+                                    comp.jumpList.push(document.Jumps);
+                                    comp.difficultyList.push(document.Difficulty);
+                                    comp.pointList.push(document.TotalScore);
+                                } catch (e) {
+                                    console.log("Error finding diver documents" + e);
+                                }
+                            });
+
+                        } catch(e) {
+                            console.log("Database connection error: " + e);
+                        }
+                    });
+
+
+                } catch (e) {
+                    console.log("Database search error: " + e);
+                }
+            });
+            socket.emit('refresh div', comp);
+        });
+
     }
 }

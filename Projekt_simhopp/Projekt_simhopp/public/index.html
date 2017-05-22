@@ -175,12 +175,12 @@
 <h2> Tävlings resultat </h2>
 
 <div>
-    <div style="width: 59%; float: left;"><!--border: solid aqua-->
+    <div id="updatingDiv" style="width: 59%; float: left;"><!--border: solid aqua-->
         <!--<header style="float: right">"Tävlingsnamn"</header>-->
         <table style="float: right;">
 
             <tr>
-                <td>Placering</td>
+                <td>Placering </td>
                 <td>Namn</td>
                 <td>Klubb</td>
                 <td>Resultat</td>
@@ -224,8 +224,65 @@
 <!--<script type="text/javascript" src="login.js"></script>-->
 <script>
     var socket = io();
+
+    socket.on('redirect', function (destination) {
+        window.location.href = destination.dest;
+    });
+
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("updatingDiv");
+        switching = true;
+        /*Make a loop that will continue until
+         no switching has been done:*/
+        while (switching) {
+            //start by saying: no switching is done:
+            switching = false;
+            rows = table.getElementsByTagName("TR");
+            /*Loop through all table rows (except the
+             first, which contains table headers):*/
+            for (i = 1; i < (rows.length - 1); i++) {
+                //start by saying there should be no switching:
+                shouldSwitch = false;
+                /*Get the two elements you want to compare,
+                 one from current row and one from the next:*/
+                x = rows[i].getElementsByTagName("TD")[1];
+                y = rows[i + 1].getElementsByTagName("TD")[1];
+                //check if the two rows should switch place:
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //if so, mark as a switch and break the loop:
+                    shouldSwitch= true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*If a switch has been marked, make the switch
+                 and mark that a switch has been done:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+
+    socket.on('refresh div', function (comp){
+        console.log('updating div');
+        $('#updatingDiv').html('<table style="float: right;"> <tr><td>Namn</td><td>Resultat</td> </tr>');
+
+        for (var i = 0; i < comp.diverList.length; i++) {
+            $('updatingDiv').append('<tr><td>comp.diverList[i]</td><td>comp.pointList[i]</td></tr>')
+        }
+
+        sortTable();
+    });
+
+
+
     $(document).ready(function () {
-        
+        socket.emit('update the div');
+        setInterval(function() {
+            console.log('retrieving data');
+            socket.emit('update the div');
+        }, 10000);
         console.log("inne");
         //login-windows
         $("#adimLogin").click(function(){
@@ -283,11 +340,10 @@
             socket.emit('login', username, password);
             console.log("login judge");
         });
+    });
 
-    });
-    socket.on('redirect', function (destination) {
-        window.location.href = destination.dest;
-    });
+
+
 
 </script>
 

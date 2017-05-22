@@ -4,11 +4,12 @@ import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
 import fs = require('fs');
-//import cookie = require('cookie');
-//import cookieParser = require('cookie-parser');
+
 import LoginHandler = require('./LoginHandler');
 import AdminHandler = require('./AdminHandler');
 import JudgeHandler = require('./JudgeHandler');
+
+var MongoClient = require('mongodb').MongoClient;
 
 var app = express();
 
@@ -75,6 +76,7 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function () {
         console.log('user has disconnected');
     });
+
 
 });
 
