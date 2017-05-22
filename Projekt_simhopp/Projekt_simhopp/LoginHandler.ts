@@ -101,7 +101,7 @@ export class LoginHandler {
 
         });
 
-        socket.on('update the div', function () {
+        socket.on('updateDivEvent', function () {
             console.log('getting data');
             var comp = null;
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {

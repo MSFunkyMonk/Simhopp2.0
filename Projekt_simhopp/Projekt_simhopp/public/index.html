@@ -175,9 +175,9 @@
 <h2> Tävlings resultat </h2>
 
 <div>
-    <div id="updatingDiv" style="width: 59%; float: left;"><!--border: solid aqua-->
+    <div style="width: 59%; float: left;"><!--border: solid aqua-->
         <!--<header style="float: right">"Tävlingsnamn"</header>-->
-        <table style="float: right;">
+        <table id="updatingDiv" style="float: right;">
 
             <tr>
                 <td>Placering </td>
@@ -229,6 +229,14 @@
         window.location.href = destination.dest;
     });
 
+    socket.emit('updateDivEvent');
+    setInterval(function() {
+        console.log('retrieving data');
+        socket.emit('updateDivEvent', function() {
+            console.log('firing event');
+        });
+    }, 10000);
+
     function sortTable() {
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("updatingDiv");
@@ -278,11 +286,9 @@
 
 
     $(document).ready(function () {
-        socket.emit('update the div');
-        setInterval(function() {
-            console.log('retrieving data');
-            socket.emit('update the div');
-        }, 10000);
+
+
+
         console.log("inne");
         //login-windows
         $("#adimLogin").click(function(){
