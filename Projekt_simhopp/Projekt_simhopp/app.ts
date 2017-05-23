@@ -83,9 +83,9 @@ io.on('connection', function(socket) {
 admin.on('connection', function(socket) {
     var adminHandler = new AdminHandler.AdminHandler(socket);
 
-    socket.on('compInfo', function (data){
+    socket.on('compInfo', function (competitionName, diver, jump){
         console.log('Sending diver information to judge');
-        judge.emit('diveInfo', data);
+        judge.emit('diveInfo', competitionName,diver,jump);
     });
     
 });

@@ -4,6 +4,7 @@ class AdminHandler {
     constructor(socket) {
         this.socket = null;
         this.socket = socket;
+        var self = this;
         socket.on('contest create', function (comp) {
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 try {
@@ -31,7 +32,11 @@ class AdminHandler {
                                     throw err;
                                 }
                                 else {
-                                    console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
+                                    console
+                                        .log("Diver: " +
+                                        comp.diverList[i].diverName +
+                                        " added successfully to: " +
+                                        comp.nameOfCompetition);
                                 }
                             }
                             catch (e) {
@@ -62,11 +67,11 @@ class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
-            socket.emit('start contest', comp.nameOfCompetition);
         });
-        socket.on('start contest', function (contestName) {
+        socket.on('start contest', function (comp, contestName) {
             console.log("i start contest");
-            var comp = null;
+            let test;
+            let Comp = { nameOfCompetition: "", numberOfJumps: 0, numberOfJudges: 0, diverList: [], jumpList: [], difficultyList: [] };
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
                 try {
                     if (err) {
@@ -78,24 +83,30 @@ class AdminHandler {
                             if (err) {
                                 throw err;
                             }
-                            comp.competitionName = document.CompetitionName;
-                            comp.numberOfJumps = document.NumberOfJumps;
-                            comp.numberOfJudges = document.NumberOfJudges;
+                            console.log(document.CompetitionName);
+                            Comp.nameOfCompetition = document.CompetitionName;
+                            Comp.numberOfJumps = document.NumberOfJumps;
+                            Comp.numberOfJudges = document.NumberOfJudges;
+                            console.log(Comp.nameOfCompetition);
                         }
                         catch (e) {
                             console.log("Database search error: " + e);
                         }
+                        console.log("biatch!!");
                     });
-                    //Glöm EJ testa!!!!!
                     collection.find({ 'Name': { $exists: true } }, { _id: 0 }).each(function (err, document) {
                         try {
                             if (err) {
                                 throw err;
                             }
-                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
-                            comp.diverList.push(document.Name);
-                            comp.jumpList.push(document.Jumps);
-                            comp.difficultyList.push(document.Difficulty);
+                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document
+                                .Difficulty}`);
+                            Comp.diverList.push(document.Name);
+                            console.log(Comp.diverList[0]);
+                            Comp.jumpList.push(document.Jumps);
+                            console.log(Comp.jumpList[0][0].jumpCode);
+                            Comp.difficultyList.push(document.Difficulty);
+                            self.startCompetition(Comp);
                         }
                         catch (e) {
                             console.log("Error finding diver documents" + e);
@@ -106,10 +117,39 @@ class AdminHandler {
                     console.log("Database connection error: " + e);
                 }
             });
-            console.log("i start contest!");
-            socket.emit('active competition');
-            this.startCompetition();
         });
+        //socket.on('get divers', function(comp) {
+        //        console.log("i get divers");
+        //        MongoClient.connect("mongodb://95.85.17.152:27017/simhopp",
+        //            function (err, db) {
+        //                try {
+        //                    if (err) {
+        //                        throw err;
+        //                    }
+        //                    var collection = db.collection(comp.numberOfContestants);
+        //                    //Glöm EJ testa!!!!!
+        //                    collection.find({ 'Name': { $exists: true } }, { _id: 0 }).each(function (err, document) {
+        //                        try {
+        //                            if (err) {
+        //                                throw err;
+        //                            }
+        //                            console.log(`Collection found: ${document.Name} ${document.Jumps} ${document
+        //                                .Difficulty}`);
+        //                            console.log(document.Name)
+        //                            comp.diverList.push(document.Name);
+        //                            comp.jumpList.push(document.Jumps);
+        //                            comp.difficultyList.push(document.Difficulty);
+        //                            self.startCompetition(comp);
+        //                        } catch (e) {
+        //                            console.log("Error finding diver documents" + e);
+        //                        }
+        //                    });
+        //                    //socket.emit('active competition');
+        //                } catch (e) {
+        //                    console.log("Database connection error: " + e);
+        //                }
+        //            });
+        //    });
         socket.on('store score', function (score, competitionName, diverName) {
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                 try {
@@ -194,27 +234,45 @@ class AdminHandler {
             });
         });
     }
-    startCompetition(comp) {
+    startCompetition(c) {
         //ej helt klar!
+        var self = this;
+        console.log(c.nameOfCompetition);
+        console.log(c.numberOfJudges);
+        console.log(c.numberOfJumps);
+        console.log("i start-func");
         var status = "";
-        while (comp == null) {
+        while (c == null) {
+            console.log("väntar på data!");
             this.socket.on('contest data retrieved', function (data) {
-                comp = data;
+                c = data;
             });
         }
-        this.socket.emit('status', "Tävlingen startade");
+        self.socket.emit('status', "Tävlingen startade");
         console.log("Tävling startade!");
         var pointList;
-        for (var turn = 0; turn < comp.numberOfJumps; turn++) {
+        for (var turn = 0; turn < c.numberOfJumps; turn++) {
             //omgång
             var i = 0;
-            for (var diver = 0; diver < comp.diverList.length; diver++) {
+            for (var diver = 0; diver < c.diverList.length; diver++) {
                 //kolla vilket format den msåte skickas på, objekt blir lite skumt
-                this.socket.emit('compInfo', comp.competitionName, comp.diverList[diver], comp.jumpList[diver][turn]);
+                console.log(c.diverList[diver]);
+                console.log(c.diverList[diver].jumpList[diver][turn]);
+                console.log(c.jumpList[diver][1]);
+                console.log(c.jumpList[diver][2]);
+                console.log(c.jumpList[diver][3]);
+                self.socket.emit('infoToJudge', c.nameOfCompetition, c.diverList[diver], c.jumpList[diver][turn]);
                 var counter = 0;
-                status = comp.competitionName + " " + comp.diverList[diver] + " " + comp.jumpList[diver][turn] + " hoppar nu";
+                status = c.nameOfCompetition +
+                    " " +
+                    c.diverList[diver] +
+                    " " +
+                    c.jumpList[diver][turn] +
+                    " hoppar nu";
+                console.log(status);
                 this.socket.emit('status', status);
-                while (counter < comp.numberOfJudges) {
+                console.log("väntar på domare!");
+                while (counter < c.numberOfJudges) {
                     //väntar på att dommare ska döma
                     this.socket.on('reciving data', function (data, status) {
                         //tar emot 
@@ -225,21 +283,21 @@ class AdminHandler {
                     });
                 }
                 //comp innehåller bara namn och score
-                var score = this.calculatePoint(comp.difficultyList[diver][turn], pointList);
-                this.socket.emit('status', "Total poäng för hoppare: " + score);
-                this.socket.emit('store score', score, comp.nameOfCompetition, comp.diverList[diver]);
+                var score = this.calculatePoint(c.difficultyList[diver][turn], pointList);
+                self.socket.emit('status', "Total poäng för hoppare: " + score);
+                self.socket.emit('store score', score, c.nameOfCompetition, c.diverList[diver]);
                 counter = 0;
                 score = 0;
                 console.log("Omgång: ", counter + 1);
             }
-            if (turn == comp.numberOfJumps) {
-                for (var j = 0; j < comp.diverList.length; j++) {
-                    this.socket.emit('store total score', comp.nameOfCompetition, comp.diverList[j]);
+            if (turn == c.numberOfJumps) {
+                for (var j = 0; j < c.diverList.length; j++) {
+                    this.socket.emit('store total score', c.nameOfCompetition, c.diverList[j]);
                 }
             }
         }
         console.log("Tävling avslutad!");
-        this.socket.emit('status', "Tävling" + comp.competitionName + "avslutad!");
+        this.socket.emit('status', "Tävling " + c.competitionName + " avslutad!");
     }
     calculatePoint(difficulty, listLength) {
         var min;

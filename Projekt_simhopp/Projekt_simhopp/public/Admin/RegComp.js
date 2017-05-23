@@ -1,5 +1,6 @@
 ﻿/// <reference path="./Competition.js" />
 var c = new Competition();
+
 $(document).ready(function() {
 
     console.log("i regComp");
