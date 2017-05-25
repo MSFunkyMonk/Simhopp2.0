@@ -1,4 +1,5 @@
 ﻿var socket = io('/Admin');
+
 (function ($) {
 
     //visar forms för att skapa tävling
@@ -14,8 +15,8 @@
     });
     $('#extraknapp').click(function () {
         console.log("sent contest information to server:");
+        console.log(c.nameOfCompetition);
         socket.emit('start contest', c.nameOfCompetition);
-        
         $('#update').append("Startar tävling!</br >");
     });
 })(jQuery);

@@ -58,9 +58,82 @@ io.on('connection', function (socket) {
 });
 admin.on('connection', function (socket) {
     var adminHandler = new AdminHandler.AdminHandler(socket);
-    socket.on('compInfo', function (data) {
-        console.log('Sending diver information to judge');
-        judge.emit('diveInfo', data);
+    //console.log("i admin connection!");
+    //socket.on('comp info', function (comp){
+    //    console.log('Sending diver information to judge');
+    //    judge.emit('diveInfo', comp);
+    //});
+    socket.on('start contest', function (contestName) {
+        console.log("i start contest");
+        console.log(contestName);
+        var Comp = { nameOfCompetition: "", numberOfJumps: 0, numberOfJudges: 0, diverList: [], jumpList: [], difficultyList: [] };
+        MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
+            try {
+                if (err) {
+                    throw err;
+                }
+                var collection = db.collection(contestName);
+                collection.findOne({ 'CompetitionName': contestName }, function (err, document) {
+                    try {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log(document.CompetitionName);
+                        Comp.nameOfCompetition = document.CompetitionName;
+                        Comp.numberOfJumps = document.NumberOfJumps;
+                        Comp.numberOfJudges = document.NumberOfJudges;
+                        console.log(Comp.nameOfCompetition);
+                    }
+                    catch (e) {
+                        console.log("Database search error: " + e);
+                    }
+                });
+                collection.find({ 'Name': { $exists: true } }, { _id: 0 }).each(function (err, document) {
+                    try {
+                        if (err) {
+                            throw err;
+                        }
+                        if (document !== null && document.Name !== null) {
+                            console.log("Collection found: " + document.Name + " " + document.Jumps + " " + document.Difficulty);
+                            Comp.diverList.push(document.Name);
+                            console.log(Comp.diverList[0]);
+                            Comp.jumpList.push(document.Jumps);
+                            console.log(Comp.jumpList[0][0].jumpCode);
+                            Comp.difficultyList.push(document.Difficulty);
+                            //self.compStart(Comp);
+                            judge.emit('diveInfo', Comp);
+                            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+                                try {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    var collection = db.collection('activeContest');
+                                    collection.findAndModify({ 'Name': { $exists: true } }, [['_id', 'asc']], { $set: { Name: Comp.nameOfCompetition } }, function (err, document) {
+                                        try {
+                                            if (err) {
+                                                throw err;
+                                            }
+                                        }
+                                        catch (e) {
+                                            console.log("Database search error: " + e);
+                                        }
+                                    });
+                                }
+                                catch (e) {
+                                    console.log("Database connection error: " + e);
+                                }
+                            });
+                        }
+                    }
+                    catch (e) {
+                        console.log("Error finding diver documents" + e);
+                    }
+                });
+            }
+            catch (e) {
+                console.log("Database connection error: " + e);
+            }
+        });
     });
 });
 judge.on('connection', function (socket) {
