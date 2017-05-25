@@ -12,10 +12,10 @@ var JudgeHandler = (function () {
         this.socket = socket;
         var self = this;
         socket.on('reciving data', function (pointList, diverList, diffList, contestName, numberOfJudges, round) {
-            //beh�ver in pointlist i mongodb, annars kan man inte g� vidare fr�n detta steg
+            console.log(numberOfJudges);
             for (var i = 0; i < numberOfJudges; i++) {
-                console.log(diffList[i][round]);
-                self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges);
+                console.log(diffList[i][round]); //Detta blir fel vid flera domare för någon anledning!
+                self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges, socket);
             }
             counterJudges++;
             if (counterJudges == numberOfJudges) {
@@ -23,83 +23,44 @@ var JudgeHandler = (function () {
             }
             console.log(counterJudges);
         });
-        socket.on('store score', function (score, competitionName, diverName) {
-            console.log("i store score");
-            MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
-                try {
-                    if (err) {
-                        throw err;
-                    }
-                    var collection = db.collection(competitionName);
-                    collection.findAndModify({ 'Name': diverName }, { $push: { Points: score } }, function (err, result) {
-                        try {
-                            if (err) {
-                                throw err;
-                            }
-                            socket.emit('end of contest');
-                        }
-                        catch (e) {
-                            console.log("Error with find and update operation: " + e);
-                        }
-                    });
-                }
-                catch (e) {
-                    console.log("Database connection error: " + e);
-                }
-            });
-        });
-        //socket.on('store total score',
-        //    function (competitionName, diverName) {
-        //        MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
-        //            function (err, db) {
-        //                try {
-        //                    if (err) {
-        //                        throw err;
-        //                    }
-        //                    var collection = db.collection(competitionName);
-        //                    collection.findOne({ 'Name': diverName },
-        //                        function (err, document) {
-        //                            try {
-        //                                if (err) {
-        //                                    throw err;
-        //                                }
-        //                                let totalScore = null;
-        //                                for (let i in document.Points) {
-        //                                    totalScore += i;
-        //                                }
-        //                                collection.findAndModify({ 'Name': diverName },
-        //                                    { $set: { TotalScore: totalScore } },
-        //                                    function (err, result) {
-        //                                        try {
-        //                                            if (err) {
-        //                                                throw err;
-        //                                            }
-        //                                        } catch (e) {
-        //                                            console.log("Data find and modify operation error: " + e);
-        //                                        }
-        //                                    });
-        //                            } catch (e) {
-        //                                console.log("Database search error: " + e);
-        //                            }
-        //                        });
-        //                } catch (e) {
-        //                    console.log("Database connection error: " + e);
-        //                }
-        //            });
-        //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
-            socket.emit('status', "slutpo�ng l�ggs i db");
+            socket.emit('status', "slutpoäng läggs i db");
             console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
                 console.log("kollar varavariable");
                 self.store_total_score(compname, diverList[0]);
                 varavariable = 0;
-                socket.emit('status', "t�vling slut");
+                socket.emit('status', "tävling slut");
             }
         });
     }
-    JudgeHandler.prototype.calculatePoint = function (point, difficulty, divername, contestName, numberOfJudges) {
+    JudgeHandler.prototype.storeScore = function (score, competitionName, diverName, socket) {
+        console.log("i store score");
+        MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
+            try {
+                if (err) {
+                    throw err;
+                }
+                var collection = db.collection(competitionName);
+                collection.findAndModify({ 'Name': diverName }, [['_id', 'asc']], { $push: { Points: score } }, function (err, result) {
+                    try {
+                        if (err) {
+                            throw err;
+                        }
+                        socket.emit('end of contest');
+                    }
+                    catch (e) {
+                        console.log("Error with find and update operation: " + e);
+                    }
+                });
+            }
+            catch (e) {
+                console.log("Database connection error: " + e);
+            }
+        });
+    };
+    JudgeHandler.prototype.calculatePoint = function (point, difficulty, divername, contestName, numberOfJudges, socket) {
         console.log("i calculatePoint!");
         var min;
         var max;
@@ -160,8 +121,7 @@ var JudgeHandler = (function () {
             resultOver7 = resultOver7 * difficulty;
             totalPoint += resultOver7;
         }
-        //detta exekveras ej, just nu!
-        this.socket.emit('store score', totalPoint, divername, contestName);
+        this.storeScore(totalPoint, divername, contestName, socket);
     };
     JudgeHandler.prototype.store_total_score = function (competitionName, diverName) {
         console.log("i store total score!");

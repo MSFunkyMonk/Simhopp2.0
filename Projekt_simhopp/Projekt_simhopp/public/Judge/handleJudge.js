@@ -11,12 +11,15 @@ socket.on('diveInfo', function (comp){
     if (comp != null) {
         console.log("i diverinfo");
         c = comp;
+        c.numberOfJudges = comp.numberOfJudges
         $('#aktiv').html(comp.nameOfCompetition);
         $('#contestant').html(comp.diverList[0]);
         $('#jumpcode').html(comp.jumpList[0][0].jumpCode);
 
 
         console.log(comp.nameOfCompetition);
+        console.log("Number of judges " + c.numberOfJudges);
+        console.log(JSON.stringify(c))
         console.log(comp.diverList[0]);
         console.log(comp.jumpList[0][0].jumpCode);
     }
@@ -31,13 +34,14 @@ $(document).ready(function () {
 
         var point = $('#points').val();
         pointList.push(point);
-        console.log(JSON.stringify(c.difficultyList));
+        console.log(JSON.stringify(c));
         if (y < c.jumpList[0].length) {
             if (point >= 0) {
 
                 if (i == c.diverList.length) {
                     console.log(" ska skicka omgång");
                     socket.emit('status', "Omgång " + y + " färdig!");
+                    console.log(c.numberOfJudges);
                     socket.emit('reciving data', pointList, c.diverList, c.difficultyList, c.nameOfCompetition,c.numberOfJudges, y);
                     y++;
                     i = 0

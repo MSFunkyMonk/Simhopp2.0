@@ -10,16 +10,13 @@ export class JudgeHandler {
     constructor(socket: any) {
         this.socket = socket;
         var self = this;
-        socket.on('reciving data',
-            function (pointList, diverList,diffList, contestName, numberOfJudges, round) {
-      
-               
+        socket.on('reciving data', function (pointList, diverList,diffList, contestName, numberOfJudges, round) {
 
-                //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
-
-                for (var i = 0; i < numberOfJudges; i++) {
-                    console.log(diffList[i][round]);
-                    self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges)
+                
+            console.log(numberOfJudges);
+            for (var i = 0; i < numberOfJudges; i++) {
+                    console.log(diffList[i][round]); //Detta blir fel vid flera domare för någon anledning!
+                     self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges, socket)
                 }
                
                 counterJudges++;
@@ -28,75 +25,9 @@ export class JudgeHandler {
                 }
                 console.log(counterJudges);
             });
-        socket.on('store score',
-            function (score, competitionName, diverName) {
-            console.log("i store score");
-                MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
-                    function (err, db) {
-                        try {
-                            if (err) {
-                                throw err;
-                            }
+        
 
-                            var collection = db.collection(competitionName);
-                            collection.findAndModify({ 'Name': diverName },
-                                { $push: { Points: score } },
-                                function (err, result) {
-                                    try {
-                                        if (err) {
-                                            throw err;
-                                        }
-                                        socket.emit('end of contest')
-                                    } catch (e) {
-                                        console.log("Error with find and update operation: " + e);
-                                    }
-                                })
-                        } catch (e) {
-                            console.log("Database connection error: " + e);
-                        }
-                    });
-            });
-
-        //socket.on('store total score',
-        //    function (competitionName, diverName) {
-        //        MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
-        //            function (err, db) {
-        //                try {
-        //                    if (err) {
-        //                        throw err;
-        //                    }
-        //                    var collection = db.collection(competitionName);
-        //                    collection.findOne({ 'Name': diverName },
-        //                        function (err, document) {
-        //                            try {
-        //                                if (err) {
-        //                                    throw err;
-        //                                }
-
-        //                                let totalScore = null;
-        //                                for (let i in document.Points) {
-        //                                    totalScore += i;
-        //                                }
-        //                                collection.findAndModify({ 'Name': diverName },
-        //                                    { $set: { TotalScore: totalScore } },
-        //                                    function (err, result) {
-        //                                        try {
-        //                                            if (err) {
-        //                                                throw err;
-        //                                            }
-        //                                        } catch (e) {
-        //                                            console.log("Data find and modify operation error: " + e);
-        //                                        }
-        //                                    });
-        //                            } catch (e) {
-        //                                console.log("Database search error: " + e);
-        //                            }
-        //                        });
-        //                } catch (e) {
-        //                    console.log("Database connection error: " + e);
-        //                }
-        //            });
-        //    });
+      
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
             socket.emit('status', "slutpoäng läggs i db");
@@ -112,8 +43,34 @@ export class JudgeHandler {
         });
     }
 
+    public storeScore(score, competitionName, diverName, socket) {
+        console.log("i store score");
+        MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
+            function (err, db) {
+                try {
+                    if (err) {
+                        throw err;
+                    }
 
-    public calculatePoint(point: any, difficulty: any, divername: any, contestName: any, numberOfJudges: any): void {
+                    var collection = db.collection(competitionName);
+                    collection.findAndModify({ 'Name': diverName },[['_id', 'asc']],
+                        { $push: { Points: score } },
+                        function (err, result) {
+                            try {
+                                if (err) {
+                                    throw err;
+                                }
+                                socket.emit('end of contest')
+                            } catch (e) {
+                                console.log("Error with find and update operation: " + e);
+                            }
+                        })
+                } catch (e) {
+                    console.log("Database connection error: " + e);
+                }
+            });
+    }
+    public calculatePoint(point: any, difficulty: any, divername: any, contestName: any, numberOfJudges: any, socket: any): void {
         console.log("i calculatePoint!")
         var min;
         var max;
@@ -182,8 +139,8 @@ export class JudgeHandler {
             totalPoint += resultOver7;
 
         }
-        //detta exekveras ej, just nu!
-        this.socket.emit('store score', totalPoint, divername, contestName);
+        
+        this.storeScore(totalPoint, divername, contestName, socket);
     }
 
     public store_total_score(competitionName, diverName) {
