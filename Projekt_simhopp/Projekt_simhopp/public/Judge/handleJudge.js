@@ -2,6 +2,7 @@
  * Created by kevinj on 2017-05-19.
  */
 var socket = io('/Judge');
+
 var c = null;
 var pointList = [];
 console.log("i handleJudge");

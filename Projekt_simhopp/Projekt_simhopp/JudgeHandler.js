@@ -86,12 +86,14 @@ class JudgeHandler {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
+            socket.emit('status', "slutpoäng läggs i db");
             console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
                 for (var i = 0; i < diverList.length; i++) {
                     this.store_total_score(compname, diverList[i]);
                 }
                 varavariable = 0;
+                socket.emit('status', "tävling slut");
             }
         });
     }
@@ -159,6 +161,7 @@ class JudgeHandler {
         this.socket.emit('store score', totalPoint, divername, contestName);
     }
     store_total_score(competitionName, diverName) {
+        console.log("i store total score!");
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             try {
                 if (err) {

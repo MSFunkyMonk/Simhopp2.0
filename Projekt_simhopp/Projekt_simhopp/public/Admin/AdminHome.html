@@ -20,10 +20,7 @@
                 console.log("uppdaterar status");
                 $('#update').append(info + "</br>");
             });
-        socket.on('infoComp',
-            function (info) {
-                this.socket.emit('comp info', info);
-            });
+
     });
 </script>
     <nav class="navbar navbar-inverse">

@@ -2,7 +2,7 @@
  * Created by kjlp on 2017-05-08.
  */
 var MongoClient = require('mongodb').MongoClient;
-var varavariable = 0
+var varavariable = 0;
 var counterJudges = 0;
 export class JudgeHandler {
     socket: any = null;
@@ -97,12 +97,14 @@ export class JudgeHandler {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
+            socket.emit('status', "slutpoäng läggs i db");
             console.log("i end of contest!")
             if (varavariable == numberOfJudges) {
                 for (var i = 0; i < diverList.length; i++) {
                     this.store_total_score(compname, diverList[i]);
                 }
                 varavariable = 0;
+                socket.emit('status', "tävling slut");
             }
         });
     }
@@ -180,6 +182,7 @@ export class JudgeHandler {
     }
 
     public store_total_score(competitionName, diverName) {
+        console.log("i store total score!");
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
             function (err, db) {
                 try {

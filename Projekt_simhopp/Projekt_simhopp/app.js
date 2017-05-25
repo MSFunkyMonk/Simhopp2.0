@@ -101,6 +101,7 @@ admin.on('connection', function (socket) {
                             Comp.difficultyList.push(document.Difficulty);
                             //self.compStart(Comp);
                             judge.emit('diveInfo', Comp);
+                            console.log("förbi judge.emit");
                             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
                                 try {
                                     if (err) {
