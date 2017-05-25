@@ -16,7 +16,6 @@ var recieveContest = new Competition();
     $('#extraknapp').click(function () {
         console.log("sent contest information to server:");
         socket.emit('start contest', recieveContest, c.nameOfCompetition);
-        
         $('#update').append("Startar tävling!</br >");
     });
 })(jQuery);

@@ -20,11 +20,7 @@
                 console.log("uppdaterar status");
                 $('#update').append(info + "</br>");
             });
-        socket.on('infoToJudge',
-            function (compname, diver, jump) {
-                console.log("info to judge");
-                socket.emit('compInfo', compname, diver, jump);
-            });
+    
     });
 </script>
     <nav class="navbar navbar-inverse">
