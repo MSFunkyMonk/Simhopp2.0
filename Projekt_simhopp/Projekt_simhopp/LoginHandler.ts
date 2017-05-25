@@ -114,9 +114,9 @@ export class LoginHandler {
                     collection.findOne({'Name': {$exists: true}}, function (err, document) {
                         try {
                             if (err) { throw err; }
-                            console.log(JSON.stringify(document));
-                            var collection = db.collection(document.Name);
-                            collection.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
+                            console.log(JSON.stringify(document.Name) + " " + JSON.stringify(document.TotalScore));
+                            var collection2 = db.collection(document.Name);
+                            collection2.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
                                 try {
                                     if (err) {
                                         throw err;
@@ -124,7 +124,7 @@ export class LoginHandler {
 
                                     console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
                                     comp.diverList.push(document.Name);
-                                    comp.pointList.push(document.TotalScore);
+                                    comp.pointList.push(document.TotalPoints);
                                 } catch (e) {
                                     console.log("Error finding diver documents" + e);
                                 }

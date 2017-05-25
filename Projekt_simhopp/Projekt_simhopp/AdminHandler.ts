@@ -30,7 +30,7 @@ export class AdminHandler {
                                     'Jumps': comp.diverList[i].jumpList,
                                     'Difficulty': difficultList,
                                     'Points': [],
-                                    'Total points': 0
+                                    'TotalPoints': 0
                                 };
 
                                 collection.insert(diverDoc,
