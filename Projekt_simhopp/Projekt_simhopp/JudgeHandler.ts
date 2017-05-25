@@ -2,7 +2,7 @@
  * Created by kjlp on 2017-05-08.
  */
 var MongoClient = require('mongodb').MongoClient;
-var varavariable
+var varavariable = 0
 var counterJudges = 0;
 export class JudgeHandler {
     socket: any = null;
@@ -12,7 +12,7 @@ export class JudgeHandler {
 
         socket.on('reciving data',
             function (pointList, diffList, diverList, contestName, numberOfJudges, round) {
-                //tar emot 
+      
                 var self = this;
 
                 //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
@@ -21,11 +21,12 @@ export class JudgeHandler {
                     this.calculatePoint(pointList[i], diffList[i][round], contestName, numberOfJudges)
                 }
                 counterJudges++;
-                if(counterJudges == round){}
-                //if (list.size == comp.numberOfJudges) {
-                //    var points = self.calculatePoint(comp.difficultyList[diver][turn], pointList);
-                //    this.socket.emit('store score', points, comp.nameOfCompetition, comp.diverList[diver]);
-                //}
+                if (counterJudges == round) {
+                    for (var i = 0; i < diverList.length; i++) {
+                        this.store_total_score(contestName, diverList[i]);
+                    }
+                }
+
             });
         socket.on('store score',
             function (score, competitionName, diverName) {
@@ -96,6 +97,7 @@ export class JudgeHandler {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
+            console.log("i end of contest!")
             if (varavariable == numberOfJudges) {
                 for (var i = 0; i < diverList.length; i++) {
                     this.store_total_score(compname, diverList[i]);
@@ -106,7 +108,8 @@ export class JudgeHandler {
     }
 
 
-    public calculatePoint(point: any, difficulty: any, divername: any, contestName: any, numberOfJudges: any ): void {
+    public calculatePoint(point: any, difficulty: any, divername: any, contestName: any, numberOfJudges: any): void {
+        console.log("i calculatePoint!")
         var min;
         var max;
         var totalPoint;

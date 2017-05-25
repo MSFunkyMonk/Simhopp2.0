@@ -32,11 +32,7 @@ var AdminHandler = (function () {
                                     throw err;
                                 }
                                 else {
-                                    console
-                                        .log("Diver: " +
-                                        comp.diverList[i].diverName +
-                                        " added successfully to: " +
-                                        comp.nameOfCompetition);
+                                    console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                                 }
                             }
                             catch (e) {

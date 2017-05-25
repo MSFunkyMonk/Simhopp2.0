@@ -39,11 +39,7 @@ export class AdminHandler {
                                             if (err) {
                                                 throw err;
                                             } else {
-                                                console
-                                                    .log("Diver: " +
-                                                        comp.diverList[i].diverName +
-                                                        " added successfully to: " +
-                                                        comp.nameOfCompetition);
+                                                console.log("Diver: " + comp.diverList[i].diverName + " added successfully to: " + comp.nameOfCompetition);
                                             }
                                         } catch (e) {
                                             console.log("Error inserting diver document number " + i + " : " + e);
@@ -110,7 +106,6 @@ export class AdminHandler {
 
     public compStart(comp: any): void {
         console.log("i compStart");
-
     }
 
 

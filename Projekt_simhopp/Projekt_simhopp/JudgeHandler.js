@@ -3,25 +3,24 @@
  * Created by kjlp on 2017-05-08.
  */
 var MongoClient = require('mongodb').MongoClient;
-var varavariable;
+var varavariable = 0;
 var counterJudges = 0;
-var JudgeHandler = (function () {
-    function JudgeHandler(socket) {
+class JudgeHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
         socket.on('reciving data', function (pointList, diffList, diverList, contestName, numberOfJudges, round) {
-            //tar emot 
             var self = this;
-            //beh�ver in pointlist i mongodb, annars kan man inte g� vidare fr�n detta steg
+            //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
             for (var i = 0; i < pointList.length; i++) {
                 this.calculatePoint(pointList[i], diffList[i][round], contestName, numberOfJudges);
             }
             counterJudges++;
-            if (counterJudges == round) { }
-            //if (list.size == comp.numberOfJudges) {
-            //    var points = self.calculatePoint(comp.difficultyList[diver][turn], pointList);
-            //    this.socket.emit('store score', points, comp.nameOfCompetition, comp.diverList[diver]);
-            //}
+            if (counterJudges == round) {
+                for (var i = 0; i < diverList.length; i++) {
+                    this.store_total_score(contestName, diverList[i]);
+                }
+            }
         });
         socket.on('store score', function (score, competitionName, diverName) {
             MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
@@ -87,6 +86,7 @@ var JudgeHandler = (function () {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
+            console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
                 for (var i = 0; i < diverList.length; i++) {
                     this.store_total_score(compname, diverList[i]);
@@ -95,7 +95,8 @@ var JudgeHandler = (function () {
             }
         });
     }
-    JudgeHandler.prototype.calculatePoint = function (point, difficulty, divername, contestName, numberOfJudges) {
+    calculatePoint(point, difficulty, divername, contestName, numberOfJudges) {
+        console.log("i calculatePoint!");
         var min;
         var max;
         var totalPoint;
@@ -156,8 +157,8 @@ var JudgeHandler = (function () {
             totalPoint += resultOver7;
         }
         this.socket.emit('store score', totalPoint, divername, contestName);
-    };
-    JudgeHandler.prototype.store_total_score = function (competitionName, diverName) {
+    }
+    store_total_score(competitionName, diverName) {
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             try {
                 if (err) {
@@ -169,8 +170,8 @@ var JudgeHandler = (function () {
                         if (err) {
                             throw err;
                         }
-                        var totalScore = null;
-                        for (var i in document.Points) {
+                        let totalScore = null;
+                        for (let i in document.Points) {
                             totalScore += i;
                         }
                         collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
@@ -193,9 +194,8 @@ var JudgeHandler = (function () {
                 console.log("Database connection error: " + e);
             }
         });
-    };
+    }
     ;
-    return JudgeHandler;
-}());
+}
 exports.JudgeHandler = JudgeHandler;
 //# sourceMappingURL=JudgeHandler.js.map
