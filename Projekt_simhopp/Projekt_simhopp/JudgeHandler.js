@@ -87,12 +87,14 @@ var JudgeHandler = (function () {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
+            socket.emit('status', "slutpo�ng l�ggs i db");
             console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
                 for (var i = 0; i < diverList.length; i++) {
                     this.store_total_score(compname, diverList[i]);
                 }
                 varavariable = 0;
+                socket.emit('status', "t�vling slut");
             }
         });
     }
@@ -160,6 +162,7 @@ var JudgeHandler = (function () {
         this.socket.emit('store score', totalPoint, divername, contestName);
     };
     JudgeHandler.prototype.store_total_score = function (competitionName, diverName) {
+        console.log("i store total score!");
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             try {
                 if (err) {
@@ -175,7 +178,7 @@ var JudgeHandler = (function () {
                         for (var i in document.Points) {
                             totalScore += i;
                         }
-                        collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
+                        collection.findAndModify({ 'Name': diverName }, [['_id', 'asc']], { $set: { TotalScore: totalScore } }, function (err, result) {
                             try {
                                 if (err) {
                                     throw err;

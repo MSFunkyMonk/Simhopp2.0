@@ -15,10 +15,26 @@
             background-color: azure;
             
         }
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            margin: auto;
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
          h1 {text-align: center}
         h2 {text-align: center}
         div { width: 100%;overflow: hidden;}
+        .center {
+            margin: auto;
 
+        }
         nav ul{ height: 150px;width: 70%;}
         nav ul{ overflow: hidden;overflow-y: scroll;}
     </style>
@@ -174,11 +190,9 @@
 <hr/>
 <h2> Tävlings resultat </h2>
 
-<div>
-    <div style="width: 59%; float: left;"><!--border: solid aqua-->
-        <!--<header style="float: right">"Tävlingsnamn"</header>-->
-        <table id="updatingDiv" style="float: right;">
-
+<div class:"center">
+    <div class:"center">
+        <table id="updatingDiv">
             <tr>
                 <td>Placering </td>
                 <td>Namn</td>
@@ -274,12 +288,10 @@
 
     socket.on('refresh div', function (comp){
         console.log('updating div');
-       
-        $('#updatingDiv').html('<table style="float: right;"> <tr><td>Namn</td><td>Resultat</td> </tr>');
-        if (comp != null) {
+        $('#updatingDiv').html('<table id="updatingDiv class:"center"> <th>Namn</th><th>Resultat</th>');
             for (var i = 0; i < comp.diverList.length; i++) {
-                $('updatingDiv').append('<tr><td>comp.diverList[i]</td><td>comp.pointList[i]</td></tr>')
-            }
+                $('#updatingDiv').append('<tr><td>' + comp.diverList[i] + '</td><td>' + comp.TotalPoints[i] + '</td></tr>');
+
         }
         sortTable();
     });

@@ -201,9 +201,7 @@ export class JudgeHandler {
                                 for (let i in document.Points) {
                                     totalScore += i;
                                 }
-                                collection.findAndModify({ 'Name': diverName },
-                                    { $set: { TotalScore: totalScore } },
-                                    function (err, result) {
+                                collection.findAndModify({ 'Name': diverName }, [['_id', 'asc']], { $set: { TotalScore: totalScore } }, function (err, result) {
                                         try {
                                             if (err) {
                                                 throw err;
