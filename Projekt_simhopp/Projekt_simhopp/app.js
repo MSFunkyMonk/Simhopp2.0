@@ -1,12 +1,11 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var express = require("express");
-var http = require("http");
-var path = require("path");
-var fs = require("fs");
-var LoginHandler = require("./LoginHandler");
-var AdminHandler = require("./AdminHandler");
-var JudgeHandler = require("./JudgeHandler");
+var express = require('express');
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
+var LoginHandler = require('./LoginHandler');
+var AdminHandler = require('./AdminHandler');
+var JudgeHandler = require('./JudgeHandler');
 var MongoClient = require('mongodb').MongoClient;
 var app = express();
 // all environments
@@ -20,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
-var stylus = require("stylus");
+var stylus = require('stylus');
 app.use(stylus.middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.cookieParser());

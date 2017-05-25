@@ -41,20 +41,20 @@ $(document).ready(function () {
                 y++;
                 i = 0
             }
-            console.log(JSON.stringify(c.jumpList[0].length));
+
             if (c.numberOfJudges == 1 && c.numberOfJumps == 1){
                 //för den första omgången
                 console.log(" tävling slut!");
                 socket.emit('status', "tävlingen är slut!");
-                socket.emit('end of contest', c.nameOfCompetition, c.diverList);
+                socket.emit('end of contest', c.numberOfJumps, c.diverList, c.nameOfCompetition);
             } else {
                 i++;
                 $('#aktiv').html(c.nameOfCompetition);
                 $('#contestant').html(c.diverList[i]);
                 console.log(i);
                 console.log(y);
-                console.log(JSON.stringify(c.jumpList[i][y].jumpCode))
-                $('#jumpcode').html(c.jumpList[i][y].jumpCode);
+                console.log(JSON.stringify(c.jumpList[y][i].jumpCode))
+                $('#jumpcode').html(c.jumpList[y][i].jumpCode);
             }
             
  
