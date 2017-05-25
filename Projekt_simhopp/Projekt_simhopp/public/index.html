@@ -274,12 +274,13 @@
 
     socket.on('refresh div', function (comp){
         console.log('updating div');
+       
         $('#updatingDiv').html('<table style="float: right;"> <tr><td>Namn</td><td>Resultat</td> </tr>');
-
-        for (var i = 0; i < comp.diverList.length; i++) {
-            $('updatingDiv').append('<tr><td>comp.diverList[i]</td><td>comp.pointList[i]</td></tr>')
+        if (comp != null) {
+            for (var i = 0; i < comp.diverList.length; i++) {
+                $('updatingDiv').append('<tr><td>comp.diverList[i]</td><td>comp.pointList[i]</td></tr>')
+            }
         }
-
         sortTable();
     });
 
