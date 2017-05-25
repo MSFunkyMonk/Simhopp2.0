@@ -41,7 +41,7 @@ $(document).ready(function () {
                 i = 0
             }
             console.log(JSON.stringify(c.jumpList[0].length));
-            if (y == (c.jumpList[0].length - 1)){
+            if (c.numberOfJudges == 1 && c.numberOfJumps == 1){
                 //för den första omgången
                 console.log(" tävling slut!");
                 socket.emit('status', "tävlingen är slut!");
