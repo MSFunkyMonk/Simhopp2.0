@@ -103,7 +103,10 @@ export class LoginHandler {
 
         socket.on('updateDivEvent', function () {
             console.log('getting data');
-            var comp = null;
+            var comp = {
+                "diverList": [],
+                "TotalPoints": []
+            }
             MongoClient.connect("mongodb://95.85.17.152:27017/simhopp", function (err, db) {
                 try {
                     if (err) {
@@ -114,17 +117,23 @@ export class LoginHandler {
                     collection.findOne({'Name': {$exists: true}}, function (err, document) {
                         try {
                             if (err) { throw err; }
-                            console.log(JSON.stringify(document.Name) + " " + JSON.stringify(document.TotalScore));
                             var collection2 = db.collection(document.Name);
-                            collection2.find({'Name': {$exists: true}}, {_id: 0}).each(function (err, document) {
+                            collection2.find({ 'Name': { $exists: true } }).toArray(function(err, document) {
                                 try {
                                     if (err) {
                                         throw err;
                                     }
 
-                                    console.log(`Collection found: ${document.Name} ${document.Jumps} ${document.Difficulty}`);
-                                    comp.diverList.push(document.Name);
-                                    comp.pointList.push(document.TotalPoints);
+                                    
+                                    for (var i = 0; i < document.length; i++) {
+                                        comp.diverList.push(document[i].Name);
+                                        comp.TotalPoints.push(document[i].TotalPoints);
+                                    }
+                                     
+                                    
+                                    
+                                    socket.emit('refresh div', comp);
+                                    
                                 } catch (e) {
                                     console.log("Error finding diver documents" + e);
                                 }
@@ -140,7 +149,7 @@ export class LoginHandler {
                     console.log("Database search error: " + e);
                 }
             });
-            socket.emit('refresh div', comp);
+            
         });
 
     }
