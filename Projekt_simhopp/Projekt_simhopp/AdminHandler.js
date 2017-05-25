@@ -1,7 +1,7 @@
 "use strict";
 var MongoClient = require('mongodb').MongoClient;
-var AdminHandler = (function () {
-    function AdminHandler(socket) {
+class AdminHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
         var self = this;
@@ -13,12 +13,12 @@ var AdminHandler = (function () {
                     }
                     db.createCollection(comp.nameOfCompetition);
                     var collection = db.collection(comp.nameOfCompetition);
-                    var _loop_1 = function(i) {
-                        var difficultList = [comp.diverList[i].jumpList[0].difficulty];
-                        for (var j = 1; j < comp.diverList[i].jumpList.length; j++) {
+                    for (let i = 0; i < comp.diverList.length; i++) {
+                        let difficultList = [comp.diverList[i].jumpList[0].difficulty];
+                        for (let j = 1; j < comp.diverList[i].jumpList.length; j++) {
                             difficultList.push(comp.diverList[i].jumpList[j].difficulty);
                         }
-                        var diverDoc = {
+                        let diverDoc = {
                             'Name': comp.diverList[i].diverName,
                             'Nationality': comp.diverList[i].nationality,
                             'Jumps': comp.diverList[i].jumpList,
@@ -39,11 +39,8 @@ var AdminHandler = (function () {
                                 console.log("Error inserting diver document number " + i + " : " + e);
                             }
                         });
-                    };
-                    for (var i = 0; i < comp.diverList.length; i++) {
-                        _loop_1(i);
                     }
-                    var compDoc = {
+                    let compDoc = {
                         'CompetitionName': comp.nameOfCompetition,
                         'NumberOfJumps': comp.numberOfJumps,
                         'NumberOfJudges': comp.numberOfJudges
@@ -93,10 +90,9 @@ var AdminHandler = (function () {
         //            });
         //    });
     }
-    AdminHandler.prototype.compStart = function (comp) {
+    compStart(comp) {
         console.log("i compStart");
-    };
-    return AdminHandler;
-}());
+    }
+}
 exports.AdminHandler = AdminHandler;
 //# sourceMappingURL=AdminHandler.js.map
