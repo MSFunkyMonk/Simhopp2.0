@@ -11,13 +11,14 @@ export class JudgeHandler {
         this.socket = socket;
         var self = this;
         socket.on('reciving data',
-            function (pointList, diffList, diverList, contestName, numberOfJudges, round) {
+            function (pointList, diverList,diffList, contestName, numberOfJudges, round) {
       
                
 
                 //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
 
-                for (var i = 0; i < pointList.length; i++) {
+                for (var i = 0; i < numberOfJudges; i++) {
+                    console.log(diffList[i][round]);
                     self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges)
                 }
                
@@ -25,10 +26,11 @@ export class JudgeHandler {
                 if (counterJudges == numberOfJudges) {
                     socket.emit('end of contest', numberOfJudges, diverList, contestName);
                 }
-
+                console.log(counterJudges);
             });
         socket.on('store score',
             function (score, competitionName, diverName) {
+            console.log("i store score");
                 MongoClient.connect('mongodb://95.85.17.152:27017/simhopp',
                     function (err, db) {
                         try {
@@ -44,6 +46,7 @@ export class JudgeHandler {
                                         if (err) {
                                             throw err;
                                         }
+                                        socket.emit('end of contest')
                                     } catch (e) {
                                         console.log("Error with find and update operation: " + e);
                                     }
@@ -116,6 +119,7 @@ export class JudgeHandler {
         var max;
         var totalPoint;
         if (numberOfJudges < 5) {
+            
             var resultUnder5: number;
             for (var i = 0; i < numberOfJudges; i++) {
                 resultUnder5 = resultUnder5 + numberOfJudges[i];
@@ -178,7 +182,8 @@ export class JudgeHandler {
             totalPoint += resultOver7;
 
         }
-        this.socket.emit('store score', totalPoint, divername, contestName);
+        //detta exekveras ej, just nu!
+        socket.emit('store score', totalPoint, divername, contestName);
     }
 
     public store_total_score(competitionName, diverName) {

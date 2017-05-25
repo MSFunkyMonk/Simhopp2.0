@@ -15,7 +15,7 @@ socket.on('diveInfo', function (comp){
         $('#contestant').html(comp.diverList[0]);
         $('#jumpcode').html(comp.jumpList[0][0].jumpCode);
 
-        console.log(JSON.stringify(comp.jumpList[0][0].jumpCode))
+
         console.log(comp.nameOfCompetition);
         console.log(comp.diverList[0]);
         console.log(comp.jumpList[0][0].jumpCode);
@@ -31,33 +31,39 @@ $(document).ready(function () {
 
         var point = $('#points').val();
         pointList.push(point);
-
+        console.log(JSON.stringify(c.difficultyList));
         if (point >= 0) {
 
-            if (i == c.diverList.length) {
+            if (i + 1 == c.diverList.length) {
                 console.log(" ska skicka omgång");
                 socket.emit('status', "Omgång " + y + " färdig!");
                 socket.emit('reciving data', pointList, c.diverList, c.difficultyList, c.nameOfCompetition,c.numberOfJudges, y);
                 y++;
                 i = 0
             }
-
-            if (c.numberOfJudges == 1 && c.numberOfJumps == 1){
-                //för den första omgången
-                console.log(" tävling slut!");
-                socket.emit('status', "tävlingen är slut!");
-                socket.emit('end of contest', c.numberOfJumps, c.diverList, c.nameOfCompetition);
-            } else {
+            else {
                 i++;
                 $('#aktiv').html(c.nameOfCompetition);
                 $('#contestant').html(c.diverList[i]);
+
                 console.log(i);
                 console.log(y);
-                console.log(JSON.stringify(c.jumpList[y][i].jumpCode))
-                $('#jumpcode').html(c.jumpList[y][i].jumpCode);
+                console.log(c.diverList[i]);
+                console.log(c.jumpList[i][y].jumpCode);
+                console.log(JSON.stringify(c.jumpList[i][y].jumpCode));
+                console.log(JSON.stringify(c.jumpList));
+                $('#jumpcode').html(c.jumpList[i][y].jumpCode);
+                console.log(JSON.stringify(c.difficultyList[i][y]));
             }
-            
- 
+            //if (c.numberOfJudges == 1 && c.numberOfJumps == 1){
+            //    //för den första omgången
+            //    console.log(" tävling slut!");
+            //    socket.emit('status', "tävlingen är slut!");
+            //    socket.emit('store score', c.numberOfJumps, c.diverList, c.nameOfCompetition);
+            //} else {
+
+            //}
+
             
         } else {
             alert("Score can't be below zero!");

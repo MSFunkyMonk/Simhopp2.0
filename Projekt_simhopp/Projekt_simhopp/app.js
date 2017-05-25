@@ -99,6 +99,7 @@ admin.on('connection', function (socket) {
                             Comp.jumpList.push(document.Jumps);
                             console.log(Comp.jumpList[0][0].jumpCode);
                             Comp.difficultyList.push(document.Difficulty);
+                            console.log(JSON.stringify(Comp.difficultyList));
                             //self.compStart(Comp);
                             judge.emit('diveInfo', Comp);
                             console.log("förbi judge.emit");
