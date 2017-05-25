@@ -1,26 +1,23 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by kjlp on 2017-05-08.
  */
 var MongoClient = require('mongodb').MongoClient;
 var varavariable = 0;
 var counterJudges = 0;
-var JudgeHandler = (function () {
-    function JudgeHandler(socket) {
+class JudgeHandler {
+    constructor(socket) {
         this.socket = null;
         this.socket = socket;
+        var self = this;
         socket.on('reciving data', function (pointList, diffList, diverList, contestName, numberOfJudges, round) {
-            var self = this;
-            //beh�ver in pointlist i mongodb, annars kan man inte g� vidare fr�n detta steg
+            //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
             for (var i = 0; i < pointList.length; i++) {
-                this.calculatePoint(pointList[i], diffList[i][round], contestName, numberOfJudges);
+                self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges);
             }
             counterJudges++;
-            if (counterJudges == round) {
-                for (var i = 0; i < diverList.length; i++) {
-                    this.store_total_score(contestName, diverList[i]);
-                }
+            if (counterJudges == numberOfJudges) {
+                socket.emit('end of contest', numberOfJudges, diverList, contestName);
             }
         });
         socket.on('store score', function (score, competitionName, diverName) {
@@ -87,18 +84,17 @@ var JudgeHandler = (function () {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
-            socket.emit('status', "slutpo�ng l�ggs i db");
+            socket.emit('status', "slutpoäng läggs i db");
             console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
-                for (var i = 0; i < diverList.length; i++) {
-                    this.store_total_score(compname, diverList[i]);
-                }
+                console.log("kollar varavariable");
+                self.store_total_score(compname, diverList[0]);
                 varavariable = 0;
-                socket.emit('status', "t�vling slut");
+                socket.emit('status', "tävling slut");
             }
         });
     }
-    JudgeHandler.prototype.calculatePoint = function (point, difficulty, divername, contestName, numberOfJudges) {
+    calculatePoint(point, difficulty, divername, contestName, numberOfJudges) {
         console.log("i calculatePoint!");
         var min;
         var max;
@@ -160,8 +156,8 @@ var JudgeHandler = (function () {
             totalPoint += resultOver7;
         }
         this.socket.emit('store score', totalPoint, divername, contestName);
-    };
-    JudgeHandler.prototype.store_total_score = function (competitionName, diverName) {
+    }
+    store_total_score(competitionName, diverName) {
         console.log("i store total score!");
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             try {
@@ -174,11 +170,11 @@ var JudgeHandler = (function () {
                         if (err) {
                             throw err;
                         }
-                        var totalScore = null;
-                        for (var i in document.Points) {
+                        let totalScore = null;
+                        for (let i in document.Points) {
                             totalScore += i;
                         }
-                        collection.findAndModify({ 'Name': diverName }, [['_id', 'asc']], { $set: { TotalScore: totalScore } }, function (err, result) {
+                        collection.findAndModify({ 'Name': diverName }, { $set: { TotalScore: totalScore } }, function (err, result) {
                             try {
                                 if (err) {
                                     throw err;
@@ -198,9 +194,8 @@ var JudgeHandler = (function () {
                 console.log("Database connection error: " + e);
             }
         });
-    };
+    }
     ;
-    return JudgeHandler;
-}());
+}
 exports.JudgeHandler = JudgeHandler;
 //# sourceMappingURL=JudgeHandler.js.map

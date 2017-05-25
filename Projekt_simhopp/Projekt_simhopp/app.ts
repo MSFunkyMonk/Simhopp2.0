@@ -15,7 +15,6 @@ var app = express();
 
 
 
-
 // all environments
 //app.set('port', process.env.PORT || 3000);
 app.set('port', '3000');
@@ -170,6 +169,8 @@ admin.on('connection', function(socket) {
 
 
     });
+
+
     
 });
 
@@ -180,5 +181,6 @@ judge.on('connection', function(socket) {
         console.log('Recieved score from judge');
         admin.emit('reciving data', data);
     });
+
 });
 

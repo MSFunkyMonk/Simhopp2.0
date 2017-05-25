@@ -9,22 +9,21 @@ export class JudgeHandler {
 
     constructor(socket: any) {
         this.socket = socket;
-
+        var self = this;
         socket.on('reciving data',
             function (pointList, diffList, diverList, contestName, numberOfJudges, round) {
       
-                var self = this;
+               
 
                 //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
 
                 for (var i = 0; i < pointList.length; i++) {
-                    this.calculatePoint(pointList[i], diffList[i][round], contestName, numberOfJudges)
+                    self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges)
                 }
+               
                 counterJudges++;
-                if (counterJudges == round) {
-                    for (var i = 0; i < diverList.length; i++) {
-                        this.store_total_score(contestName, diverList[i]);
-                    }
+                if (counterJudges == numberOfJudges) {
+                    socket.emit('end of contest', numberOfJudges, diverList, contestName);
                 }
 
             });
@@ -98,11 +97,12 @@ export class JudgeHandler {
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
             socket.emit('status', "slutpoäng läggs i db");
-            console.log("i end of contest!")
+            console.log("i end of contest!");
+          
             if (varavariable == numberOfJudges) {
-                for (var i = 0; i < diverList.length; i++) {
-                    this.store_total_score(compname, diverList[i]);
-                }
+                console.log("kollar varavariable");
+                
+                self.store_total_score(compname, diverList[0]);
                 varavariable = 0;
                 socket.emit('status', "tävling slut");
             }
