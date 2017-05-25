@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var bcrypt = require('bcryptjs');
 var MongoClient = require('mongodb').MongoClient;
 var LoginHandler = (function () {

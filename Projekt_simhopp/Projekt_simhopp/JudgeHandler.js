@@ -1,17 +1,18 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by kjlp on 2017-05-08.
  */
 var MongoClient = require('mongodb').MongoClient;
 var varavariable = 0;
 var counterJudges = 0;
-class JudgeHandler {
-    constructor(socket) {
+var JudgeHandler = (function () {
+    function JudgeHandler(socket) {
         this.socket = null;
         this.socket = socket;
         var self = this;
         socket.on('reciving data', function (pointList, diverList, diffList, contestName, numberOfJudges, round) {
-            //behöver in pointlist i mongodb, annars kan man inte gå vidare från detta steg
+            //beh�ver in pointlist i mongodb, annars kan man inte g� vidare fr�n detta steg
             for (var i = 0; i < numberOfJudges; i++) {
                 console.log(diffList[i][round]);
                 self.calculatePoint(pointList[i], diffList[i][round], diverList[i], contestName, numberOfJudges);
@@ -88,17 +89,17 @@ class JudgeHandler {
         //    });
         socket.on('end of contest', function (numberOfJudges, diverList, compname) {
             varavariable++;
-            socket.emit('status', "slutpoäng läggs i db");
+            socket.emit('status', "slutpo�ng l�ggs i db");
             console.log("i end of contest!");
             if (varavariable == numberOfJudges) {
                 console.log("kollar varavariable");
                 self.store_total_score(compname, diverList[0]);
                 varavariable = 0;
-                socket.emit('status', "tävling slut");
+                socket.emit('status', "t�vling slut");
             }
         });
     }
-    calculatePoint(point, difficulty, divername, contestName, numberOfJudges) {
+    JudgeHandler.prototype.calculatePoint = function (point, difficulty, divername, contestName, numberOfJudges) {
         console.log("i calculatePoint!");
         var min;
         var max;
@@ -160,9 +161,9 @@ class JudgeHandler {
             totalPoint += resultOver7;
         }
         //detta exekveras ej, just nu!
-        socket.emit('store score', totalPoint, divername, contestName);
-    }
-    store_total_score(competitionName, diverName) {
+        this.socket.emit('store score', totalPoint, divername, contestName);
+    };
+    JudgeHandler.prototype.store_total_score = function (competitionName, diverName) {
         console.log("i store total score!");
         MongoClient.connect('mongodb://95.85.17.152:27017/simhopp', function (err, db) {
             try {
@@ -175,8 +176,8 @@ class JudgeHandler {
                         if (err) {
                             throw err;
                         }
-                        let totalScore = null;
-                        for (let i in document.Points) {
+                        var totalScore = null;
+                        for (var i in document.Points) {
                             totalScore += i;
                         }
                         collection.findAndModify({ 'Name': diverName }, [['_id', 'asc']], { $set: { TotalScore: totalScore } }, function (err, result) {
@@ -199,8 +200,9 @@ class JudgeHandler {
                 console.log("Database connection error: " + e);
             }
         });
-    }
+    };
     ;
-}
+    return JudgeHandler;
+}());
 exports.JudgeHandler = JudgeHandler;
 //# sourceMappingURL=JudgeHandler.js.map

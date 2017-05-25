@@ -183,7 +183,7 @@ export class JudgeHandler {
 
         }
         //detta exekveras ej, just nu!
-        socket.emit('store score', totalPoint, divername, contestName);
+        this.socket.emit('store score', totalPoint, divername, contestName);
     }
 
     public store_total_score(competitionName, diverName) {
