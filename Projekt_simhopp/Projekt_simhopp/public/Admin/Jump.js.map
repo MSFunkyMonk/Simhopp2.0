@@ -1,1 +1,1 @@
-{"version":3,"file":"Jump.js","sourceRoot":"","sources":["Jump.ts"],"names":[],"mappings":"AAAA,mCAAmC;AAEnC;IAAA;QAKW,eAAU,GAAkB,IAAI,KAAK,EAAU,CAAC;IAkB3D,CAAC;IAAD,WAAC;AAAD,CAAC,AAvBD,IAuBC"}
+{"version":3,"file":"Jump.js","sourceRoot":"","sources":["Jump.ts"],"names":[],"mappings":"AAAA,mCAAmC;AAEnC;IAAA;QAKW,eAAU,GAAkB,IAAI,KAAK,EAAU,CAAC;QAIvD,qBAAqB;QACrB,gEAAgE;QAChE,4DAA4D;QAE5D,oEAAoE;QACpE,gEAAgE;QAEhE,gEAAgE;QAChE,wDAAwD;QAExD,6EAA6E;QAC7E,sEAAsE;IAG1E,CAAC;IAAD,WAAC;AAAD,CAAC,AAvBD,IAuBC"}
